@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Excel-практикумы — Корпоративные финансы</title>
+  <meta name="description" content="7 практикумов в Excel: TVM, NPV/IRR, портфель Марковица, WACC, финанализ, DCF, финансовое планирование.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+</head>
+<body data-page="tools/excel-labs" data-depth="1">
+  <div id="site-nav"></div>
+  <main id="main-content">
+    <section class="hero hero-compact">
+      <div class="hero-glow hero-glow-primary" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-badge">7 практикумов &bull; Excel / Google Sheets &bull; ОПК-5</div>
+        <h1>Excel-<span class="highlight">практикумы</span></h1>
+        <p class="hero-subtitle">Практические задания по финансовым расчётам в электронных таблицах</p>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="lecture-content">
+
+          <h2>1. Временная стоимость денег (TVM)</h2>
+          <p><strong>Связь:</strong> <a href="../lectures/topic-12.html">Тема 1.2</a></p>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Функция Excel</th><th>Назначение</th><th>Синтаксис</th></tr></thead>
+              <tbody>
+                <tr><td><code>ПС / PV</code></td><td>Приведённая стоимость</td><td><code>=ПС(ставка; кпер; плт; [бс])</code></td></tr>
+                <tr><td><code>БС / FV</code></td><td>Будущая стоимость</td><td><code>=БС(ставка; кпер; плт; [пс])</code></td></tr>
+                <tr><td><code>СТАВКА / RATE</code></td><td>Процентная ставка</td><td><code>=СТАВКА(кпер; плт; пс; [бс])</code></td></tr>
+                <tr><td><code>ПЛТ / PMT</code></td><td>Периодический платёж</td><td><code>=ПЛТ(ставка; кпер; пс; [бс])</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="box box-example">
+            <div class="box-title">Задание 1.1 — Сравнение депозитов</div>
+            <p>Банк A: 1 000 000 ₽ под 10%, капитализация ежегодно, 5 лет.<br>
+            Банк B: 1 000 000 ₽ под 9,5%, капитализация ежемесячно, 5 лет.</p>
+            <p>Формулы: <code>=БС(10%;5;0;-1000000)</code> и <code>=БС(9,5%/12;60;0;-1000000)</code></p>
+            <p style="margin-bottom:0;"><strong>Результат:</strong> A = 1 610 510 ₽, B = 1 600 527 ₽. Банк А выгоднее.</p>
+          </div>
+
+          <h2>2. Оценка инвестиционных проектов</h2>
+          <p><strong>Связь:</strong> <a href="../lectures/topic-31.html">Тема 3.1</a> | <a href="npv-calculator.html">Калькулятор NPV</a></p>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Функция</th><th>Назначение</th><th>Синтаксис</th></tr></thead>
+              <tbody>
+                <tr><td><code>ЧПС / NPV</code></td><td>Чистая приведённая стоимость</td><td><code>=ЧПС(ставка; CF1:CFn) + CF0</code></td></tr>
+                <tr><td><code>ВСД / IRR</code></td><td>Внутренняя норма доходности</td><td><code>=ВСД(CF0:CFn; [прогноз])</code></td></tr>
+                <tr><td><code>ЧИСТНЗ / XNPV</code></td><td>NPV с нерегулярными датами</td><td><code>=ЧИСТНЗ(ставка; CF; даты)</code></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="box box-example">
+            <div class="box-title">Задание 2.1 — Оценка проекта Лукойл</div>
+            <p>IC = 45 000 млн ₽, потоки: 5, 8, 10, 12, 11, 9, 8 млрд. WACC = 19,32%.</p>
+            <p style="margin-bottom:0;"><code>=ЧПС(19,32%;B3:B9)+B2</code> → NPV = −13 392 млн ₽ → Отклонить.</p>
+          </div>
+
+          <h2>3. Портфель Марковица</h2>
+          <p><strong>Связь:</strong> <a href="../lectures/topic-32.html">Тема 3.2</a></p>
+          <div class="box box-example">
+            <div class="box-title">Задание 3.1 — Эффективная граница</div>
+            <p>Создать модель портфеля из 2 акций (Лукойл + Сбербанк). Построить множество возможных портфелей при разных весах (от 0% до 100% с шагом 5%). Отобразить на графике «риск–доходность».</p>
+            <p>Функции: <code>СРЗНАЧ</code>, <code>СТАНДОТКЛОН</code>, <code>КОВАРИАЦИЯ</code>, <code>КОРРЕЛ</code></p>
+            <p style="margin-bottom:0;">Использовать <strong>«Поиск решения»</strong> (Solver) для нахождения портфеля с минимальным риском.</p>
+          </div>
+
+          <h2>4. Расчёт WACC</h2>
+          <p><strong>Связь:</strong> <a href="../lectures/topic-42.html">Тема 4.2</a> | <a href="wacc-calculator.html">Калькулятор WACC</a></p>
+          <div class="box box-example">
+            <div class="box-title">Задание 4.1 — WACC для 3 компаний</div>
+            <p>Создать таблицу для расчёта WACC трёх компаний (Лукойл, Газпром, Сбербанк). Визуализировать структуру капитала диаграммами. Провести анализ чувствительности: как WACC меняется при изменении доли долга от 0% до 80%.</p>
+            <p style="margin-bottom:0;">Построить <strong>U-образную кривую WACC</strong> и определить оптимальную структуру.</p>
+          </div>
+
+          <h2>5. Финансовый анализ</h2>
+          <p><strong>Связь:</strong> <a href="../lectures/topic-71.html">Тема 7.1</a></p>
+          <div class="box box-example">
+            <div class="box-title">Задание 5.1 — Dashboard коэффициентов</div>
+            <p>Импортировать данные финансовой отчётности компании. Рассчитать 15 коэффициентов (ликвидность, рентабельность, деловая активность, финансовая устойчивость). Построить формулу Дюпона (5-факторная). Рассчитать Z-score Альтмана.</p>
+            <p style="margin-bottom:0;">Создать <strong>визуальный dashboard</strong> с условным форматированием (красный/жёлтый/зелёный).</p>
+          </div>
+
+          <h2>6. Оценка бизнеса методом DCF</h2>
+          <p><strong>Связь:</strong> <a href="../lectures/topic-61.html">Тема 6.1</a></p>
+          <div class="box box-example">
+            <div class="box-title">Задание 6.1 — DCF-модель</div>
+            <p>Построить полную DCF-модель: прогноз выручки (5 лет), расчёт FCFF, терминальная стоимость (модель Гордона), дисконтирование. Анализ чувствительности: таблица данных (WACC × темп роста g).</p>
+            <p style="margin-bottom:0;">Функции: <code>ТДАТА</code>, <code>ЧПС</code>, формулы массива, <strong>«Таблица данных»</strong> (Data Table).</p>
+          </div>
+
+          <h2>7. Финансовое планирование</h2>
+          <p><strong>Связь:</strong> <a href="../lectures/topic-52.html">Тема 5.2</a></p>
+          <div class="box box-example">
+            <div class="box-title">Задание 7.1 — Бюджет денежных средств</div>
+            <p>Составить помесячный бюджет денежных средств на 12 месяцев. Определить месяцы дефицита/профицита. Рассчитать оптимальный остаток по модели Баумоля. Визуализировать: график баланса + пороговые значения.</p>
+            <p style="margin-bottom:0;">$$C^* = \sqrt{\frac{2FT}{k}}$$</p>
+          </div>
+
+          <div class="box box-info">
+            <div class="box-title">Рекомендации</div>
+            <ul>
+              <li>Используйте <strong>именованные диапазоны</strong> вместо адресов ячеек — модель будет читаемой</li>
+              <li>Каждый практикум — <strong>отдельный лист</strong> в рабочей книге</li>
+              <li>Исходные данные — в отдельных ячейках с подписями, <strong>не хардкод</strong> в формулах</li>
+              <li>Все графики должны иметь <strong>заголовки, подписи осей, легенду</strong></li>
+            </ul>
+          </div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+  <div id="site-footer"></div>
+  <script src="../js/components.js"></script>
+  <script src="../js/app.js"></script>
+</body>
+</html>
