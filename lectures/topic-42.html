@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тема 4.2: WACC — Корпоративные финансы</title>
+  <meta name="description" content="Средневзвешенная стоимость капитала (WACC): формулы, расчёт на примере ПАО «Лукойл», оптимизация структуры капитала.">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Тема 4.2: WACC — Средневзвешенная стоимость капитала">
+  <meta property="og:description" content="Формулы, расчёт WACC, налоговый щит, пример ПАО «Лукойл», оптимизация структуры капитала.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/layout.css">
+
+  <!-- KaTeX (only on pages with formulas) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+
+  <!-- Chart.js (only on pages with charts) -->
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body data-page="lectures/topic-42" data-depth="1">
+
+  <div id="site-nav"></div>
+
+  <main id="main-content">
+
+    <!-- Lecture Header -->
+    <section class="hero hero-compact" aria-label="Заголовок лекции">
+      <div class="hero-glow hero-glow-primary" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-badge">Тема 4.2 &bull; 2 ч. лекция + 4 ч. практика &bull; ОПК-4, ОПК-5</div>
+        <h1>
+          Средневзвешенная стоимость капитала<br>
+          <span class="highlight">(WACC)</span>
+        </h1>
+        <p class="hero-subtitle">Оптимизация структуры капитала и принятие инвестиционных решений</p>
+      </div>
+    </section>
+
+    <!-- Lecture Content -->
+    <section class="section" aria-label="Содержание лекции">
+      <div class="container">
+        <div class="lecture-content">
+
+          <!-- Motivational intro -->
+          <div class="box box-example">
+            <div class="box-title">Проблемный вопрос</div>
+            <p>
+              Представьте: вы финансовый директор. Перед вами два проекта. Первый обещает 12% доходности, второй — 18%.
+              <strong>Какой выбрать?</strong>
+            </p>
+            <p style="color: var(--color-text-muted); margin-top: var(--space-2); margin-bottom: 0;">
+              Ответ невозможен без знания <em>стоимости капитала</em> компании. Если деньги обходятся в 15% — первый проект убыточен, а второй прибылен. Именно это и есть WACC.
+            </p>
+          </div>
+
+          <!-- Block 1 -->
+          <h2>1. Понятие стоимости капитала</h2>
+
+          <p>
+            <strong>Стоимость капитала (Cost of Capital)</strong> — ставка доходности, которую требуют поставщики капитала
+            (акционеры и кредиторы) за предоставление финансовых ресурсов компании.
+          </p>
+
+          <div class="box box-key">
+            <div class="box-title">Ключевые функции</div>
+            <ul>
+              <li><strong>Ставка отсечения (hurdle rate)</strong> — проекты с доходностью ниже стоимости капитала отклоняются</li>
+              <li><strong>Ставка дисконтирования</strong> — используется при расчёте NPV инвестиционных проектов</li>
+              <li><strong>Критерий оптимальности</strong> — минимизация стоимости капитала максимизирует стоимость компании</li>
+            </ul>
+          </div>
+
+          <!-- Block 2 -->
+          <h2>2. Источники капитала и их стоимость</h2>
+
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Источник</th>
+                  <th>Форма привлечения</th>
+                  <th>Обозначение</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><strong>Заёмный капитал</strong> (Debt)</td>
+                  <td>Кредиты, облигации</td>
+                  <td class="num">$k_d$</td>
+                </tr>
+                <tr>
+                  <td><strong>Привилегированные акции</strong></td>
+                  <td>Фиксированные дивиденды</td>
+                  <td class="num">$k_p$</td>
+                </tr>
+                <tr>
+                  <td><strong>Собственный капитал</strong> (Equity)</td>
+                  <td>Обыкновенные акции, нераспр. прибыль</td>
+                  <td class="num">$k_e$</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h3>2.1. Стоимость заёмного капитала ($k_d$)</h3>
+
+          <p>Заёмный капитал — самый дешёвый источник по двум причинам:</p>
+          <ol>
+            <li><strong>Приоритет в выплатах</strong> — кредиторы получают проценты до акционеров, что снижает их риск</li>
+            <li><strong>Налоговый щит (Tax Shield)</strong> — процентные платежи уменьшают налогооблагаемую прибыль</li>
+          </ol>
+
+          <div class="box box-formula">
+            <div class="box-title">Формула</div>
+            <p>Стоимость заёмного капитала после налогов:</p>
+            $$k_d^{\text{после}} = k_d^{\text{до}} \times (1 - T)$$
+            <p style="margin-bottom: 0;">где $T$ — ставка налога на прибыль.</p>
+          </div>
+
+          <div class="box box-warning">
+            <div class="box-title">Актуальные данные</div>
+            <p style="margin-bottom: 0;">
+              С 01.01.2025 г. базовая ставка налога на прибыль в России повышена с 20% до <strong>25%</strong>
+              (ФЗ от 12.07.2024 № 176-ФЗ). Это увеличивает налоговый щит и делает заёмный капитал ещё дешевле.
+            </p>
+          </div>
+
+          <div class="box box-example">
+            <div class="box-title">Пример расчёта</div>
+            <p>Ставка по кредиту 16%, налог на прибыль 25%:</p>
+            $$k_d = 16\% \times (1 - 0{,}25) = 16\% \times 0{,}75 = 12{,}0\%$$
+            <p>Для сравнения, при старой ставке 20%:</p>
+            $$k_d = 16\% \times (1 - 0{,}20) = 16\% \times 0{,}80 = 12{,}8\%$$
+            <p style="margin-bottom: 0;">Экономия: <strong>0,8 п.п.</strong> на каждый рубль долга.</p>
+          </div>
+
+          <!-- Block 3: WACC Formula -->
+          <h2>3. Формула WACC</h2>
+
+          <p>
+            <strong>WACC (Weighted Average Cost of Capital)</strong> — средневзвешенная стоимость капитала,
+            рассчитывается как взвешенная сумма стоимостей каждого источника:
+          </p>
+
+          <div class="box box-formula">
+            <div class="box-title">Формула WACC</div>
+            $$WACC = w_e \cdot k_e + w_d \cdot k_d \cdot (1 - T) + w_p \cdot k_p$$
+            <p style="margin-top: var(--space-3); margin-bottom: 0;">
+              где $w_e$, $w_d$, $w_p$ — доли собственного, заёмного и привилегированного капитала в общей структуре
+              ($w_e + w_d + w_p = 1$).
+            </p>
+          </div>
+
+          <!-- Block 4: Example with chart -->
+          <h2>4. Пример: WACC ПАО «Лукойл» (2024)</h2>
+
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Параметр</th>
+                  <th>Значение</th>
+                  <th>Источник</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>Доля собственного капитала ($w_e$)</td><td class="num">78%</td><td>МСФО 2024</td></tr>
+                <tr><td>Доля заёмного капитала ($w_d$)</td><td class="num">22%</td><td>МСФО 2024</td></tr>
+                <tr><td>Стоимость собственного капитала ($k_e$)</td><td class="num">18,5%</td><td>CAPM</td></tr>
+                <tr><td>Стоимость заёмного капитала ($k_d$)</td><td class="num">15,0%</td><td>Ставка ЦБ + спред</td></tr>
+                <tr><td>Ставка налога ($T$)</td><td class="num">25%</td><td>НК РФ с 2025</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="box box-formula">
+            <div class="box-title">Расчёт</div>
+            $$WACC = 0{,}78 \times 18{,}5\% + 0{,}22 \times 15{,}0\% \times (1 - 0{,}25)$$
+            $$= 14{,}43\% + 2{,}48\% = \mathbf{16{,}91\%}$$
+          </div>
+
+          <!-- Chart: Capital Structure -->
+          <h3>Структура капитала ПАО «Лукойл»</h3>
+          <div class="chart-box">
+            <canvas id="capitalChart" aria-label="Диаграмма структуры капитала Лукойл: 78% собственный, 22% заёмный" role="img"></canvas>
+          </div>
+
+          <!-- Questions -->
+          <h2>Контрольные вопросы</h2>
+
+          <details class="question-card">
+            <summary>Почему заёмный капитал дешевле собственного?</summary>
+            <div class="answer">
+              <p>По двум причинам: (1) кредиторы имеют приоритет в выплатах, что снижает их риск и,
+              соответственно, требуемую доходность; (2) процентные платежи формируют налоговый щит —
+              уменьшают налогооблагаемую прибыль, что снижает эффективную стоимость долга.</p>
+            </div>
+          </details>
+
+          <details class="question-card">
+            <summary>Как повышение ставки налога на прибыль влияет на WACC?</summary>
+            <div class="answer">
+              <p>Повышение ставки налога с 20% до 25% увеличивает налоговый щит (множитель $(1-T)$ уменьшается),
+              что снижает посленалоговую стоимость заёмного капитала. При прочих равных WACC снижается,
+              делая больше инвестиционных проектов привлекательными.</p>
+            </div>
+          </details>
+
+          <details class="question-card">
+            <summary>Что произойдёт с WACC, если компания увеличит долю долга?</summary>
+            <div class="answer">
+              <p>До определённого момента WACC будет снижаться (из-за более дешёвого долга с налоговым щитом).
+              Однако при чрезмерном увеличении долга растёт финансовый риск, что повышает как $k_e$
+              (акционеры требуют большую компенсацию), так и $k_d$ (кредиторы повышают ставки).
+              В итоге WACC начинает расти — это U-образная кривая оптимальной структуры капитала.</p>
+            </div>
+          </details>
+
+          <!-- Lecture Navigation -->
+          <nav class="nav-lecture" aria-label="Навигация по лекциям">
+            <a href="topic-41.html">
+              <span class="nav-label">&larr; Предыдущая</span>
+              <span class="nav-title">4.1 Структура капитала</span>
+            </a>
+            <a href="topic-51.html">
+              <span class="nav-label">Следующая &rarr;</span>
+              <span class="nav-title">5.1 Дивидендная политика</span>
+            </a>
+          </nav>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="../js/components.js"></script>
+  <script src="../js/app.js"></script>
+
+  <!-- Chart initialization -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const ctx = document.getElementById('capitalChart');
+      if (ctx && typeof Chart !== 'undefined') {
+        new Chart(ctx, {
+          type: 'doughnut',
+          data: {
+            labels: ['Собственный капитал (78%)', 'Заёмный капитал (22%)'],
+            datasets: [{
+              data: [78, 22],
+              backgroundColor: ['#1d4ed8', '#b45309'],
+              borderWidth: 0,
+              hoverOffset: 8
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            cutout: '55%',
+            plugins: {
+              legend: {
+                position: 'bottom',
+                labels: {
+                  padding: 20,
+                  usePointStyle: true,
+                  pointStyleWidth: 12,
+                  font: { family: 'Inter, sans-serif', size: 13 }
+                }
+              }
+            }
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

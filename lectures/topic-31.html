@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тема 3.1: NPV, IRR, PI, DPP — Корпоративные финансы</title>
+  <meta name="description" content="Оценка инвестиционных проектов: NPV, IRR, PI, DPP. Денежные потоки, правила принятия решений, примеры расчётов.">
+  <meta property="og:title" content="Тема 3.1: NPV, IRR, PI, DPP — Оценка инвестиционных проектов">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+</head>
+<body data-page="lectures/topic-31" data-depth="1">
+  <div id="site-nav"></div>
+  <main id="main-content">
+    <section class="hero hero-compact">
+      <div class="hero-glow hero-glow-primary" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-badge">Тема 3.1 &bull; 2 ч. лекция + 6 ч. практика &bull; УК-2, ОПК-4</div>
+        <h1>Оценка инвестиционных проектов:<br><span class="highlight">NPV, IRR, PI, DPP</span></h1>
+        <p class="hero-subtitle">Методы оценки, правила принятия решений, профиль NPV</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="lecture-content">
+
+          <div class="box box-example">
+            <div class="box-title">Проблемный вопрос</div>
+            <p>Компания может вложить 100 млн руб. в модернизацию завода. Ожидаемые потоки — 30 млн/год в течение 5 лет. Стоит ли инвестировать? Какой метод оценки даст правильный ответ?</p>
+          </div>
+
+          <h2>1. Инвестиционный процесс</h2>
+          <p><strong>Capital Budgeting</strong> — решения о вложении капитала в долгосрочные активы. Они определяют будущую стоимость компании, связывают значительные ресурсы и в большинстве случаев необратимы.</p>
+
+          <h2>2. Денежные потоки проекта</h2>
+          <p>Используются <strong>приростные (инкрементальные) потоки</strong> — разница между потоками с проектом и без.</p>
+          <div class="box box-key">
+            <div class="box-title">Правила формирования потоков</div>
+            <ol>
+              <li>Учитывать только приростные потоки</li>
+              <li>Учитывать альтернативные издержки (opportunity cost)</li>
+              <li><strong>Не учитывать</strong> невозвратные затраты (sunk costs)</li>
+              <li>Учитывать побочные эффекты (каннибализация, синергия)</li>
+              <li>Учитывать изменения в оборотном капитале</li>
+            </ol>
+          </div>
+
+          <h2>3. Метод NPV</h2>
+          <div class="box box-formula">
+            <div class="box-title">Чистая приведённая стоимость (Net Present Value)</div>
+            $$NPV = \sum_{t=1}^{n} \frac{CF_t}{(1 + r)^t} - IC$$
+          </div>
+          <div class="box box-key">
+            <div class="box-title">Правило NPV</div>
+            <ul>
+              <li>$NPV > 0$ → проект создаёт стоимость → <strong>принять</strong></li>
+              <li>$NPV < 0$ → проект разрушает стоимость → <strong>отклонить</strong></li>
+              <li>$NPV = 0$ → проект безразличен</li>
+            </ul>
+          </div>
+          <p>NPV — <strong>главный критерий</strong>. При конфликте с IRR приоритет всегда у NPV. Достоинства: учитывает TVM, показывает абсолютный прирост стоимости, аддитивен.</p>
+
+          <h2>4. Метод IRR</h2>
+          <div class="box box-formula">
+            <div class="box-title">Внутренняя норма доходности (Internal Rate of Return)</div>
+            $$\sum_{t=1}^{n} \frac{CF_t}{(1 + IRR)^t} = IC$$
+            <p style="margin-bottom:0;">IRR — ставка, при которой NPV = 0. Правило: $IRR > WACC$ → принять.</p>
+          </div>
+          <div class="box box-formula">
+            <div class="box-title">Линейная интерполяция</div>
+            $$IRR \approx r_1 + \frac{NPV_1}{NPV_1 - NPV_2} \times (r_2 - r_1)$$
+          </div>
+          <div class="box box-warning">
+            <div class="box-title">Ограничения IRR</div>
+            <ul>
+              <li>Может давать несколько значений при нестандартных потоках</li>
+              <li>При взаимоисключающих проектах может конфликтовать с NPV</li>
+              <li>Не учитывает масштаб проекта</li>
+            </ul>
+          </div>
+
+          <h2>5. Индекс рентабельности (PI)</h2>
+          <div class="box box-formula">
+            <div class="box-title">Profitability Index</div>
+            $$PI = \frac{PV_{\text{притоков}}}{IC}$$
+            <p style="margin-bottom:0;">$PI > 1$ → принять, $PI < 1$ → отклонить. Полезен при рационировании капитала.</p>
+          </div>
+
+          <h2>6. Дисконтированный срок окупаемости (DPP)</h2>
+          <div class="box box-formula">
+            <div class="box-title">Discounted Payback Period</div>
+            <p>DPP — момент, когда кумулятивные дисконтированные потоки становятся положительными.</p>
+            $$DPP = n^* + \frac{|\text{кумулятивный DCF}_{n^*}|}{\text{DCF}_{n^*+1}}$$
+          </div>
+
+          <h2>7. Сравнительная таблица методов</h2>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Метод</th><th>Критерий</th><th>Достоинства</th><th>Недостатки</th></tr></thead>
+              <tbody>
+                <tr><td><strong>NPV</strong></td><td>NPV &gt; 0</td><td>Учитывает TVM, абсолютный прирост, аддитивен</td><td>Не показывает относительную эффективность</td></tr>
+                <tr><td><strong>IRR</strong></td><td>IRR &gt; WACC</td><td>Интуитивно понятен, %-ная доходность</td><td>Множественные значения, конфликт с NPV</td></tr>
+                <tr><td><strong>PI</strong></td><td>PI &gt; 1</td><td>Относительный показатель, рационирование</td><td>Не учитывает масштаб</td></tr>
+                <tr><td><strong>DPP</strong></td><td>DPP &lt; срок</td><td>Учитывает TVM и ликвидность</td><td>Игнорирует потоки после окупаемости</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>Контрольные вопросы</h2>
+          <details class="question-card">
+            <summary>Почему NPV считается главным критерием оценки проектов?</summary>
+            <div class="answer"><p>NPV напрямую показывает прирост стоимости компании, учитывает TVM, обладает свойством аддитивности и не имеет проблем с множественностью значений (как IRR). При конфликте NPV и IRR всегда следует выбирать по NPV.</p></div>
+          </details>
+          <details class="question-card">
+            <summary>Когда IRR может дать неверный ответ?</summary>
+            <div class="answer"><p>1) При нестандартных потоках (несколько смен знака) — множественные IRR. 2) При сравнении взаимоисключающих проектов разного масштаба — IRR не учитывает абсолютную величину. 3) При различной структуре потоков — пересечение Фишера.</p></div>
+          </details>
+          <details class="question-card">
+            <summary>Что такое невозвратные затраты и почему их не учитывают?</summary>
+            <div class="answer"><p>Sunk costs — затраты, которые уже произведены и не могут быть возвращены (например, маркетинговое исследование до начала проекта). Их не включают в анализ, т.к. они не зависят от решения принять/отклонить проект.</p></div>
+          </details>
+
+          <nav class="nav-lecture" aria-label="Навигация по лекциям">
+            <a href="topic-22.html"><span class="nav-label">&larr; Предыдущая</span><span class="nav-title">2.2 Модель CAPM</span></a>
+            <a href="topic-32.html"><span class="nav-label">Следующая &rarr;</span><span class="nav-title">3.2 Портфельный анализ</span></a>
+          </nav>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div id="site-footer"></div>
+  <script src="../js/components.js"></script>
+  <script src="../js/app.js"></script>
+</body>
+</html>

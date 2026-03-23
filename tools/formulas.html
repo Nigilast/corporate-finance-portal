@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Формульный справочник — Корпоративные финансы</title>
+  <meta name="description" content="29 ключевых формул курса: PV, FV, NPV, IRR, WACC, CAPM, DuPont, Альтман Z-score и другие.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+</head>
+<body data-page="tools/formulas" data-depth="1">
+  <div id="site-nav"></div>
+  <main id="main-content">
+    <section class="hero hero-compact">
+      <div class="hero-glow hero-glow-primary" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-badge">Справочник &bull; 29 формул</div>
+        <h1>Формульный <span class="highlight">справочник</span></h1>
+        <p class="hero-subtitle">Все ключевые формулы курса в одном месте</p>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="lecture-content">
+
+          <h2>1. Временная стоимость денег</h2>
+          <div class="box box-formula"><div class="box-title">Наращение (FV)</div>$$FV = PV \times (1 + r)^n$$</div>
+          <div class="box box-formula"><div class="box-title">Дисконтирование (PV)</div>$$PV = \frac{FV}{(1 + r)^n}$$</div>
+          <div class="box box-formula"><div class="box-title">Аннуитет (PV)</div>$$PV_{\text{ann}} = PMT \times \frac{1 - (1+r)^{-n}}{r}$$</div>
+          <div class="box box-formula"><div class="box-title">Перпетуитет</div>$$PV = \frac{PMT}{r}$$</div>
+          <div class="box box-formula"><div class="box-title">Растущий перпетуитет (Гордон)</div>$$PV = \frac{PMT}{r - g}$$</div>
+          <div class="box box-formula"><div class="box-title">Формула Фишера</div>$$(1 + r_{\text{ном}}) = (1 + r_{\text{реал}}) \times (1 + \pi)$$</div>
+          <div class="box box-formula"><div class="box-title">EAR</div>$$EAR = \left(1 + \frac{r}{m}\right)^m - 1$$</div>
+
+          <h2>2. Риск и доходность</h2>
+          <div class="box box-formula"><div class="box-title">Ожидаемая доходность</div>$$E(r) = \sum_{i} p_i \times r_i$$</div>
+          <div class="box box-formula"><div class="box-title">Дисперсия</div>$$\sigma^2 = \sum_{i} p_i \times (r_i - E(r))^2$$</div>
+          <div class="box box-formula"><div class="box-title">Риск портфеля (2 актива)</div>$$\sigma_p = \sqrt{w_1^2\sigma_1^2 + w_2^2\sigma_2^2 + 2w_1w_2\sigma_1\sigma_2\rho_{12}}$$</div>
+          <div class="box box-formula"><div class="box-title">CAPM</div>$$k_e = r_f + \beta \times (r_m - r_f)$$</div>
+          <div class="box box-formula"><div class="box-title">Бета-коэффициент</div>$$\beta_i = \frac{Cov(r_i, r_m)}{\sigma_m^2}$$</div>
+          <div class="box box-formula"><div class="box-title">Коэффициент Шарпа</div>$$S = \frac{E(r_p) - r_f}{\sigma_p}$$</div>
+
+          <h2>3. Инвестиционные решения</h2>
+          <div class="box box-formula"><div class="box-title">NPV</div>$$NPV = \sum_{t=0}^{n} \frac{CF_t}{(1 + r)^t}$$</div>
+          <div class="box box-formula"><div class="box-title">IRR</div>$$\sum_{t=0}^{n} \frac{CF_t}{(1 + IRR)^t} = 0$$</div>
+          <div class="box box-formula"><div class="box-title">PI</div>$$PI = \frac{PV_{\text{притоков}}}{IC}$$</div>
+
+          <h2>4. Структура капитала</h2>
+          <div class="box box-formula"><div class="box-title">WACC</div>$$WACC = w_e \cdot k_e + w_d \cdot k_d \cdot (1-T) + w_p \cdot k_p$$</div>
+          <div class="box box-formula"><div class="box-title">Стоимость долга (после налогов)</div>$$k_d^{\text{после}} = k_d^{\text{до}} \times (1-T)$$</div>
+          <div class="box box-formula"><div class="box-title">Налоговый щит</div>$$TS = D \times r_d \times T$$</div>
+          <div class="box box-formula"><div class="box-title">ММ II (с налогами)</div>$$k_e = k_0 + (k_0 - k_d) \times \frac{D}{E} \times (1-T)$$</div>
+          <div class="box box-formula"><div class="box-title">Формула Хамады</div>$$\beta_L = \beta_U \times \left(1 + (1-T) \times \frac{D}{E}\right)$$</div>
+
+          <h2>5. Рентабельность</h2>
+          <div class="box box-formula"><div class="box-title">ROE</div>$$ROE = \frac{\text{Чистая прибыль}}{\text{Собственный капитал}}$$</div>
+          <div class="box box-formula"><div class="box-title">Формула Дюпона (3-факторная)</div>$$ROE = \frac{NI}{Sales} \times \frac{Sales}{Assets} \times \frac{Assets}{Equity}$$</div>
+          <div class="box box-formula"><div class="box-title">EVA</div>$$EVA = NOPAT - WACC \times IC$$</div>
+
+          <h2>6. Оценка бизнеса</h2>
+          <div class="box box-formula"><div class="box-title">DCF (FCFF)</div>$$V = \sum_{t=1}^{n} \frac{FCFF_t}{(1+WACC)^t} + \frac{TV}{(1+WACC)^n}$$</div>
+          <div class="box box-formula"><div class="box-title">Терминальная стоимость</div>$$TV = \frac{FCFF_{n+1}}{WACC - g}$$</div>
+          <div class="box box-formula"><div class="box-title">FCFF</div>$$FCFF = EBIT(1-T) + DA - CAPEX - \Delta WC$$</div>
+
+          <h2>7. Финансовый анализ</h2>
+          <div class="box box-formula"><div class="box-title">Z-score Альтмана</div>$$Z = 1{,}2X_1 + 1{,}4X_2 + 3{,}3X_3 + 0{,}6X_4 + 1{,}0X_5$$</div>
+
+        </div>
+      </div>
+    </section>
+  </main>
+  <div id="site-footer"></div>
+  <script src="../js/components.js"></script>
+  <script src="../js/app.js"></script>
+</body>
+</html>

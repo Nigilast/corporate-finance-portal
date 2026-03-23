@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Калькулятор CAPM — Корпоративные финансы</title>
+  <meta name="description" content="Интерактивный калькулятор CAPM с графиком SML. Рассчитайте требуемую доходность собственного капитала.">
+  <meta property="og:title" content="Калькулятор CAPM — Модель оценки капитальных активов">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body data-page="tools/capm-calculator" data-depth="1">
+  <div id="site-nav"></div>
+  <main id="main-content">
+    <section class="hero hero-compact">
+      <div class="hero-glow hero-glow-primary" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-badge">Интерактивный инструмент</div>
+        <h1>Калькулятор <span class="highlight">CAPM</span></h1>
+        <p class="hero-subtitle">Модель оценки капитальных активов и линия рынка ценных бумаг (SML)</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="box box-formula" style="max-width:var(--container-narrow);margin:0 auto var(--space-8);">
+          <div class="box-title">Формула CAPM</div>
+          $$k_e = r_f + \beta \times (r_m - r_f)$$
+        </div>
+
+        <div style="text-align:center;margin-bottom:var(--space-6);">
+          <span class="text-sm text-muted" style="margin-right:var(--space-2);">Пресеты:</span>
+          <div class="preset-group" style="display:inline-flex;">
+            <button class="preset-btn active" data-preset="lukoil">Лукойл</button>
+            <button class="preset-btn" data-preset="gazprom">Газпром</button>
+            <button class="preset-btn" data-preset="sberbank">Сбербанк</button>
+            <button class="preset-btn" data-preset="yandex">Яндекс</button>
+          </div>
+        </div>
+
+        <div class="calc-layout">
+          <div class="calc-panel">
+            <h3>Параметры</h3>
+            <div class="calc-field">
+              <label for="rf">Безрисковая ставка ($r_f$), % <span class="unit">(ОФЗ-10Y)</span></label>
+              <input type="number" id="rf" value="15.0" min="0" max="50" step="0.1">
+            </div>
+            <div class="calc-field">
+              <label for="rm">Ожидаемая доходность рынка ($r_m$), %</label>
+              <input type="number" id="rm" value="20.0" min="0" max="100" step="0.5">
+            </div>
+            <div class="calc-field">
+              <label for="beta">Бета-коэффициент ($\beta$)</label>
+              <input type="number" id="beta" value="0.70" min="-2" max="5" step="0.05">
+            </div>
+            <div class="calc-field">
+              <label for="crp">Страновая премия (CRP), % <span class="unit">опционально</span></label>
+              <input type="number" id="crp" value="0" min="0" max="20" step="0.5">
+            </div>
+            <button class="btn btn-primary" style="width:100%;margin-top:var(--space-4);" onclick="calculate()">Рассчитать k<sub>e</sub></button>
+          </div>
+
+          <div class="calc-panel">
+            <h3>Результаты</h3>
+            <div class="result-box">
+              <div class="result-row"><span class="result-label">Требуемая доходность (k<sub>e</sub>)</span><span class="result-value" id="resKe">—</span></div>
+              <div class="result-row"><span class="result-label">Рыночная премия (r<sub>m</sub> − r<sub>f</sub>)</span><span class="result-value" id="resMRP" style="font-size:var(--text-base);">—</span></div>
+              <div class="result-row"><span class="result-label">Премия за риск акции (β × MRP)</span><span class="result-value" id="resRP" style="font-size:var(--text-base);">—</span></div>
+            </div>
+            <div class="box box-info" id="interpBox" style="display:none;">
+              <div class="box-title">Интерпретация</div>
+              <p id="interpText" style="margin:0;"></p>
+            </div>
+            <div class="chart-box"><canvas id="smlChart" role="img" aria-label="Линия рынка ценных бумаг (SML)"></canvas></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div id="site-footer"></div>
+  <script src="../js/components.js"></script>
+  <script src="../js/app.js"></script>
+  <script>
+    const presets = {
+      lukoil: { rf: 15.0, rm: 20.0, beta: 0.70, crp: 0, name: 'ПАО «Лукойл»' },
+      gazprom: { rf: 15.0, rm: 20.0, beta: 0.55, crp: 0, name: 'ПАО «Газпром»' },
+      sberbank: { rf: 15.0, rm: 20.0, beta: 1.40, crp: 0, name: 'ПАО «Сбербанк»' },
+      yandex: { rf: 15.0, rm: 20.0, beta: 1.10, crp: 0, name: 'Яндекс' }
+    };
+    let chart = null;
+
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const p = presets[btn.dataset.preset];
+        document.getElementById('rf').value = p.rf;
+        document.getElementById('rm').value = p.rm;
+        document.getElementById('beta').value = p.beta;
+        document.getElementById('crp').value = p.crp;
+        calculate();
+      });
+    });
+
+    function calculate() {
+      const rf = parseFloat(document.getElementById('rf').value) / 100;
+      const rm = parseFloat(document.getElementById('rm').value) / 100;
+      const beta = parseFloat(document.getElementById('beta').value);
+      const crp = parseFloat(document.getElementById('crp').value) / 100;
+      const mrp = rm - rf;
+      const rp = beta * mrp;
+      const ke = rf + rp + crp;
+
+      document.getElementById('resKe').textContent = (ke * 100).toFixed(2) + '%';
+      document.getElementById('resMRP').textContent = (mrp * 100).toFixed(2) + '%';
+      document.getElementById('resRP').textContent = (rp * 100).toFixed(2) + '%';
+
+      const iBox = document.getElementById('interpBox');
+      const iText = document.getElementById('interpText');
+      iBox.style.display = 'block';
+      if (beta < 1) {
+        iText.textContent = 'β = ' + beta.toFixed(2) + ' < 1 — акция менее волатильна, чем рынок. Требуемая доходность ' + (ke*100).toFixed(1) + '% ниже рыночной (' + (rm*100).toFixed(1) + '%).';
+      } else if (beta > 1) {
+        iText.textContent = 'β = ' + beta.toFixed(2) + ' > 1 — акция более волатильна, чем рынок. Требуемая доходность ' + (ke*100).toFixed(1) + '% выше рыночной (' + (rm*100).toFixed(1) + '%).';
+      } else {
+        iText.textContent = 'β ≈ 1 — акция движется в среднем как рынок. Требуемая доходность ≈ рыночной.';
+      }
+
+      drawSML(rf, rm, beta, ke);
+    }
+
+    function drawSML(rf, rm, beta, ke) {
+      if (typeof Chart === 'undefined') return;
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const mrp = rm - rf;
+      // SML line points
+      const smlBetas = [0, 0.5, 1.0, 1.5, 2.0];
+      const smlReturns = smlBetas.map(b => (rf + b * mrp) * 100);
+
+      if (chart) chart.destroy();
+      chart = new Chart(document.getElementById('smlChart'), {
+        type: 'scatter',
+        data: {
+          datasets: [
+            {
+              label: 'SML',
+              data: smlBetas.map((b, i) => ({ x: b, y: smlReturns[i] })),
+              borderColor: '#1d4ed8',
+              backgroundColor: 'transparent',
+              showLine: true,
+              borderWidth: 2,
+              pointRadius: 0,
+              tension: 0
+            },
+            {
+              label: 'Акция',
+              data: [{ x: beta, y: ke * 100 }],
+              backgroundColor: '#b45309',
+              borderColor: '#b45309',
+              pointRadius: 8,
+              pointStyle: 'star'
+            },
+            {
+              label: 'Рынок (β=1)',
+              data: [{ x: 1, y: rm * 100 }],
+              backgroundColor: '#15803d',
+              borderColor: '#15803d',
+              pointRadius: 6
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            title: { display: true, text: 'Линия рынка ценных бумаг (SML)', font: { family: 'Inter', size: 14, weight: '600' }, color: isDark ? '#d6d3d1' : '#44403c' },
+            legend: { position: 'bottom', labels: { usePointStyle: true, font: { family: 'Inter', size: 12 }, color: isDark ? '#a8a29e' : '#78716c' } }
+          },
+          scales: {
+            x: { title: { display: true, text: 'β (бета)', font: { family: 'Inter' }, color: isDark ? '#a8a29e' : '#78716c' }, min: 0, max: 2.2, ticks: { font: { family: 'Inter', size: 11 }, color: isDark ? '#a8a29e' : '#78716c' }, grid: { color: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)' } },
+            y: { title: { display: true, text: 'Доходность, %', font: { family: 'Inter' }, color: isDark ? '#a8a29e' : '#78716c' }, ticks: { callback: v => v + '%', font: { family: 'Inter', size: 11 }, color: isDark ? '#a8a29e' : '#78716c' }, grid: { color: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)' } }
+          }
+        }
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', calculate);
+  </script>
+</body>
+</html>

@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тема 1.2: Временная стоимость денег — Корпоративные финансы</title>
+  <meta name="description" content="Временная стоимость денег: наращение, дисконтирование, аннуитеты, перпетуитет, формула Фишера, оценка облигаций.">
+  <meta property="og:title" content="Тема 1.2: Временная стоимость денег">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+</head>
+<body data-page="lectures/topic-12" data-depth="1">
+  <div id="site-nav"></div>
+  <main id="main-content">
+    <section class="hero hero-compact">
+      <div class="hero-glow hero-glow-primary" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-badge">Тема 1.2 &bull; 2 ч. лекция + 4 ч. практика &bull; УК-1, ОПК-2</div>
+        <h1>Временная стоимость<br><span class="highlight">денег</span></h1>
+        <p class="hero-subtitle">Дисконтирование, наращение, аннуитеты, формула Фишера</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="lecture-content">
+
+          <div class="box box-example">
+            <div class="box-title">Проблемный вопрос</div>
+            <p>Что лучше: получить 1 000 000 рублей сегодня или 1 500 000 через 5 лет? Ответ зависит от ставки — и именно эту задачу решает концепция временной стоимости денег.</p>
+          </div>
+
+          <h2>1. Концепция временной стоимости денег</h2>
+          <p><strong>Time Value of Money (TVM)</strong> — рубль сегодня стоит больше, чем рубль в будущем. Причины:</p>
+          <div class="box box-key">
+            <div class="box-title">4 причины TVM</div>
+            <ol>
+              <li><strong>Возможность инвестирования</strong> — сегодняшний рубль можно вложить и получить доход</li>
+              <li><strong>Инфляция</strong> — покупательная способность снижается со временем</li>
+              <li><strong>Риск</strong> — будущие поступления не гарантированы</li>
+              <li><strong>Предпочтение ликвидности</strong> — люди предпочитают деньги сейчас</li>
+            </ol>
+          </div>
+
+          <h2>2. Простые и сложные проценты</h2>
+          <div class="box box-formula">
+            <div class="box-title">Простые проценты</div>
+            $$FV = PV \times (1 + r \times n)$$
+          </div>
+          <div class="box box-formula">
+            <div class="box-title">Сложные проценты</div>
+            $$FV = PV \times (1 + r)^n$$
+          </div>
+          <div class="box box-example">
+            <div class="box-title">Пример</div>
+            <p>1 000 000 руб. под 10% на 20 лет:</p>
+            <ul>
+              <li>Простые: $1\,000\,000 \times (1 + 0{,}10 \times 20) = 3\,000\,000$ руб.</li>
+              <li>Сложные: $1\,000\,000 \times (1{,}10)^{20} = 6\,727\,500$ руб. (<strong>в 2,2 раза больше!</strong>)</li>
+            </ul>
+          </div>
+
+          <h2>3. Наращение и дисконтирование</h2>
+          <div class="box box-formula">
+            <div class="box-title">Наращение (Compounding)</div>
+            $$FV = PV \times (1 + r)^n$$
+            <p style="margin-bottom:0;">Определение будущей стоимости текущих денег.</p>
+          </div>
+          <div class="box box-formula">
+            <div class="box-title">Дисконтирование (Discounting)</div>
+            $$PV = \frac{FV}{(1 + r)^n}$$
+            <p style="margin-bottom:0;">Определение текущей стоимости будущих денег.</p>
+          </div>
+          <p>Множитель $(1 + r)^n$ — <strong>коэффициент наращения</strong>, $\frac{1}{(1 + r)^n}$ — <strong>коэффициент дисконтирования</strong>.</p>
+
+          <h2>4. Аннуитеты</h2>
+          <p><strong>Аннуитет (Annuity)</strong> — серия равных платежей через равные промежутки времени.</p>
+          <div class="box box-formula">
+            <div class="box-title">Обычный аннуитет (постнумерандо)</div>
+            $$PV_{\text{ann}} = PMT \times \frac{1 - (1 + r)^{-n}}{r}$$
+            $$FV_{\text{ann}} = PMT \times \frac{(1 + r)^n - 1}{r}$$
+          </div>
+          <div class="box box-formula">
+            <div class="box-title">Авансовый аннуитет (пренумерандо)</div>
+            $$PV_{\text{due}} = PV_{\text{ann}} \times (1 + r)$$
+          </div>
+          <p>Примеры аннуитетов: ипотечные платежи, арендная плата, купоны по облигациям.</p>
+
+          <h2>5. Перпетуитет</h2>
+          <div class="box box-formula">
+            <div class="box-title">Перпетуитет (бессрочный аннуитет)</div>
+            $$PV = \frac{PMT}{r}$$
+          </div>
+          <div class="box box-formula">
+            <div class="box-title">Растущий перпетуитет (модель Гордона)</div>
+            $$PV = \frac{PMT}{r - g}, \quad r > g$$
+          </div>
+
+          <h2>6. Номинальная и реальная ставки</h2>
+          <div class="box box-formula">
+            <div class="box-title">Формула Фишера</div>
+            $$(1 + r_{\text{ном}}) = (1 + r_{\text{реал}}) \times (1 + \pi)$$
+            <p style="margin-bottom:0;">Приближённо: $r_{\text{реал}} \approx r_{\text{ном}} - \pi$</p>
+          </div>
+          <div class="box box-example">
+            <div class="box-title">Пример</div>
+            <p>Номинальная ставка = 15%, инфляция = 7%:</p>
+            $$r_{\text{реал}} = \frac{1{,}15}{1{,}07} - 1 = 7{,}48\%$$
+            <p style="margin-bottom:0;">Приближённо: $15\% - 7\% = 8\%$ (погрешность ≈ 0,5 п.п.).</p>
+          </div>
+
+          <h2>7. Эффективная годовая ставка</h2>
+          <div class="box box-formula">
+            <div class="box-title">EAR</div>
+            $$EAR = \left(1 + \frac{r_{\text{ном}}}{m}\right)^m - 1$$
+            <p style="margin-bottom:0;">где $m$ — число начислений в год.</p>
+          </div>
+          <div class="box box-example">
+            <div class="box-title">Пример</div>
+            <p>Номинальная 12%, ежеквартально ($m = 4$):</p>
+            $$EAR = \left(1 + \frac{0{,}12}{4}\right)^4 - 1 = (1{,}03)^4 - 1 = 12{,}55\%$$
+          </div>
+
+          <h2>8. Оценка облигаций</h2>
+          <div class="box box-formula">
+            <div class="box-title">Стоимость купонной облигации</div>
+            $$P = C \times \frac{1 - (1 + r)^{-n}}{r} + \frac{N}{(1 + r)^n}$$
+            <p style="margin-bottom:0;">$C$ — купон, $N$ — номинал, $r$ — требуемая доходность, $n$ — число периодов.</p>
+          </div>
+
+          <h2>Контрольные вопросы</h2>
+          <details class="question-card">
+            <summary>Почему рубль сегодня стоит больше, чем рубль в будущем?</summary>
+            <div class="answer"><p>Из-за возможности инвестирования (альтернативная доходность), инфляции (снижение покупательной способности), риска (неопределённость будущих поступлений) и предпочтения ликвидности.</p></div>
+          </details>
+          <details class="question-card">
+            <summary>В чём разница между простыми и сложными процентами?</summary>
+            <div class="answer"><p>Простые проценты начисляются только на первоначальную сумму. Сложные — на сумму с ранее начисленными процентами («проценты на проценты»). На длинных горизонтах разница огромна благодаря экспоненциальному росту.</p></div>
+          </details>
+          <details class="question-card">
+            <summary>Что такое растущий перпетуитет и где он применяется?</summary>
+            <div class="answer"><p>Бессрочная серия платежей, растущих с постоянным темпом $g$. PV = PMT/(r−g). Основа модели Гордона для оценки акций: цена акции = ожидаемый дивиденд / (требуемая доходность − темп роста).</p></div>
+          </details>
+
+          <nav class="nav-lecture" aria-label="Навигация по лекциям">
+            <a href="topic-11.html"><span class="nav-label">&larr; Предыдущая</span><span class="nav-title">1.1 Введение в корп. финансы</span></a>
+            <a href="topic-21.html"><span class="nav-label">Следующая &rarr;</span><span class="nav-title">2.1 Риск и доходность</span></a>
+          </nav>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div id="site-footer"></div>
+  <script src="../js/components.js"></script>
+  <script src="../js/app.js"></script>
+</body>
+</html>

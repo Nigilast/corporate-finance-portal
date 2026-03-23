@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тема 7.1: Финансовый анализ — Корпоративные финансы</title>
+  <meta name="description" content="Коэффициентный анализ, формула Дюпона (5-факторная), модель Альтмана Z-score, диагностика банкротства.">
+  <meta property="og:title" content="Тема 7.1: Финансовый анализ — коэффициенты, DuPont, Альтман">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+</head>
+<body data-page="lectures/topic-71" data-depth="1">
+  <div id="site-nav"></div>
+  <main id="main-content">
+    <section class="hero hero-compact">
+      <div class="hero-glow hero-glow-primary" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-badge">Тема 7.1 &bull; 2 ч. лекция + 4 ч. практика &bull; ОПК-2, ОПК-3</div>
+        <h1>Финансовый<br><span class="highlight">анализ</span></h1>
+        <p class="hero-subtitle">Коэффициентный анализ, формула Дюпона, модель Альтмана (Z-score)</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="lecture-content">
+
+          <div class="box box-example">
+            <div class="box-title">Проблемный вопрос</div>
+            <p>Как за 15 минут определить, здорова ли компания финансово? Какие 5 коэффициентов расскажут больше, чем 100 страниц отчётности?</p>
+          </div>
+
+          <h2>1. Группы финансовых коэффициентов</h2>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Группа</th><th>Что измеряет</th><th>Ключевые коэффициенты</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Ликвидность</strong></td><td>Способность платить по краткосрочным обязательствам</td><td>Current Ratio, Quick Ratio</td></tr>
+                <tr><td><strong>Рентабельность</strong></td><td>Эффективность генерации прибыли</td><td>ROE, ROA, ROS, ROIC</td></tr>
+                <tr><td><strong>Деловая активность</strong></td><td>Скорость оборота активов</td><td>Оборачиваемость активов, запасов, дебиторки</td></tr>
+                <tr><td><strong>Финансовая устойчивость</strong></td><td>Структура капитала и долговая нагрузка</td><td>D/E, Interest Coverage, Net Debt/EBITDA</td></tr>
+                <tr><td><strong>Рыночные</strong></td><td>Оценка инвесторами</td><td>P/E, P/BV, EV/EBITDA, дивидендная доходность</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>2. Ключевые формулы</h2>
+          <div class="box box-formula">
+            <div class="box-title">Ликвидность</div>
+            $$\text{Current Ratio} = \frac{\text{Оборотные активы}}{\text{Краткосрочные обязательства}}$$
+            $$\text{Quick Ratio} = \frac{\text{Оборотные активы} - \text{Запасы}}{\text{Краткосрочные обязательства}}$$
+          </div>
+          <div class="box box-formula">
+            <div class="box-title">Рентабельность</div>
+            $$ROE = \frac{\text{Чистая прибыль}}{\text{Собственный капитал}}$$
+            $$ROIC = \frac{NOPAT}{\text{Инвестированный капитал}}$$
+          </div>
+          <div class="box box-formula">
+            <div class="box-title">Финансовая устойчивость</div>
+            $$\text{Interest Coverage} = \frac{EBIT}{\text{Процентные расходы}}$$
+            $$\text{Net Debt/EBITDA} = \frac{\text{Долг} - \text{Денежные средства}}{EBITDA}$$
+          </div>
+
+          <h2>3. Формула Дюпона (5-факторная)</h2>
+          <div class="box box-formula">
+            <div class="box-title">5-факторная модель DuPont</div>
+            $$ROE = \frac{NI}{EBT} \times \frac{EBT}{EBIT} \times \frac{EBIT}{Sales} \times \frac{Sales}{Assets} \times \frac{Assets}{Equity}$$
+            <p style="margin-bottom:0;">= Налоговое бремя × Процентное бремя × Операционная маржа × Оборачиваемость × Леверидж</p>
+          </div>
+
+          <div class="box box-key">
+            <div class="box-title">Практическая ценность DuPont</div>
+            <p style="margin-bottom:0;">Позволяет определить <strong>источник</strong> высокого/низкого ROE. Например: высокий ROE банка = леверидж (7–10x), а ритейлера = оборачиваемость (2–3x).</p>
+          </div>
+
+          <h2>4. Модель Альтмана (Z-score)</h2>
+          <div class="box box-formula">
+            <div class="box-title">Z-score Альтмана (для публичных компаний)</div>
+            $$Z = 1{,}2 X_1 + 1{,}4 X_2 + 3{,}3 X_3 + 0{,}6 X_4 + 1{,}0 X_5$$
+            <p>где:</p>
+            <ul>
+              <li>$X_1$ = Оборотный капитал / Активы</li>
+              <li>$X_2$ = Нераспределённая прибыль / Активы</li>
+              <li>$X_3$ = EBIT / Активы</li>
+              <li>$X_4$ = Рыночная капитализация / Долг</li>
+              <li>$X_5$ = Выручка / Активы</li>
+            </ul>
+          </div>
+
+          <div class="box box-key">
+            <div class="box-title">Интерпретация Z-score</div>
+            <ul>
+              <li>$Z > 2{,}99$ — <strong>безопасная зона</strong> (низкая вероятность банкротства)</li>
+              <li>$1{,}81 < Z < 2{,}99$ — <strong>серая зона</strong> (неопределённость)</li>
+              <li>$Z < 1{,}81$ — <strong>зона бедствия</strong> (высокая вероятность банкротства)</li>
+            </ul>
+          </div>
+
+          <div class="box box-warning">
+            <div class="box-title">Ограничения для России</div>
+            <p style="margin-bottom:0;">Модель разработана на данных американских компаний 1960-х. Для российских компаний Z-score может давать искажения: иная структура баланса, высокий леверидж банков, специфика отчётности. Рекомендуется использовать совместно с отраслевым анализом.</p>
+          </div>
+
+          <h2>Контрольные вопросы</h2>
+          <details class="question-card">
+            <summary>Какие 5 групп финансовых коэффициентов используются в анализе?</summary>
+            <div class="answer"><p>1) Ликвидность, 2) Рентабельность, 3) Деловая активность (оборачиваемость), 4) Финансовая устойчивость (структура капитала), 5) Рыночные показатели (P/E, EV/EBITDA).</p></div>
+          </details>
+          <details class="question-card">
+            <summary>Как формула Дюпона помогает диагностировать проблемы?</summary>
+            <div class="answer"><p>Раскладывает ROE на 5 факторов, позволяя определить конкретный источник проблемы: низкая маржа → ценовая/затратная проблема; низкая оборачиваемость → неэффективное использование активов; высокий леверидж → финансовый риск.</p></div>
+          </details>
+          <details class="question-card">
+            <summary>Что означает Z-score = 2.0 по модели Альтмана?</summary>
+            <div class="answer"><p>Компания в «серой зоне» (1.81–2.99): вероятность банкротства не высока, но и не исключена. Требуется дополнительный анализ: тренд Z-score, отраслевое сравнение, качество активов.</p></div>
+          </details>
+
+          <nav class="nav-lecture" aria-label="Навигация по лекциям">
+            <a href="topic-61.html"><span class="nav-label">&larr; Предыдущая</span><span class="nav-title">6.1 Оценка бизнеса</span></a>
+            <a href="index.html"><span class="nav-label">К каталогу &rarr;</span><span class="nav-title">Все лекции</span></a>
+          </nav>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div id="site-footer"></div>
+  <script src="../js/components.js"></script>
+  <script src="../js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Кейс: ПАО «Сбербанк» — Корпоративные финансы</title>
+  <meta name="description" content="Кейс Сбербанк: банковская структура капитала, ROE, формула Дюпона, влияние левериджа, Базель III.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body data-page="cases/sberbank" data-depth="1">
+  <div id="site-nav"></div>
+  <main id="main-content">
+    <section class="hero hero-compact">
+      <div class="hero-glow hero-glow-primary" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-badge">Кейс 3 &bull; Структура капитала + ROE &bull; ОПК-2, ОПК-3</div>
+        <h1>ПАО &laquo;<span class="highlight">Сбербанк</span>&raquo;</h1>
+        <p class="hero-subtitle">Банковская структура капитала, леверидж и формула Дюпона</p>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="lecture-content">
+
+          <h2>Описание ситуации</h2>
+          <p>Сбербанк — крупнейший банк России. Его структура капитала радикально отличается от нефинансовых компаний: отношение активов к капиталу достигает <strong>7–8x</strong>, что объясняет высокий ROE при относительно низком ROA.</p>
+
+          <h2>Исходные данные (2024)</h2>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Показатель</th><th>Значение</th></tr></thead>
+              <tbody>
+                <tr><td>Чистая прибыль</td><td class="num">1 580 млрд ₽</td></tr>
+                <tr><td>Собственный капитал</td><td class="num">6 500 млрд ₽</td></tr>
+                <tr><td>Совокупные активы</td><td class="num">50 000 млрд ₽</td></tr>
+                <tr><td>Чистый процентный доход</td><td class="num">2 800 млрд ₽</td></tr>
+                <tr><td>Дивиденд на акцию</td><td class="num">~36 ₽</td></tr>
+                <tr><td>Div Yield</td><td class="num">~12,6%</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>Решение</h2>
+
+          <div class="box box-formula">
+            <div class="box-title">ROE и ROA</div>
+            $$ROE = \frac{1\,580}{6\,500} = 24{,}3\%$$
+            $$ROA = \frac{1\,580}{50\,000} = 3{,}2\%$$
+          </div>
+
+          <div class="box box-formula">
+            <div class="box-title">Формула Дюпона</div>
+            $$ROE = \underbrace{\frac{1\,580}{2\,800}}_{56{,}4\%} \times \underbrace{\frac{2\,800}{50\,000}}_{5{,}6\%} \times \underbrace{\frac{50\,000}{6\,500}}_{7{,}69x} = 24{,}3\%$$
+            <p style="margin-bottom:0;">Главный драйвер ROE — <strong>финансовый леверидж 7,69x</strong>.</p>
+          </div>
+
+          <div class="box box-key">
+            <div class="box-title">Почему банки — особый случай</div>
+            <ul>
+              <li><strong>D/E</strong> Сбербанка = (50 000 − 6 500) / 6 500 = <strong>6,69</strong> — невозможно для нефинансовых компаний</li>
+              <li>Регулятор (ЦБ) контролирует леверидж через нормативы <strong>Базель III</strong></li>
+              <li>ROE 24% при ROA 3,2% — леверидж «мультиплицирует» низкую рентабельность активов</li>
+            </ul>
+          </div>
+
+          <h3>Леверидж и ROE (2019–2024)</h3>
+          <div class="chart-box"><canvas id="roeChart" role="img" aria-label="ROE Сбербанка 2019-2024"></canvas></div>
+
+          <h2>Контрольные вопросы</h2>
+          <details class="question-card">
+            <summary>Почему ROE банка может быть 24% при ROA всего 3%?</summary>
+            <div class="answer"><p>Из-за финансового левериджа. Формула Дюпона: ROE = ROA × (Активы/Капитал). При леверидже 7,69x: 3,2% × 7,69 ≈ 24,3%. Банк использует в основном заёмные средства (вклады, межбанк), а не собственный капитал.</p></div>
+          </details>
+          <details class="question-card">
+            <summary>Чем ограничивается леверидж банка?</summary>
+            <div class="answer"><p>Нормативами Базель III: минимальный коэффициент достаточности капитала (CET1 ≥ 4,5%, Tier 1 ≥ 6%, Total Capital ≥ 8%). ЦБ РФ может устанавливать дополнительные буферы. Это ограничивает D/E банка и снижает риск системного кризиса.</p></div>
+          </details>
+
+          <nav class="nav-lecture" aria-label="Навигация по кейсам">
+            <a href="gazprom.html"><span class="nav-label">&larr; Предыдущий</span><span class="nav-title">Газпром: дивиденды</span></a>
+            <a href="index.html"><span class="nav-label">К каталогу &rarr;</span><span class="nav-title">Все кейсы</span></a>
+          </nav>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div id="site-footer"></div>
+  <script src="../js/components.js"></script>
+  <script src="../js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof Chart === 'undefined') return;
+      new Chart(document.getElementById('roeChart'), {
+        type: 'bar',
+        data: {
+          labels: ['2019', '2020', '2021', '2022', '2023', '2024'],
+          datasets: [
+            { label: 'ROE, %', data: [20.2, 16.1, 24.5, 5.2, 25.3, 24.3], backgroundColor: '#1d4ed8', borderRadius: 4 },
+            { label: 'ROA, %', data: [2.8, 2.0, 3.2, 0.6, 3.3, 3.2], backgroundColor: '#b45309', borderRadius: 4 }
+          ]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            title: { display: true, text: 'ROE vs ROA Сбербанк', font: { family: 'Inter', size: 14, weight: '600' } },
+            legend: { position: 'bottom', labels: { usePointStyle: true, font: { family: 'Inter', size: 12 } } }
+          },
+          scales: { y: { beginAtZero: true, ticks: { callback: v => v + '%', font: { family: 'Inter', size: 11 } } }, x: { ticks: { font: { family: 'Inter', size: 11 } } } }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

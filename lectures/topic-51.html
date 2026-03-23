@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тема 5.1: Дивидендная политика — Корпоративные финансы</title>
+  <meta name="description" content="Дивидендная политика корпорации: теории дивидендов, DPS, DPR, Dividend Yield, модель Гордона, российская практика (Лукойл, Газпром).">
+
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="Тема 5.1: Дивидендная политика корпорации">
+  <meta property="og:description" content="Теории дивидендов ММ, синица в руке, сигнальная теория. DPS, DPR, Dividend Yield. Модель Гордона. Практика Лукойл и Газпром.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/layout.css">
+
+  <!-- KaTeX (only on pages with formulas) -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+
+  <!-- Chart.js (dividend charts) -->
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body data-page="lectures/topic-51" data-depth="1">
+
+  <div id="site-nav"></div>
+
+  <main id="main-content">
+
+    <!-- Lecture Header -->
+    <section class="hero hero-compact" aria-label="Заголовок лекции">
+      <div class="hero-glow hero-glow-primary" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-badge">Тема 5.1 &bull; 2 ч. лекция + 4 ч. практика &bull; УК-2, ОПК-4</div>
+        <h1>
+          Дивидендная политика<br>
+          <span class="highlight">корпорации</span>
+        </h1>
+        <p class="hero-subtitle">Теории дивидендов, формы выплат и российская практика</p>
+      </div>
+    </section>
+
+    <!-- Lecture Content -->
+    <section class="section" aria-label="Содержание лекции">
+      <div class="container">
+        <div class="lecture-content">
+
+          <!-- Block 1 -->
+          <h2>1. Понятие дивидендной политики</h2>
+
+          <p>
+            <strong>Дивидендная политика (Dividend Policy)</strong> — совокупность решений компании о размере,
+            форме и периодичности выплаты дивидендов акционерам.
+          </p>
+
+          <div class="box box-key">
+            <div class="box-title">Формы выплат</div>
+            <ul>
+              <li><strong>Денежные дивиденды</strong> — наиболее распространённая форма (промежуточные и финальные);</li>
+              <li><strong>Дивиденды акциями (Stock Dividend)</strong> — выплата дополнительными акциями;</li>
+              <li><strong>Дробление акций (Stock Split)</strong> — увеличение числа акций с пропорциональным снижением цены;</li>
+              <li><strong>Обратный выкуп акций (Share Buyback)</strong> — покупка собственных акций на рынке.</li>
+            </ul>
+          </div>
+
+          <!-- Block 2 -->
+          <h2>2. Ключевые показатели</h2>
+
+          <div class="box box-formula">
+            <div class="box-title">Дивиденд на акцию (DPS)</div>
+            $$DPS = \frac{\text{Общая сумма дивидендов}}{\text{Количество акций в обращении}}$$
+          </div>
+
+          <div class="box box-formula">
+            <div class="box-title">Коэффициент выплат (DPR)</div>
+            $$DPR = \frac{DPS}{EPS} \times 100\%$$
+          </div>
+
+          <div class="box box-formula">
+            <div class="box-title">Дивидендная доходность (Dividend Yield)</div>
+            $$DY = \frac{DPS}{P_0} \times 100\%$$
+          </div>
+
+          <!-- Block 3 -->
+          <h2>3. Теории дивидендной политики</h2>
+
+          <h3>3.1. Теория нерелевантности (Модильяни–Миллер, 1961)</h3>
+
+          <p>
+            В совершенном мире (без налогов, транзакционных издержек, информационной асимметрии)
+            <strong>дивидендная политика не влияет на стоимость компании</strong>. Инвестору безразлично:
+            получить дивиденды или реинвестировать прибыль с той же доходностью.
+          </p>
+
+          <h3>3.2. Теория «синицы в руке» (Gordon–Lintner)</h3>
+
+          <p>
+            Инвесторы предпочитают <strong>текущие дивиденды</strong> будущему приросту капитала,
+            поскольку дивиденды менее рискованны. Компании с высокими дивидендами оцениваются дороже.
+          </p>
+
+          <div class="box box-formula">
+            <div class="box-title">Следствие</div>
+            $$k_e^{\text{высокие дивиденды}} < k_e^{\text{низкие дивиденды}}$$
+          </div>
+
+          <h3>3.3. Теория налоговой дифференциации</h3>
+
+          <p>
+            Если дивиденды облагаются по более высокой ставке, чем прирост капитала,
+            инвесторы предпочитают компании с <strong>низкими дивидендами</strong>
+            (реинвестирование + рост цены акций).
+          </p>
+
+          <h3>3.4. Сигнальная теория</h3>
+
+          <div class="box box-info">
+            <div class="box-title">Дивиденды как сигнал</div>
+            <ul>
+              <li><strong>Рост дивидендов</strong> — позитивный сигнал (менеджмент ожидает стабильные/растущие потоки);</li>
+              <li><strong>Снижение/отмена дивидендов</strong> — негативный сигнал — падение цены акций.</li>
+            </ul>
+          </div>
+
+          <h3>3.5. Теория клиентуры</h3>
+
+          <p>
+            Разные группы инвесторов предпочитают разные уровни дивидендов в зависимости от налогового статуса:
+            пенсионные фонды предпочитают высокие дивиденды; состоятельные частные инвесторы — низкие (налоговая оптимизация).
+          </p>
+
+          <!-- Block 4 -->
+          <h2>4. Типы дивидендной политики</h2>
+
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Тип</th>
+                  <th>Описание</th>
+                  <th>Пример</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Стабильная</strong></td><td>Постоянный/растущий DPS</td><td>Лукойл</td></tr>
+                <tr><td><strong>Остаточная</strong></td><td>Дивиденды = Прибыль − Инвестиции</td><td>Стартапы</td></tr>
+                <tr><td><strong>Компромиссная</strong></td><td>Стабильный базовый + «специальный»</td><td>Многие зрелые компании</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Block 5 -->
+          <h2>5. Российская практика</h2>
+
+          <div class="box box-warning">
+            <div class="box-title">Государственные компании</div>
+            <p style="margin-bottom: 0;">
+              Распоряжение Правительства РФ (2016) — не менее <strong>50%</strong> чистой прибыли по МСФО на дивиденды
+              (Газпром, Роснефть, Сбербанк — формально подпадают).
+            </p>
+          </div>
+
+          <div class="box box-example">
+            <div class="box-title">ПАО «Лукойл»</div>
+            <p style="margin-bottom: 0;">
+              100% скорректированного FCF на дивиденды. Стабильный рост: 250 руб. (2018) → 1 011 руб. (2024).
+            </p>
+          </div>
+
+          <div class="box box-warning">
+            <div class="box-title">ПАО «Газпром»</div>
+            <p style="margin-bottom: 0;">
+              Формальная политика 50% ЧП, но фактически <strong>0 руб.</strong> в 2021–2024 гг. при положительной прибыли.
+              Причины: масштабный CAPEX, низкий FCF, государственное влияние.
+            </p>
+          </div>
+
+          <!-- Chart: Lukoil dividends -->
+          <h3>Динамика дивидендов ПАО «Лукойл»</h3>
+          <div class="chart-box">
+            <canvas id="dividendChart" aria-label="Диаграмма динамики дивидендов Лукойл 2018–2024" role="img"></canvas>
+          </div>
+
+          <!-- Block 6 -->
+          <h2>6. Модель Гордона (оценка акций)</h2>
+
+          <div class="box box-formula">
+            <div class="box-title">Модель Гордона</div>
+            $$P_0 = \frac{D_1}{k_e - g}$$
+            <p style="margin-bottom: 0;">
+              где $D_1 = D_0 \times (1 + g)$ — ожидаемый дивиденд, $k_e$ — требуемая доходность, $g$ — темп роста.
+              Из модели следует: <strong>рост дивидендов повышает стоимость акций</strong> (при прочих равных).
+            </p>
+          </div>
+
+          <!-- Формулы (сводка) -->
+          <h2>7. Сводка формул</h2>
+
+          <div class="box box-formula">
+            <div class="box-title">Все ключевые формулы темы</div>
+            $$DPS = \frac{\text{Дивиденды}}{\text{Акции}}$$
+            $$DPR = \frac{DPS}{EPS} \times 100\%$$
+            $$DY = \frac{DPS}{P_0} \times 100\%$$
+            $$P_0 = \frac{D_1}{k_e - g} \quad \text{(модель Гордона)}$$
+            $$\text{Остаточные дивиденды} = NI - E_{\text{реинвестированная на проекты}}$$
+          </div>
+
+          <!-- Примеры -->
+          <h2>8. Примеры расчётов</h2>
+
+          <h3>Пример 1. DPR и Dividend Yield для ПАО «Лукойл» (2023)</h3>
+
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Показатель</th>
+                  <th>Значение</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td>DPS (итого за год)</td><td class="num">945 руб.</td></tr>
+                <tr><td>EPS</td><td class="num">~1 400 руб.</td></tr>
+                <tr><td>Цена акции ($P_0$)</td><td class="num">~7 200 руб.</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="box box-example">
+            <div class="box-title">Расчёт</div>
+            $$DPR = \frac{945}{1\,400} \times 100\% = 67{,}5\%$$
+            $$DY = \frac{945}{7\,200} \times 100\% = 13{,}1\%$$
+            <p style="margin-bottom: 0;">
+              Лукойл выплачивает 67,5% прибыли в виде дивидендов с доходностью 13,1%.
+            </p>
+          </div>
+
+          <h3>Пример 2. Оценка акции по модели Гордона</h3>
+
+          <div class="box box-example">
+            <div class="box-title">Расчёт справедливой цены</div>
+            <p>Текущий дивиденд $D_0 = 945$ руб., темп роста $g = 5\%$, требуемая доходность $k_e = 20{,}3\%$.</p>
+            $$D_1 = 945 \times 1{,}05 = 992 \text{ руб.}$$
+            $$P_0 = \frac{992}{0{,}203 - 0{,}05} = \frac{992}{0{,}153} = 6\,484 \text{ руб.}$$
+            <p style="margin-bottom: 0;">
+              Если рыночная цена 7 200 руб. > справедливая 6 484 руб., акция может быть переоценена
+              (или рынок ожидает $g > 5\%$).
+            </p>
+          </div>
+
+          <h3>Пример 3. Остаточная модель дивидендов</h3>
+
+          <div class="box box-example">
+            <div class="box-title">Расчёт по остаточной модели</div>
+            <p>Чистая прибыль = 10 млрд руб. Оптимальный бюджет инвестиций = 7 млрд руб. Доля собственного капитала в финансировании = 60%.</p>
+            $$\text{Нераспр. прибыль на инвестиции} = 7 \times 0{,}60 = 4{,}2 \text{ млрд}$$
+            $$\text{Дивиденды} = 10 - 4{,}2 = 5{,}8 \text{ млрд руб.}$$
+            $$DPR = 5{,}8 / 10 = 58\%$$
+          </div>
+
+          <!-- Ключевые понятия -->
+          <h2>9. Ключевые понятия</h2>
+
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>Термин</th>
+                  <th>Определение</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Дивиденд (Dividend)</strong></td><td>Часть прибыли, выплачиваемая акционерам</td></tr>
+                <tr><td><strong>DPS (Dividend Per Share)</strong></td><td>Дивиденд на одну акцию</td></tr>
+                <tr><td><strong>DPR (Payout Ratio)</strong></td><td>Доля прибыли, направляемая на дивиденды</td></tr>
+                <tr><td><strong>Dividend Yield</strong></td><td>Дивидендная доходность (DPS/P₀)</td></tr>
+                <tr><td><strong>Buyback (обратный выкуп)</strong></td><td>Покупка компанией собственных акций</td></tr>
+                <tr><td><strong>Теория «синицы в руке»</strong></td><td>Инвесторы предпочитают текущие дивиденды</td></tr>
+                <tr><td><strong>Сигнальная теория</strong></td><td>Дивиденды как информационный сигнал рынку</td></tr>
+                <tr><td><strong>Теория клиентуры</strong></td><td>Разные инвесторы предпочитают разные дивиденды</td></tr>
+                <tr><td><strong>Остаточная модель</strong></td><td>Дивиденды = Прибыль − Инвестиции</td></tr>
+                <tr><td><strong>Модель Гордона</strong></td><td>Оценка акции: P = D₁/(k_e − g)</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Контрольные вопросы -->
+          <h2>Контрольные вопросы</h2>
+
+          <details class="question-card">
+            <summary>Какие формы выплат дивидендов существуют?</summary>
+            <div class="answer">
+              <p>Денежные дивиденды (промежуточные и финальные), дивиденды акциями (Stock Dividend), дробление акций (Stock Split), обратный выкуп акций (Share Buyback).</p>
+            </div>
+          </details>
+
+          <details class="question-card">
+            <summary>Почему ММ считают дивидендную политику нерелевантной?</summary>
+            <div class="answer">
+              <p>В совершенном мире (без налогов, транзакционных издержек, информационной асимметрии) инвестору безразлично: получить дивиденды или реинвестировать прибыль с той же доходностью. Стоимость компании определяется её инвестиционными решениями, а не распределением прибыли.</p>
+            </div>
+          </details>
+
+          <details class="question-card">
+            <summary>Чем теория «синицы в руке» противоречит теории ММ?</summary>
+            <div class="answer">
+              <p>Теория Gordon–Lintner утверждает, что инвесторы предпочитают текущие дивиденды (они менее рискованны), поэтому компании с высокими дивидендами имеют более низкую стоимость собственного капитала ($k_e$) и оцениваются выше. ММ утверждают обратное — дивидендная политика не влияет на стоимость.</p>
+            </div>
+          </details>
+
+          <details class="question-card">
+            <summary>Какой сигнал рынку посылает отмена дивидендов? Приведите пример Газпрома.</summary>
+            <div class="answer">
+              <p>Отмена дивидендов — сильный негативный сигнал: рынок интерпретирует это как признак проблем с денежными потоками или неуверенность менеджмента в будущем. Газпром: формальная политика 50% ЧП по МСФО, но фактические выплаты 0 руб. в 2021–2024 гг. при положительной прибыли. Причины: масштабный CAPEX, низкий FCF, государственное влияние.</p>
+            </div>
+          </details>
+
+          <details class="question-card">
+            <summary>Чем стабильная дивидендная политика отличается от остаточной?</summary>
+            <div class="answer">
+              <p>Стабильная — постоянный или растущий DPS независимо от колебаний прибыли (пример: Лукойл). Остаточная — дивиденды = прибыль минус потребности в инвестициях; размер дивидендов непредсказуем и зависит от инвестиционных возможностей (характерно для стартапов и растущих компаний).</p>
+            </div>
+          </details>
+
+          <details class="question-card">
+            <summary>Как повышение ставки налога на прибыль (до 25%) влияет на дивиденды?</summary>
+            <div class="answer">
+              <p>Повышение налога на прибыль уменьшает чистую прибыль, из которой выплачиваются дивиденды. При прочих равных DPS может снизиться. Однако компании с фиксированной дивидендной политикой (% от FCF) могут сохранить выплаты, если операционный поток достаточен.</p>
+            </div>
+          </details>
+
+          <details class="question-card">
+            <summary>Почему обратный выкуп акций может быть предпочтительнее дивидендов?</summary>
+            <div class="answer">
+              <p>Обратный выкуп: (1) создаёт налоговое преимущество (прирост капитала облагается при продаже, а не при получении), (2) даёт инвестору гибкость (выбор момента продажи), (3) повышает EPS за счёт сокращения числа акций, (4) не создаёт обязательства регулярных выплат.</p>
+            </div>
+          </details>
+
+          <!-- Практические задания -->
+          <h2>Практические задания</h2>
+
+          <h3>Задание 1. Анализ дивидендных показателей</h3>
+
+          <div class="box box-example">
+            <div class="box-title">Условие</div>
+            <p style="margin-bottom: 0;">
+              Компания: ЧП = 5 млрд руб., 100 млн акций, DPS = 30 руб., цена = 450 руб.
+              <strong>Рассчитайте EPS, DPR, Dividend Yield.</strong>
+            </p>
+          </div>
+
+          <div class="box box-formula">
+            <div class="box-title">Решение</div>
+            $$EPS = 5\,000 / 100 = 50 \text{ руб.}$$
+            $$DPR = 30 / 50 = 60\%$$
+            $$DY = 30 / 450 = 6{,}7\%$$
+          </div>
+
+          <h3>Задание 2. Модель Гордона</h3>
+
+          <div class="box box-example">
+            <div class="box-title">Условие</div>
+            <p style="margin-bottom: 0;">
+              $D_0 = 50$ руб., $g = 7\%$, $k_e = 18\%$. <strong>Справедливая цена акции?</strong>
+            </p>
+          </div>
+
+          <div class="box box-formula">
+            <div class="box-title">Решение</div>
+            $$P_0 = \frac{50 \times 1{,}07}{0{,}18 - 0{,}07} = \frac{53{,}5}{0{,}11} = 486 \text{ руб.}$$
+          </div>
+
+          <!-- Lecture Navigation -->
+          <nav class="nav-lecture" aria-label="Навигация по лекциям">
+            <a href="topic-42.html">
+              <span class="nav-label">&larr; Предыдущая</span>
+              <span class="nav-title">4.2 WACC</span>
+            </a>
+            <a href="topic-52.html">
+              <span class="nav-label">Следующая &rarr;</span>
+              <span class="nav-title">5.2 Оборотный капитал</span>
+            </a>
+          </nav>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="../js/components.js"></script>
+  <script src="../js/app.js"></script>
+
+  <!-- Chart initialization -->
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const ctx = document.getElementById('dividendChart');
+      if (ctx && typeof Chart !== 'undefined') {
+        new Chart(ctx, {
+          type: 'bar',
+          data: {
+            labels: ['2018', '2019', '2020', '2021', '2022', '2023', '2024'],
+            datasets: [{
+              label: 'DPS Лукойл (руб.)',
+              data: [250, 355, 213, 340, 793, 945, 1011],
+              backgroundColor: '#1d4ed8',
+              borderRadius: 6,
+              barPercentage: 0.6
+            }]
+          },
+          options: {
+            responsive: true,
+            maintainAspectRatio: true,
+            scales: {
+              y: {
+                beginAtZero: true,
+                title: {
+                  display: true,
+                  text: 'Дивиденд на акцию, руб.',
+                  font: { family: 'Inter, sans-serif', size: 12 }
+                },
+                ticks: {
+                  font: { family: 'Inter, sans-serif', size: 11 }
+                }
+              },
+              x: {
+                ticks: {
+                  font: { family: 'Inter, sans-serif', size: 11 }
+                }
+              }
+            },
+            plugins: {
+              legend: {
+                display: false
+              }
+            }
+          }
+        });
+      }
+    });
+  </script>
+</body>
+</html>

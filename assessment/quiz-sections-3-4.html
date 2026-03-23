@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тест: Разделы 3–4 — Корпоративные финансы</title>
+  <meta name="description" content="Тест по разделам 3-4: NPV, IRR, WACC, структура капитала, теоремы ММ. 20 вопросов из ФОС.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/pages.css">
+</head>
+<body data-page="assessment/quiz-sections-3-4" data-depth="1">
+  <div id="site-nav"></div>
+  <main id="main-content">
+    <section class="hero hero-compact">
+      <div class="hero-glow hero-glow-primary" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-badge">Разделы 3–4 &bull; 20 вопросов &bull; 40 минут</div>
+        <h1>Тест: <span class="highlight">Инвестиции и капитал</span></h1>
+        <p class="hero-subtitle">NPV, IRR, PI, WACC, теоремы ММ, структура капитала</p>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="quiz-container" id="quizContainer"></div>
+        <div class="score-box" id="scoreBox">
+          <div class="score-num" id="scoreNum"></div>
+          <div class="score-label">правильных ответов из 20</div>
+          <div class="score-msg" id="scoreMsg"></div>
+          <div class="quiz-actions">
+            <button class="btn btn-primary" onclick="location.reload()">Пройти заново</button>
+            <a href="../lectures/" class="btn btn-outline">К лекциям</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div id="site-footer"></div>
+  <script src="../js/components.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/utils.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const q = [
+      {text:'NPV проекта показывает:',options:['Общую сумму поступлений','Разницу между дисконтированными притоками и инвестициями','Срок возврата средств','IRR проекта'],correct:1},
+      {text:'NPV: IC=7 млн, CF=3 млн/год × 3 года, r=12%:',options:['+205 494 руб.','+2 000 000 руб.','−795 000 руб.','+1 000 000 руб.'],correct:0,explanation:'NPV = 3М/1,12 + 3М/1,12² + 3М/1,12³ − 7М ≈ +205 494 руб.'},
+      {text:'IRR — это ставка, при которой:',options:['NPV максимален','NPV = 0','PI = 0','DPP = сроку проекта'],correct:1},
+      {text:'IRR = 20%, WACC = 15%. Проект следует:',options:['Отклонить','Принять','Отложить','Недостаточно данных'],correct:1,explanation:'IRR > WACC → проект создаёт стоимость → принять.'},
+      {text:'β Хамады: β_a=0,8, D/V=40%, T=20%:',options:['0,80','1,23','1,60','0,64'],correct:1,explanation:'βL = 0,8 × (1 + (1−0,2) × 0,4/0,6) ≈ 1,23.'},
+      {text:'PI при IC=5M, PV потоков=5,8M:',options:['0,86','1,16','5,80','0,16'],correct:1,explanation:'PI = 5,8/5,0 = 1,16 > 1 → принять.'},
+      {text:'WACC: D=45%(rd=10%,T=20%), E=55%(re=20%):',options:['15,0%','14,6%','12,0%','18,0%'],correct:1,explanation:'WACC = 0,45×10%×0,8 + 0,55×20% = 3,6% + 11,0% = 14,6%.'},
+      {text:'Конфликт NPV и IRR возникает при:',options:['Независимых проектах','Взаимоисключающих проектах разного масштаба','Одинаковом объёме инвестиций','NPV = 0'],correct:1},
+      {text:'Первая теорема ММ (без налогов): стоимость компании:',options:['Зависит от структуры капитала','Не зависит от структуры капитала','Максимальна при 100% долга','Минимальна при 50/50'],correct:1},
+      {text:'CAPM: rf=8%, β=1,5, MRP=7%. Доходность:',options:['15,0%','18,5%','22,0%','10,5%'],correct:1,explanation:'k_e = 8% + 1,5 × 7% = 18,5%.'},
+      {text:'Налоговый щит долга означает:',options:['Компания не платит налог','Проценты уменьшают налогооблагаемую базу','Дивиденды вычитаются из налогов','Льготы для любого источника'],correct:1},
+      {text:'DFL: EBIT=10M, проценты=2M:',options:['0,80','1,25','5,00','2,00'],correct:1,explanation:'DFL = EBIT/(EBIT−I) = 10/8 = 1,25.'},
+      {text:'Теория иерархии (Pecking Order): компания предпочитает:',options:['Максимум заёмных средств','Внутренние → долг → акции','Акции при любой возможности','Постоянное D/E'],correct:1},
+      {text:'Налоговый щит: D=50M, rd=10%, T=20%:',options:['10 000 000','5 000 000','1 000 000','2 000 000'],correct:2,explanation:'Щит = D × rd × T = 50M × 10% × 20% = 1 000 000 руб.'},
+      {text:'DPP отличается от простого PP тем, что:',options:['Не учитывает потоки после окупаемости','Учитывает временну́ю стоимость денег','Всегда короче PP','Только для госпроектов'],correct:1},
+      {text:'При росте долга WACC:',options:['Всегда снижается','Всегда растёт','Сначала снижается, затем растёт','Не меняется'],correct:2,explanation:'U-образная кривая: сначала дешёвый долг снижает WACC, затем финансовый риск растёт.'},
+      {text:'Невозвратные затраты (sunk costs):',options:['Учитываются в NPV','Не учитываются при анализе проекта','Увеличивают IRR','Снижают WACC'],correct:1},
+      {text:'Вторая теорема ММ (без налогов): при росте долга ke:',options:['Снижается','Растёт линейно','Не меняется','Растёт экспоненциально'],correct:1,explanation:'k_e = k_0 + (k_0 − k_d) × D/E — линейный рост.'},
+      {text:'Оптимальная структура капитала — это D/E, при котором:',options:['NPV максимален','WACC минимален','Прибыль максимальна','Долг = 0'],correct:1},
+      {text:'PI > 1 означает:',options:['Проект убыточен','PV притоков > инвестиций → принять','IRR < WACC','DPP > срока проекта'],correct:1}
+    ];
+    renderQuiz('quizContainer', q, 'scoreBox');
+  });
+  </script>
+</body>
+</html>

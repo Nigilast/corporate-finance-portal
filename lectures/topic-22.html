@@ -1,0 +1,353 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тема 2.2: Модель CAPM — Корпоративные финансы</title>
+  <meta name="description" content="Модель CAPM, бета-коэффициент, линия рынка ценных бумаг (SML), линия рынка капиталов (CML), альфа Дженсена, модель Фама–Френча.">
+  <meta property="og:title" content="Тема 2.2: Модель CAPM">
+  <meta property="og:description" content="CAPM, бета-коэффициент, SML, CML, альфа Дженсена, многофакторные модели">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+</head>
+<body data-page="lectures/topic-22" data-depth="1">
+  <div id="site-nav"></div>
+  <main id="main-content">
+
+    <section class="hero hero-compact" aria-label="Заголовок лекции">
+      <div class="hero-glow hero-glow-primary" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-badge">Тема 2.2 &bull; 2 ч. лекция + 4 ч. практика</div>
+        <h1>Модель <span class="highlight">CAPM</span></h1>
+        <p class="hero-subtitle">Бета-коэффициент, SML, CML, альфа Дженсена, многофакторные модели</p>
+      </div>
+    </section>
+
+    <section class="section" aria-label="Содержание лекции">
+      <div class="container">
+        <div class="lecture-content">
+
+          <div class="box box-example">
+            <div class="box-title">Проблемный вопрос</div>
+            <p>Как определить справедливую доходность акции, зная только её чувствительность к рынку? Почему одного показателя — бета — достаточно для оценки систематического риска? И как понять, переоценён актив или недооценён?</p>
+          </div>
+
+          <h2>1. Гипотеза эффективного рынка (EMH)</h2>
+
+          <p><strong>Гипотеза эффективного рынка (Efficient Market Hypothesis)</strong> — цены активов полностью отражают доступную информацию.</p>
+
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr><th>Форма</th><th>Информация, отражённая в ценах</th><th>Следствие</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Слабая</strong></td><td>Историческая (прошлые цены, объёмы)</td><td>Технический анализ бесполезен</td></tr>
+                <tr><td><strong>Средняя</strong></td><td>Вся публичная информация</td><td>Фундаментальный анализ бесполезен</td></tr>
+                <tr><td><strong>Сильная</strong></td><td>Вся информация, включая инсайдерскую</td><td>Невозможно систематически обыгрывать рынок</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="box box-info">
+            <div class="box-title">На практике</div>
+            <p>Рынки в целом эффективны в средней форме, но отклонения (аномалии) существуют. CAPM предполагает эффективность рынка.</p>
+          </div>
+
+          <h2>2. Линия рынка капиталов (CML)</h2>
+
+          <p><strong>CML (Capital Market Line)</strong> связывает доходность и общий риск ($\sigma$) <strong>эффективных портфелей</strong>:</p>
+
+          <div class="box box-formula">
+            <div class="box-title">CML — Capital Market Line</div>
+            $$E(r_p) = r_f + \frac{E(r_m) - r_f}{\sigma_m} \times \sigma_p$$
+            <p>CML показывает, что любой эффективный портфель — это комбинация безрискового актива и рыночного портфеля. Наклон CML — «рыночная цена риска» (Sharpe Ratio рынка).</p>
+          </div>
+
+          <h2>3. Модель CAPM</h2>
+
+          <p><strong>CAPM (Capital Asset Pricing Model)</strong> — модель оценки капитальных активов. Связывает ожидаемую доходность <strong>отдельного актива</strong> с его <strong>систематическим риском</strong> ($\beta$):</p>
+
+          <div class="box box-formula">
+            <div class="box-title">Формула CAPM</div>
+            $$E(r_i) = r_f + \beta_i \times (E(r_m) - r_f)$$
+            <p>где $r_f$ — безрисковая ставка; $\beta_i$ — бета-коэффициент актива; $(E(r_m) - r_f)$ — рыночная премия за риск (Equity Risk Premium, ERP).</p>
+          </div>
+
+          <div class="box box-key">
+            <div class="box-title">Предпосылки CAPM</div>
+            <ol>
+              <li>Инвесторы рациональны и не склонны к риску</li>
+              <li>Рынок совершенен (нет налогов, транзакционных издержек)</li>
+              <li>Все инвесторы имеют одинаковые ожидания (однородные ожидания)</li>
+              <li>Можно занимать и давать взаймы по безрисковой ставке</li>
+              <li>Все активы делимы и ликвидны</li>
+            </ol>
+          </div>
+
+          <h2>4. Бета-коэффициент ($\beta$)</h2>
+
+          <p><strong>Бета</strong> — мера систематического риска актива:</p>
+
+          <div class="box box-formula">
+            <div class="box-title">Бета-коэффициент</div>
+            $$\beta_i = \frac{Cov(r_i, r_m)}{Var(r_m)} = \frac{\rho_{i,m} \times \sigma_i}{\sigma_m}$$
+          </div>
+
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr><th>$\beta$</th><th>Тип актива</th><th>Характеристика</th></tr>
+              </thead>
+              <tbody>
+                <tr><td class="num">$\beta &gt; 1$</td><td>Агрессивный</td><td>Растёт/падает быстрее рынка</td></tr>
+                <tr><td class="num">$\beta = 1$</td><td>Рыночный</td><td>Движется синхронно с рынком</td></tr>
+                <tr><td class="num">$0 &lt; \beta &lt; 1$</td><td>Защитный</td><td>Менее волатилен, чем рынок</td></tr>
+                <tr><td class="num">$\beta = 0$</td><td>Безрисковый</td><td>Не зависит от рынка</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="box box-info">
+            <div class="box-title">Справочные бета для российских компаний</div>
+            <p>Источник: capm-navigator.ru</p>
+            <ul>
+              <li><strong>Лукойл:</strong> $\beta \approx 0{,}95$ (почти рыночный)</li>
+              <li><strong>Газпром:</strong> $\beta \approx 0{,}51$ (защитный)</li>
+              <li><strong>Сбербанк:</strong> $\beta \approx 1{,}20$ (агрессивный)</li>
+              <li><strong>Яндекс:</strong> $\beta \approx 1{,}35$ (агрессивный, технологический сектор)</li>
+            </ul>
+          </div>
+
+          <h2>5. Линия рынка ценных бумаг (SML)</h2>
+
+          <p><strong>SML (Security Market Line)</strong> — графическое представление CAPM: зависимость $E(r)$ от $\beta$.</p>
+
+          <div class="box box-key">
+            <div class="box-title">Интерпретация SML</div>
+            <ul>
+              <li>Актив <strong>выше SML</strong> — недооценён (доходность выше справедливой &rarr; покупать)</li>
+              <li>Актив <strong>ниже SML</strong> — переоценён (доходность ниже справедливой &rarr; продавать)</li>
+            </ul>
+          </div>
+
+          <div class="box box-formula">
+            <div class="box-title">Альфа Дженсена (Jensen's Alpha)</div>
+            $$\alpha_i = r_i^{\text{факт}} - [r_f + \beta_i \times (r_m - r_f)]$$
+            <ul>
+              <li>$\alpha &gt; 0$: управляющий обеспечил доходность выше ожидаемой по CAPM</li>
+              <li>$\alpha &lt; 0$: доходность ниже ожидаемой</li>
+            </ul>
+          </div>
+
+          <h2>6. Параметры CAPM для России</h2>
+
+          <div class="box box-warning">
+            <div class="box-title">Российская специфика</div>
+            <ul>
+              <li><strong>Безрисковая ставка ($r_f$):</strong> доходность 10-летних ОФЗ &asymp; 14,6% (конец 2025 г.). Альтернатива: ключевая ставка ЦБ РФ = 15,0% (март 2026)</li>
+              <li><strong>Рыночная премия за риск (ERP):</strong> для России оценивается в 5–7% (с учётом странового риска). Для расчётов в курсе используем <strong>6%</strong></li>
+              <li><strong>Источник бета:</strong> CAPM Navigator (capm-navigator.ru) — расчёт $\beta$ и WACC для 270+ российских компаний, обновление ежеквартально</li>
+            </ul>
+          </div>
+
+          <h2>7. Ограничения и критика CAPM</h2>
+
+          <div class="box box-warning">
+            <div class="box-title">Ограничения модели</div>
+            <ol>
+              <li>Предпосылки нереалистичны (совершенный рынок, однородные ожидания)</li>
+              <li>$\beta$ нестабильна во времени (зависит от периода расчёта)</li>
+              <li>Одного фактора ($\beta$) недостаточно для объяснения доходности</li>
+              <li>Проблема выбора рыночного портфеля (критика Ролла)</li>
+              <li>На развивающихся рынках CAPM работает хуже</li>
+            </ol>
+          </div>
+
+          <h2>8. Многофакторные модели</h2>
+
+          <div class="box box-formula">
+            <div class="box-title">Модель Фама–Френча (3 фактора)</div>
+            $$E(r_i) = r_f + \beta_1 \times (r_m - r_f) + \beta_2 \times SMB + \beta_3 \times HML$$
+            <ul>
+              <li><strong>SMB (Small Minus Big)</strong> — премия за размер (малые компании доходнее крупных)</li>
+              <li><strong>HML (High Minus Low)</strong> — премия за стоимость (компании с высоким B/M доходнее «компаний роста»)</li>
+            </ul>
+          </div>
+
+          <div class="box box-info">
+            <div class="box-title">Расширение</div>
+            <p>5-факторная модель Фама–Френча добавляет рентабельность (RMW) и инвестиции (CMA).</p>
+          </div>
+
+          <h2>9. Примеры расчётов</h2>
+
+          <h3>Пример 1. Стоимость собственного капитала для ПАО «Лукойл»</h3>
+
+          <p>$r_f = 14{,}6\%$, $\beta = 0{,}95$, $ERP = 6\%$.</p>
+
+          $$k_e = 14{,}6\% + 0{,}95 \times 6\% = 14{,}6\% + 5{,}7\% = 20{,}3\%$$
+
+          <div class="box box-example">
+            <div class="box-title">Интерпретация</div>
+            <p style="margin-bottom: 0;">Акционеры Лукойла требуют не менее 20,3% годовой доходности.</p>
+          </div>
+
+          <h3>Пример 2. Стоимость собственного капитала для ПАО «Газпром»</h3>
+
+          <p>$r_f = 14{,}6\%$, $\beta = 0{,}51$, $ERP = 6\%$.</p>
+
+          $$k_e = 14{,}6\% + 0{,}51 \times 6\% = 14{,}6\% + 3{,}06\% = 17{,}66\%$$
+
+          <div class="box box-example">
+            <div class="box-title">Интерпретация</div>
+            <p style="margin-bottom: 0;">Газпром — защитный актив ($\beta &lt; 1$), поэтому требуемая доходность ниже, чем у Лукойла.</p>
+          </div>
+
+          <h3>Пример 3. Анализ по SML — актив переоценён или недооценён?</h3>
+
+          <p>Актив: $\beta = 1{,}3$, фактическая доходность = 22%. Рынок: $r_f = 14{,}6\%$, $ERP = 6\%$.</p>
+
+          <p>Справедливая доходность по CAPM:</p>
+          $$E(r) = 14{,}6\% + 1{,}3 \times 6\% = 14{,}6\% + 7{,}8\% = 22{,}4\%$$
+
+          $$\alpha = 22\% - 22{,}4\% = -0{,}4\%$$
+
+          <div class="box box-example">
+            <div class="box-title">Интерпретация</div>
+            <p style="margin-bottom: 0;">Актив лежит чуть <strong>ниже SML</strong> &rarr; слегка переоценён (фактическая доходность ниже справедливой).</p>
+          </div>
+
+          <h2>10. Ключевые понятия</h2>
+
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr><th>Термин</th><th>Определение</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>CAPM</strong></td><td>Модель оценки капитальных активов: связь доходности и $\beta$</td></tr>
+                <tr><td><strong>Бета ($\beta$)</strong></td><td>Мера систематического риска актива</td></tr>
+                <tr><td><strong>SML (Security Market Line)</strong></td><td>Линия «требуемая доходность — $\beta$»</td></tr>
+                <tr><td><strong>CML (Capital Market Line)</strong></td><td>Линия «доходность — $\sigma$» для эффективных портфелей</td></tr>
+                <tr><td><strong>Безрисковая ставка ($r_f$)</strong></td><td>Доходность ОФЗ (гос. облигации)</td></tr>
+                <tr><td><strong>Рыночная премия за риск (ERP)</strong></td><td>$(r_m - r_f)$, для России &asymp; 5–7%</td></tr>
+                <tr><td><strong>Альфа Дженсена ($\alpha$)</strong></td><td>Избыточная доходность сверх предсказанной CAPM</td></tr>
+                <tr><td><strong>EMH</strong></td><td>Гипотеза эффективного рынка</td></tr>
+                <tr><td><strong>Модель Фама–Френча</strong></td><td>3-факторная модель: рынок + размер + стоимость</td></tr>
+                <tr><td><strong>SMB, HML</strong></td><td>Факторы размера и стоимости в модели Фама–Френча</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>11. Практические задания</h2>
+
+          <h3>Задание 1. Расчёт требуемой доходности</h3>
+
+          <p>$r_f = 15\%$, $\beta = 1{,}2$, рыночная премия = 5,5%.</p>
+
+          <p><strong>Рассчитайте $k_e$ по CAPM.</strong></p>
+
+          <details class="question-card">
+            <summary>Показать решение</summary>
+            <div class="answer">
+              $$k_e = 15\% + 1{,}2 \times 5{,}5\% = 15\% + 6{,}6\% = 21{,}6\%$$
+            </div>
+          </details>
+
+          <h3>Задание 2. Определение $\beta$ из данных</h3>
+
+          <p>Фактическая доходность акции = 19%, $r_f = 14\%$, $r_m = 20\%$.</p>
+
+          <p><strong>Определите $\beta$, предполагая, что акция корректно оценена рынком ($\alpha = 0$).</strong></p>
+
+          <details class="question-card">
+            <summary>Показать решение</summary>
+            <div class="answer">
+              $$19\% = 14\% + \beta \times (20\% - 14\%)$$
+              $$5\% = \beta \times 6\%$$
+              $$\beta = 5/6 = 0{,}83$$
+            </div>
+          </details>
+
+          <h3>Задание 3. Оценка акции по SML</h3>
+
+          <p>Акция X: $\beta = 0{,}8$, фактическая доходность = 20%. Акция Y: $\beta = 1{,}4$, фактическая доходность = 24%. $r_f = 14\%$, ERP = 6%.</p>
+
+          <p><strong>Какая акция недооценена?</strong></p>
+
+          <details class="question-card">
+            <summary>Показать решение</summary>
+            <div class="answer">
+              $$E(r_X) = 14\% + 0{,}8 \times 6\% = 18{,}8\%; \quad \alpha_X = 20\% - 18{,}8\% = +1{,}2\%$$
+              $$E(r_Y) = 14\% + 1{,}4 \times 6\% = 22{,}4\%; \quad \alpha_Y = 24\% - 22{,}4\% = +1{,}6\%$$
+              <p>Обе акции выше SML ($\alpha &gt; 0$) &rarr; недооценены. Y имеет большую альфу &rarr; более привлекательна.</p>
+            </div>
+          </details>
+
+          <h2>Контрольные вопросы</h2>
+
+          <details class="question-card">
+            <summary>Сформулируйте модель CAPM. Какие предпосылки лежат в её основе?</summary>
+            <div class="answer"><p>CAPM: $E(r_i) = r_f + \beta_i \times (E(r_m) - r_f)$. Предпосылки: рациональные инвесторы, совершенный рынок (нет налогов и транзакционных издержек), однородные ожидания, возможность занимать/давать взаймы по безрисковой ставке, все активы делимы и ликвидны.</p></div>
+          </details>
+
+          <details class="question-card">
+            <summary>Что показывает бета-коэффициент? Чем $\beta = 0{,}5$ отличается от $\beta = 1{,}5$?</summary>
+            <div class="answer"><p>Бета — мера систематического риска. $\beta = 0{,}5$ (защитный актив) означает, что при росте рынка на 10% актив вырастет примерно на 5%. $\beta = 1{,}5$ (агрессивный актив) — при росте рынка на 10% актив вырастет примерно на 15%. Агрессивный актив более волатилен и требует более высокой доходности.</p></div>
+          </details>
+
+          <details class="question-card">
+            <summary>В чём разница между CML и SML?</summary>
+            <div class="answer"><p>CML описывает зависимость доходности от общего риска ($\sigma$) для <strong>эффективных портфелей</strong>. SML описывает зависимость доходности от систематического риска ($\beta$) для <strong>любых активов</strong> (в том числе отдельных акций и неэффективных портфелей).</p></div>
+          </details>
+
+          <details class="question-card">
+            <summary>Как определить, переоценён или недооценён актив, используя SML?</summary>
+            <div class="answer"><p>Рассчитать справедливую доходность по CAPM и сравнить с фактической. Если фактическая доходность выше (актив выше SML, $\alpha &gt; 0$) — актив недооценён. Если ниже (актив ниже SML, $\alpha &lt; 0$) — переоценён.</p></div>
+          </details>
+
+          <details class="question-card">
+            <summary>Какова безрисковая ставка в России и как она определяется?</summary>
+            <div class="answer"><p>Безрисковая ставка в России определяется по доходности 10-летних ОФЗ (государственных облигаций) &asymp; 14,6% (конец 2025). Альтернативный ориентир — ключевая ставка ЦБ РФ = 15,0% (март 2026).</p></div>
+          </details>
+
+          <details class="question-card">
+            <summary>Назовите основные ограничения CAPM.</summary>
+            <div class="answer"><p>1) Нереалистичные предпосылки; 2) $\beta$ нестабильна во времени; 3) одного фактора недостаточно; 4) проблема выбора рыночного портфеля (критика Ролла); 5) на развивающихся рынках модель работает хуже.</p></div>
+          </details>
+
+          <details class="question-card">
+            <summary>Чем 3-факторная модель Фама–Френча отличается от CAPM?</summary>
+            <div class="answer"><p>CAPM использует один фактор — рыночную премию за риск. Фама–Френч добавляет ещё два: SMB (премия за размер — малые компании доходнее крупных) и HML (премия за стоимость — «стоимостные» компании доходнее «компаний роста»). 5-факторная версия дополнительно включает рентабельность (RMW) и инвестиции (CMA).</p></div>
+          </details>
+
+          <nav class="nav-lecture" aria-label="Навигация по лекциям">
+            <a href="topic-21.html">
+              <span class="nav-label">&larr; Предыдущая</span>
+              <span class="nav-title">2.1 Риск и доходность</span>
+            </a>
+            <a href="topic-31.html">
+              <span class="nav-label">Следующая &rarr;</span>
+              <span class="nav-title">3.1 NPV, IRR, PI, DPP</span>
+            </a>
+          </nav>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <div id="site-footer"></div>
+  <script src="../js/components.js"></script>
+  <script src="../js/app.js"></script>
+</body>
+</html>

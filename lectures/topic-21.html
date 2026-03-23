@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тема 2.1: Риск и доходность — Корпоративные финансы</title>
+  <meta name="description" content="Концепция риска и доходности финансовых активов: ожидаемая доходность, дисперсия, стандартное отклонение, ковариация, корреляция, портфельный риск.">
+  <meta property="og:title" content="Тема 2.1: Риск и доходность">
+  <meta property="og:description" content="Ожидаемая доходность, меры риска, диверсификация, ковариация, риск портфеля из двух активов">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+</head>
+<body data-page="lectures/topic-21" data-depth="1">
+  <div id="site-nav"></div>
+  <main id="main-content">
+
+    <section class="hero hero-compact" aria-label="Заголовок лекции">
+      <div class="hero-glow hero-glow-primary" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-badge">Тема 2.1 &bull; 2 ч. лекция + 4 ч. практика</div>
+        <h1>Риск и <span class="highlight">доходность</span></h1>
+        <p class="hero-subtitle">Ожидаемая доходность, меры риска, диверсификация, ковариация, портфельный риск</p>
+      </div>
+    </section>
+
+    <section class="section" aria-label="Содержание лекции">
+      <div class="container">
+        <div class="lecture-content">
+
+          <div class="box box-example">
+            <div class="box-title">Проблемный вопрос</div>
+            <p>Почему инвесторы требуют более высокую доходность от рискованных активов? Как измерить риск? И почему портфель из нескольких активов может быть менее рискованным, чем каждый актив по отдельности?</p>
+          </div>
+
+          <h2>1. Понятие риска и доходности</h2>
+
+          <p><strong>Доходность (Return)</strong> — прирост стоимости инвестиции за период, выраженный в процентах:</p>
+
+          <div class="box box-formula">
+            <div class="box-title">Доходность актива</div>
+            $$r = \frac{P_1 - P_0 + D}{P_0}$$
+            <p>где $P_0$ — цена покупки, $P_1$ — цена продажи, $D$ — дивиденды (или купоны).</p>
+          </div>
+
+          <p><strong>Риск (Risk)</strong> — вероятность отклонения фактической доходности от ожидаемой. Чем больше разброс возможных результатов, тем выше риск.</p>
+
+          <div class="box box-key">
+            <div class="box-title">Фундаментальный принцип</div>
+            <p><strong>Чем выше риск, тем выше требуемая доходность.</strong> Инвесторы требуют компенсацию (премию) за принятие риска.</p>
+          </div>
+
+          <h2>2. Ожидаемая доходность</h2>
+
+          <div class="box box-formula">
+            <div class="box-title">По сценариям (ex ante)</div>
+            $$E(r) = \sum_{i=1}^{n} p_i \times r_i$$
+            <p>где $p_i$ — вероятность сценария $i$, $r_i$ — доходность при сценарии $i$.</p>
+          </div>
+
+          <div class="box box-formula">
+            <div class="box-title">По историческим данным (ex post)</div>
+            $$\bar{r} = \frac{1}{n} \sum_{t=1}^{n} r_t$$
+          </div>
+
+          <h2>3. Меры риска</h2>
+
+          <div class="box box-formula">
+            <div class="box-title">Дисперсия (Variance, $\sigma^2$)</div>
+            $$\sigma^2 = \sum_{i=1}^{n} p_i \times (r_i - E(r))^2$$
+          </div>
+
+          <div class="box box-formula">
+            <div class="box-title">Стандартное отклонение (Standard Deviation, $\sigma$)</div>
+            $$\sigma = \sqrt{\sigma^2}$$
+            <p>Наиболее популярная мера <strong>общего риска</strong> актива. Измеряется в тех же единицах, что и доходность (%).</p>
+          </div>
+
+          <div class="box box-formula">
+            <div class="box-title">Коэффициент вариации (CV)</div>
+            $$CV = \frac{\sigma}{E(r)}$$
+            <p>Позволяет сравнивать риск активов с разным уровнем доходности — показывает «риск на единицу доходности».</p>
+          </div>
+
+          <h2>4. Нормальное распределение</h2>
+
+          <p>Если доходности подчиняются нормальному распределению, то:</p>
+          <ul>
+            <li><strong>68,3%</strong> наблюдений лежат в интервале $E(r) \pm 1\sigma$</li>
+            <li><strong>95,4%</strong> — в интервале $E(r) \pm 2\sigma$</li>
+            <li><strong>99,7%</strong> — в интервале $E(r) \pm 3\sigma$</li>
+          </ul>
+
+          <div class="box box-example">
+            <div class="box-title">Пример</div>
+            <p>Если $E(r) = 15\%$, $\sigma = 20\%$, то с вероятностью 95% доходность будет от $-25\%$ до $+55\%$.</p>
+          </div>
+
+          <h2>5. Виды рисков</h2>
+
+          <p><strong>Систематический (рыночный) риск</strong> — обусловлен макроэкономическими факторами (инфляция, ставки, кризисы, политика). <strong>Нельзя устранить</strong> диверсификацией.</p>
+
+          <p><strong>Несистематический (специфический) риск</strong> — связан с конкретной компанией или отраслью (управленческие ошибки, судебные иски, технологические сбои). <strong>Устраняется</strong> диверсификацией.</p>
+
+          <div class="box box-formula">
+            <div class="box-title">Общий риск</div>
+            $$\text{Общий риск} = \text{Систематический} + \text{Несистематический}$$
+          </div>
+
+          <div class="box box-info">
+            <div class="box-title">Эффект диверсификации</div>
+            <p>Исследования показывают, что портфель из 20–30 случайно выбранных акций устраняет большую часть несистематического риска.</p>
+          </div>
+
+          <h2>6. Ковариация и корреляция</h2>
+
+          <div class="box box-formula">
+            <div class="box-title">Ковариация</div>
+            $$Cov(r_A, r_B) = \sum_{i=1}^{n} p_i \times (r_{A,i} - E(r_A)) \times (r_{B,i} - E(r_B))$$
+            <p>Мера совместного изменения доходностей двух активов.</p>
+          </div>
+
+          <div class="box box-formula">
+            <div class="box-title">Корреляция</div>
+            $$\rho_{AB} = \frac{Cov(r_A, r_B)}{\sigma_A \times \sigma_B}$$
+            <p>Нормированная ковариация (от $-1$ до $+1$).</p>
+          </div>
+
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr><th>Корреляция</th><th>Интерпретация</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>$\rho = +1$</td><td>Активы движутся синхронно (нет эффекта диверсификации)</td></tr>
+                <tr><td>$\rho = -1$</td><td>Активы движутся в противофазе (максимальная диверсификация)</td></tr>
+                <tr><td>$\rho = 0$</td><td>Линейная связь отсутствует</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>7. Риск портфеля из двух активов</h2>
+
+          <div class="box box-formula">
+            <div class="box-title">Ожидаемая доходность портфеля</div>
+            $$E(r_p) = w_A \times E(r_A) + w_B \times E(r_B)$$
+          </div>
+
+          <div class="box box-formula">
+            <div class="box-title">Стандартное отклонение портфеля</div>
+            $$\sigma_p = \sqrt{w_A^2 \sigma_A^2 + w_B^2 \sigma_B^2 + 2 w_A w_B \rho_{AB} \sigma_A \sigma_B}$$
+          </div>
+
+          <div class="box box-key">
+            <div class="box-title">Ключевой вывод</div>
+            <p><strong>Риск портфеля может быть ниже риска каждого отдельного актива</strong> (если $\rho &lt; 1$).</p>
+          </div>
+
+          <h2>8. Примеры расчётов</h2>
+
+          <h3>Пример 1. Ожидаемая доходность и риск по сценариям</h3>
+
+          <p>Акции Лукойла оценены по трём сценариям:</p>
+
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr><th>Сценарий</th><th>Вероятность</th><th>Доходность</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Рост нефти</td><td class="num">0,30</td><td class="num">+25%</td></tr>
+                <tr><td>Стабильность</td><td class="num">0,50</td><td class="num">+12%</td></tr>
+                <tr><td>Падение нефти</td><td class="num">0,20</td><td class="num">−8%</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          $$E(r) = 0{,}30 \times 25\% + 0{,}50 \times 12\% + 0{,}20 \times (-8\%) = 7{,}5 + 6{,}0 - 1{,}6 = 11{,}9\%$$
+
+          $$\sigma^2 = 0{,}30(25 - 11{,}9)^2 + 0{,}50(12 - 11{,}9)^2 + 0{,}20(-8 - 11{,}9)^2$$
+          $$= 0{,}30 \times 171{,}6 + 0{,}50 \times 0{,}01 + 0{,}20 \times 396{,}0 = 51{,}5 + 0 + 79{,}2 = 130{,}7$$
+
+          $$\sigma = \sqrt{130{,}7} = 11{,}4\%$$
+
+          $$CV = 11{,}4\% / 11{,}9\% = 0{,}96$$
+
+          <h3>Пример 2. Риск портфеля из двух активов</h3>
+
+          <p>Портфель: 60% акции Лукойл ($\sigma_A = 11{,}4\%$), 40% акции Сбербанк ($\sigma_B = 18{,}0\%$). Корреляция $\rho = 0{,}35$.</p>
+
+          $$\sigma_p = \sqrt{(0{,}6)^2 \times (11{,}4)^2 + (0{,}4)^2 \times (18{,}0)^2 + 2 \times 0{,}6 \times 0{,}4 \times 0{,}35 \times 11{,}4 \times 18{,}0}$$
+
+          $$= \sqrt{46{,}8 + 51{,}8 + 34{,}5} = \sqrt{133{,}1} = 11{,}5\%$$
+
+          <div class="box box-example">
+            <div class="box-title">Интерпретация</div>
+            <p style="margin-bottom: 0;">Риск портфеля (11,5%) <strong>ниже</strong> средневзвешенного риска ($0{,}6 \times 11{,}4 + 0{,}4 \times 18{,}0 = 14{,}0\%$). Это эффект диверсификации.</p>
+          </div>
+
+          <h2>9. Ключевые понятия</h2>
+
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr><th>Термин</th><th>Определение</th></tr>
+              </thead>
+              <tbody>
+                <tr><td><strong>Ожидаемая доходность (Expected Return)</strong></td><td>Средневзвешенная доходность по всем сценариям</td></tr>
+                <tr><td><strong>Стандартное отклонение ($\sigma$)</strong></td><td>Мера общего риска актива</td></tr>
+                <tr><td><strong>Дисперсия ($\sigma^2$)</strong></td><td>Квадрат стандартного отклонения</td></tr>
+                <tr><td><strong>Коэффициент вариации (CV)</strong></td><td>Риск на единицу доходности</td></tr>
+                <tr><td><strong>Систематический риск</strong></td><td>Рыночный риск, не устраняется диверсификацией</td></tr>
+                <tr><td><strong>Несистематический риск</strong></td><td>Специфический риск, устраняется диверсификацией</td></tr>
+                <tr><td><strong>Диверсификация</strong></td><td>Распределение инвестиций для снижения риска</td></tr>
+                <tr><td><strong>Ковариация (Covariance)</strong></td><td>Мера совместной изменчивости двух активов</td></tr>
+                <tr><td><strong>Корреляция ($\rho$)</strong></td><td>Нормированная ковариация (от $-1$ до $+1$)</td></tr>
+                <tr><td><strong>Портфель (Portfolio)</strong></td><td>Набор финансовых активов инвестора</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>10. Практические задания</h2>
+
+          <h3>Задание 1. Расчёт ожидаемой доходности и $\sigma$</h3>
+
+          <p>Акции Газпрома:</p>
+
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead>
+                <tr><th>Сценарий</th><th>Вероятность</th><th>Доходность</th></tr>
+              </thead>
+              <tbody>
+                <tr><td>Оптимистичный</td><td class="num">0,25</td><td class="num">+30%</td></tr>
+                <tr><td>Базовый</td><td class="num">0,50</td><td class="num">+10%</td></tr>
+                <tr><td>Пессимистичный</td><td class="num">0,25</td><td class="num">−15%</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p><strong>Рассчитайте $E(r)$, $\sigma$, $CV$.</strong></p>
+
+          <details class="question-card">
+            <summary>Показать решение</summary>
+            <div class="answer">
+              $$E(r) = 0{,}25 \times 30 + 0{,}50 \times 10 + 0{,}25 \times (-15) = 7{,}5 + 5{,}0 - 3{,}75 = 8{,}75\%$$
+              $$\sigma^2 = 0{,}25(30-8{,}75)^2 + 0{,}50(10-8{,}75)^2 + 0{,}25(-15-8{,}75)^2$$
+              $$= 0{,}25 \times 451{,}6 + 0{,}50 \times 1{,}56 + 0{,}25 \times 564{,}1 = 112{,}9 + 0{,}8 + 141{,}0 = 254{,}7$$
+              $$\sigma = \sqrt{254{,}7} = 16{,}0\%$$
+              $$CV = 16{,}0 / 8{,}75 = 1{,}83$$
+            </div>
+          </details>
+
+          <h3>Задание 2. Портфель из двух активов</h3>
+
+          <p>50% Газпром ($E(r) = 8{,}75\%$, $\sigma = 16\%$) и 50% Сбербанк ($E(r) = 14\%$, $\sigma = 20\%$). $\rho = 0{,}40$.</p>
+
+          <p><strong>Рассчитайте $E(r_p)$ и $\sigma_p$.</strong></p>
+
+          <details class="question-card">
+            <summary>Показать решение</summary>
+            <div class="answer">
+              $$E(r_p) = 0{,}5 \times 8{,}75 + 0{,}5 \times 14 = 11{,}375\%$$
+              $$\sigma_p = \sqrt{0{,}25 \times 256 + 0{,}25 \times 400 + 2 \times 0{,}25 \times 0{,}40 \times 16 \times 20}$$
+              $$= \sqrt{64 + 100 + 64} = \sqrt{228} = 15{,}1\%$$
+              <p>Средневзвешенный $\sigma$: $0{,}5 \times 16 + 0{,}5 \times 20 = 18\%$. Портфельный $\sigma = 15{,}1\%$ — экономия 2,9 п.п. благодаря диверсификации.</p>
+            </div>
+          </details>
+
+          <h2>Контрольные вопросы</h2>
+
+          <details class="question-card">
+            <summary>Как рассчитать ожидаемую доходность актива по сценариям?</summary>
+            <div class="answer"><p>Ожидаемая доходность — это сумма произведений вероятности каждого сценария на доходность при этом сценарии: $E(r) = \sum p_i \times r_i$. Например, при трёх сценариях нужно умножить вероятность каждого на соответствующую доходность и сложить результаты.</p></div>
+          </details>
+
+          <details class="question-card">
+            <summary>Что показывает стандартное отклонение? Почему оно лучше дисперсии для практических целей?</summary>
+            <div class="answer"><p>Стандартное отклонение ($\sigma$) — мера общего риска актива, показывающая средний разброс доходности вокруг ожидаемого значения. Оно лучше дисперсии, потому что измеряется в тех же единицах, что и доходность (%), а дисперсия — в квадратных процентах, что затрудняет интерпретацию.</p></div>
+          </details>
+
+          <details class="question-card">
+            <summary>В чём разница между систематическим и несистематическим риском?</summary>
+            <div class="answer"><p>Систематический (рыночный) риск обусловлен макроэкономическими факторами и не устраняется диверсификацией. Несистематический (специфический) риск связан с конкретной компанией или отраслью и устраняется диверсификацией (портфель из 20–30 акций убирает большую часть).</p></div>
+          </details>
+
+          <details class="question-card">
+            <summary>Что означает корреляция = −1 между двумя активами?</summary>
+            <div class="answer"><p>Корреляция $\rho = -1$ означает, что активы движутся строго в противофазе: когда один растёт, другой падает на пропорциональную величину. Это обеспечивает максимальный эффект диверсификации — теоретически можно создать безрисковый портфель.</p></div>
+          </details>
+
+          <details class="question-card">
+            <summary>Почему риск портфеля может быть ниже риска каждого из входящих в него активов?</summary>
+            <div class="answer"><p>Если корреляция между активами меньше +1, колебания одного актива частично компенсируются колебаниями другого. Формула: $\sigma_p = \sqrt{w_A^2 \sigma_A^2 + w_B^2 \sigma_B^2 + 2 w_A w_B \rho_{AB} \sigma_A \sigma_B}$. При $\rho &lt; 1$ перекрёстный член уменьшает общий риск.</p></div>
+          </details>
+
+          <details class="question-card">
+            <summary>Какой вид риска устраняется диверсификацией? Сколько акций нужно для значительной диверсификации?</summary>
+            <div class="answer"><p>Диверсификацией устраняется несистематический (специфический) риск. Исследования показывают, что портфель из 20–30 случайно выбранных акций устраняет бо&#769;льшую часть несистематического риска. Систематический риск остаётся.</p></div>
+          </details>
+
+          <nav class="nav-lecture" aria-label="Навигация по лекциям">
+            <a href="topic-12.html">
+              <span class="nav-label">&larr; Предыдущая</span>
+              <span class="nav-title">1.2 Временная стоимость денег</span>
+            </a>
+            <a href="topic-22.html">
+              <span class="nav-label">Следующая &rarr;</span>
+              <span class="nav-title">2.2 Модель CAPM</span>
+            </a>
+          </nav>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+  <div id="site-footer"></div>
+  <script src="../js/components.js"></script>
+  <script src="../js/app.js"></script>
+</body>
+</html>

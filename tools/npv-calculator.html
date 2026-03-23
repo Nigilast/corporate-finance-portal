@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Калькулятор NPV/IRR — Корпоративные финансы</title>
+  <meta name="description" content="Интерактивный калькулятор NPV, IRR, PI, DPP с графиком NPV-профиля. Оцените инвестиционный проект.">
+  <meta property="og:title" content="Калькулятор NPV/IRR — Оценка инвестиционных проектов">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body data-page="tools/npv-calculator" data-depth="1">
+  <div id="site-nav"></div>
+  <main id="main-content">
+    <section class="hero hero-compact">
+      <div class="hero-glow hero-glow-primary" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-badge">Интерактивный инструмент</div>
+        <h1>Калькулятор <span class="highlight">NPV / IRR</span></h1>
+        <p class="hero-subtitle">Оцените инвестиционный проект: NPV, IRR, PI, DPP</p>
+      </div>
+    </section>
+
+    <section class="section">
+      <div class="container">
+        <div class="box box-formula" style="max-width:var(--container-narrow);margin:0 auto var(--space-8);">
+          <div class="box-title">Формула</div>
+          $$NPV = \sum_{t=0}^{n} \frac{CF_t}{(1+r)^t}$$
+        </div>
+
+        <div style="text-align:center;margin-bottom:var(--space-6);">
+          <span class="text-sm text-muted" style="margin-right:var(--space-2);">Пресеты:</span>
+          <div class="preset-group" style="display:inline-flex;">
+            <button class="preset-btn active" data-preset="lukoil">Лукойл: модернизация</button>
+            <button class="preset-btn" data-preset="startup">Стартап</button>
+            <button class="preset-btn" data-preset="custom">Свои данные</button>
+          </div>
+        </div>
+
+        <div class="calc-layout">
+          <div class="calc-panel">
+            <h3>Параметры</h3>
+            <div class="calc-field">
+              <label for="discount">Ставка дисконтирования (WACC), %</label>
+              <input type="number" id="discount" value="16.9" min="0" max="100" step="0.1">
+            </div>
+            <div class="calc-field">
+              <label for="investment">Начальные инвестиции, млн ₽</label>
+              <input type="number" id="investment" value="500" min="0" step="10">
+            </div>
+            <div class="calc-field">
+              <label for="periods">Число периодов (лет)</label>
+              <input type="number" id="periods" value="5" min="1" max="30" step="1">
+            </div>
+            <div class="calc-field">
+              <label>Денежные потоки по годам, млн ₽</label>
+              <div id="cfInputs" style="display:flex;flex-direction:column;gap:var(--space-2);"></div>
+            </div>
+            <button class="btn btn-primary" style="width:100%;margin-top:var(--space-4);" onclick="calculate()">Рассчитать</button>
+          </div>
+
+          <div class="calc-panel">
+            <h3>Результаты</h3>
+            <div class="result-box" id="resultBox">
+              <div class="result-row"><span class="result-label">NPV</span><span class="result-value" id="resNPV">—</span></div>
+              <div class="result-row"><span class="result-label">IRR</span><span class="result-value" id="resIRR" style="font-size:var(--text-base);">—</span></div>
+              <div class="result-row"><span class="result-label">PI</span><span class="result-value" id="resPI" style="font-size:var(--text-base);">—</span></div>
+              <div class="result-row"><span class="result-label">DPP</span><span class="result-value" id="resDPP" style="font-size:var(--text-base);">—</span></div>
+            </div>
+            <div class="box box-info" id="verdictBox" style="display:none;">
+              <div class="box-title">Вердикт</div>
+              <p id="verdictText" style="margin:0;"></p>
+            </div>
+            <div class="chart-box"><canvas id="npvProfileChart" role="img" aria-label="NPV-профиль проекта"></canvas></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div id="site-footer"></div>
+  <script src="../js/components.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/utils.js"></script>
+  <script>
+    const presets = {
+      lukoil: { discount: 16.9, investment: 500, cfs: [150, 160, 170, 140, 130] },
+      startup: { discount: 25, investment: 50, cfs: [5, 15, 25, 40, 60] },
+      custom: { discount: 15, investment: 100, cfs: [30, 30, 30, 30, 30] }
+    };
+
+    let chart = null;
+
+    function buildCFInputs(count, values) {
+      const box = document.getElementById('cfInputs');
+      box.innerHTML = '';
+      for (let i = 0; i < count; i++) {
+        const inp = document.createElement('input');
+        inp.type = 'number'; inp.id = 'cf' + i; inp.step = '1';
+        inp.value = values && values[i] !== undefined ? values[i] : 0;
+        inp.placeholder = 'Год ' + (i + 1);
+        inp.style.cssText = 'width:100%;padding:var(--space-2) var(--space-3);font-family:var(--font-body);font-size:var(--text-sm);border:1px solid var(--color-border);border-radius:var(--radius-sm);background:var(--color-bg);color:var(--color-text);';
+        const wrap = document.createElement('div');
+        wrap.style.cssText = 'display:flex;align-items:center;gap:var(--space-2);';
+        const lbl = document.createElement('span');
+        lbl.textContent = 'Год ' + (i + 1) + ':';
+        lbl.style.cssText = 'font-size:var(--text-xs);color:var(--color-text-muted);min-width:50px;';
+        wrap.appendChild(lbl); wrap.appendChild(inp);
+        box.appendChild(wrap);
+      }
+    }
+
+    document.getElementById('periods').addEventListener('change', function() {
+      buildCFInputs(parseInt(this.value), null);
+    });
+
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const p = presets[btn.dataset.preset];
+        document.getElementById('discount').value = p.discount;
+        document.getElementById('investment').value = p.investment;
+        document.getElementById('periods').value = p.cfs.length;
+        buildCFInputs(p.cfs.length, p.cfs);
+        calculate();
+      });
+    });
+
+    function getCashflows() {
+      const inv = parseFloat(document.getElementById('investment').value);
+      const n = parseInt(document.getElementById('periods').value);
+      const cfs = [-inv];
+      for (let i = 0; i < n; i++) {
+        const el = document.getElementById('cf' + i);
+        cfs.push(el ? parseFloat(el.value) || 0 : 0);
+      }
+      return cfs;
+    }
+
+    function calculate() {
+      const r = parseFloat(document.getElementById('discount').value) / 100;
+      const cfs = getCashflows();
+      const npv = calcNPV(r, cfs);
+      const irr = calcIRR(cfs, 0.1);
+      const pi = calcPI(r, cfs);
+      const dpp = calcDPP(r, cfs);
+
+      document.getElementById('resNPV').textContent = formatNumber(npv, 2) + ' млн ₽';
+      document.getElementById('resNPV').style.color = npv >= 0 ? 'var(--color-success)' : 'var(--color-error)';
+      document.getElementById('resIRR').textContent = isFinite(irr) ? formatPercent(irr, 2) : '—';
+      document.getElementById('resPI').textContent = formatNumber(pi, 3);
+      document.getElementById('resDPP').textContent = dpp !== null ? formatNumber(dpp, 1) + ' лет' : 'Не окупается';
+
+      const vBox = document.getElementById('verdictBox');
+      const vText = document.getElementById('verdictText');
+      vBox.style.display = 'block';
+      if (npv > 0) {
+        vText.textContent = 'Проект создаёт стоимость (NPV > 0). Рекомендация: ПРИНЯТЬ. IRR (' + (irr*100).toFixed(1) + '%) > WACC (' + (r*100).toFixed(1) + '%).';
+        vBox.className = 'box box-key';
+      } else {
+        vText.textContent = 'Проект разрушает стоимость (NPV < 0). Рекомендация: ОТКЛОНИТЬ.';
+        vBox.className = 'box box-warning';
+      }
+
+      drawNPVProfile(cfs);
+    }
+
+    function drawNPVProfile(cfs) {
+      if (typeof Chart === 'undefined') return;
+      const rates = []; const npvs = [];
+      for (let r = 0; r <= 0.50; r += 0.01) {
+        rates.push((r * 100).toFixed(0) + '%');
+        npvs.push(calcNPV(r, cfs));
+      }
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      if (chart) chart.destroy();
+      chart = new Chart(document.getElementById('npvProfileChart'), {
+        type: 'line',
+        data: {
+          labels: rates,
+          datasets: [{
+            label: 'NPV',
+            data: npvs,
+            borderColor: '#1d4ed8',
+            backgroundColor: 'rgba(29,78,216,0.1)',
+            fill: true,
+            tension: 0.3,
+            pointRadius: 0,
+            borderWidth: 2
+          }]
+        },
+        options: {
+          responsive: true,
+          plugins: {
+            title: { display: true, text: 'NPV-профиль', font: { family: 'Inter', size: 14, weight: '600' }, color: isDark ? '#d6d3d1' : '#44403c' },
+            legend: { display: false }
+          },
+          scales: {
+            y: {
+              ticks: { callback: v => v.toFixed(0), font: { family: 'Inter', size: 11 }, color: isDark ? '#a8a29e' : '#78716c' },
+              grid: { color: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)' }
+            },
+            x: {
+              ticks: { maxTicksLimit: 10, font: { family: 'Inter', size: 11 }, color: isDark ? '#a8a29e' : '#78716c' },
+              grid: { display: false }
+            }
+          }
+        }
+      });
+    }
+
+    // Init
+    document.addEventListener('DOMContentLoaded', () => {
+      const p = presets.lukoil;
+      buildCFInputs(p.cfs.length, p.cfs);
+      calculate();
+    });
+  </script>
+</body>
+</html>

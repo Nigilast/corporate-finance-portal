@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Тест: Разделы 1–2 — Корпоративные финансы</title>
+  <meta name="description" content="Тест по разделам 1-2: временная стоимость денег, риск и доходность, CAPM, диверсификация. 20 вопросов из ФОС.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/pages.css">
+</head>
+<body data-page="assessment/quiz-sections-1-2" data-depth="1">
+  <div id="site-nav"></div>
+  <main id="main-content">
+    <section class="hero hero-compact">
+      <div class="hero-glow hero-glow-primary" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-badge">Разделы 1–2 &bull; 20 вопросов &bull; 40 минут</div>
+        <h1>Тест: <span class="highlight">Основы и риск</span></h1>
+        <p class="hero-subtitle">Временная стоимость денег, риск и доходность, CAPM, диверсификация</p>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="quiz-container" id="quizContainer"></div>
+        <div class="score-box" id="scoreBox">
+          <div class="score-num" id="scoreNum"></div>
+          <div class="score-label">правильных ответов из 20</div>
+          <div class="score-msg" id="scoreMsg"></div>
+          <div class="quiz-actions">
+            <button class="btn btn-primary" onclick="location.reload()">Пройти заново</button>
+            <a href="../lectures/" class="btn btn-outline">К лекциям</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div id="site-footer"></div>
+  <script src="../js/components.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/utils.js"></script>
+  <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const q = [
+      {text:'Концепция временной стоимости денег означает, что:',options:['Деньги теряют покупательную способность из-за инфляции','Рубль сегодня стоит больше, чем рубль в будущем','Деньги имеют разную стоимость в разных странах','Все перечисленные варианты верны'],correct:1,explanation:'TVM — фундаментальная концепция: рубль сегодня ценнее благодаря возможности инвестирования, инфляции, риску и предпочтению ликвидности.'},
+      {text:'PV 200 000 руб. через 3 года при ставке 10%?',options:['150 263 руб.','200 000 руб.','266 200 руб.','181 818 руб.'],correct:0,explanation:'PV = 200 000 / 1,1³ = 200 000 / 1,331 = 150 263 руб.'},
+      {text:'Аннуитет — это:',options:['Разовый платёж в конце срока','Серия равных платежей через равные промежутки','Серия растущих платежей','Платёж в начале периода'],correct:1},
+      {text:'Номинальная ставка 12%, инфляция 4%. Реальная ставка ≈',options:['16%','8%','48%','3%'],correct:1,explanation:'По формуле Фишера: r_реал ≈ r_ном − π = 12% − 4% = 8%.'},
+      {text:'Ожидаемая доходность актива рассчитывается как:',options:['Максимальная при благоприятном сценарии','Среднеарифметическая за 5 лет','Средневзвешенная по вероятностям сценариев','Доходность при наиболее вероятном сценарии'],correct:2},
+      {text:'Стандартное отклонение доходности — это мера:',options:['Ожидаемой доходности','Систематического риска','Общего риска','Несистематического риска'],correct:2,explanation:'σ измеряет общий риск (и систематический, и несистематический).'},
+      {text:'Диверсификация портфеля позволяет устранить:',options:['Систематический риск','Рыночный риск','Несистематический риск','Все виды риска'],correct:2},
+      {text:'Бета = 1,5 означает, что актив:',options:['Растёт в 1,5 раза быстрее рынка','Имеет риск в 1,5 раза ниже','Не зависит от рынка','Безрисковый'],correct:0},
+      {text:'По CAPM, доходность актива с β=0 равна:',options:['Рыночной доходности','Нулю','Безрисковой ставке','Среднерыночной премии'],correct:2,explanation:'При β=0 актив не несёт систематического риска, поэтому k_e = r_f.'},
+      {text:'rf=8%, rm=14%, β=1,2. Доходность по CAPM:',options:['15,2%','22,8%','9,6%','14,8%'],correct:0,explanation:'k_e = 8% + 1,2 × (14% − 8%) = 8% + 7,2% = 15,2%.'},
+      {text:'Линия SML показывает зависимость:',options:['Доходности портфеля от σ','Требуемой доходности от β','Цены от объёма торгов','Доходности от инфляции'],correct:1},
+      {text:'Агентский конфликт возникает между:',options:['Государством и инвесторами','Акционерами и менеджерами / кредиторами','Поставщиками и покупателями','Центром и регионами'],correct:1},
+      {text:'Сильная форма EMH утверждает, что цены отражают:',options:['Только публичную информацию','Только историческую','Всю информацию, включая инсайдерскую','Только дивиденды'],correct:2},
+      {text:'Коэффициент вариации используется для:',options:['Сравнения риска активов с разной доходностью','Расчёта ожидаемой доходности','Определения корреляции','Оценки опциона'],correct:0},
+      {text:'Какое утверждение о диверсификации НЕВЕРНО?',options:['Снижает несистематический риск','Полностью устраняет рыночный риск','Низкая корреляция снижает риск портфеля','20–30 акций достаточно'],correct:1,explanation:'Диверсификация НЕ устраняет рыночный (систематический) риск.'},
+      {text:'Безрисковая ставка в России — это доходность:',options:['Депозита Сбербанка','Ключевой ставки ЦБ','Государственных облигаций (ОФЗ)','Индекса MOEX'],correct:2},
+      {text:'EAR при 12% ежеквартально:',options:['12,00%','12,55%','12,36%','13,00%'],correct:1,explanation:'EAR = (1 + 0,12/4)⁴ − 1 = 1,03⁴ − 1 ≈ 12,55%.'},
+      {text:'Ковариация = 0 означает:',options:['Одинаковая доходность','Доходности не связаны линейно','Один актив безрисковый','Портфель без риска'],correct:1},
+      {text:'Модель Фама–Френча vs CAPM:',options:['Один фактор','Добавляет размер и стоимость','Не учитывает β','Только для облигаций'],correct:1},
+      {text:'Перпетуитет с платежом 100 руб./год при r=10%:',options:['1 000 руб.','10 000 руб.','100 руб.','Бесконечно'],correct:0,explanation:'PV = PMT/r = 100/0,10 = 1 000 руб.'}
+    ];
+    renderQuiz('quizContainer', q, 'scoreBox');
+  });
+  </script>
+</body>
+</html>

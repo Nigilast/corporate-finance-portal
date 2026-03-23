@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Калькулятор WACC — Корпоративные финансы</title>
+  <meta name="description" content="Интерактивный калькулятор WACC с визуализацией структуры капитала. Пресеты: Лукойл, Газпром, Сбербанк.">
+
+  <meta property="og:title" content="Калькулятор WACC — Средневзвешенная стоимость капитала">
+  <meta property="og:description" content="Рассчитайте WACC с визуализацией. Пресеты российских компаний.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/pages.css">
+
+  <!-- KaTeX for formula display -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+
+  <!-- Chart.js -->
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body data-page="tools/wacc-calculator" data-depth="1">
+
+  <div id="site-nav"></div>
+
+  <main id="main-content">
+
+    <section class="hero hero-compact" aria-label="Заголовок">
+      <div class="hero-glow hero-glow-primary" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-badge">Интерактивный инструмент</div>
+        <h1>Калькулятор <span class="highlight">WACC</span></h1>
+        <p class="hero-subtitle">Средневзвешенная стоимость капитала с визуализацией структуры</p>
+      </div>
+    </section>
+
+    <section class="section" aria-label="Калькулятор">
+      <div class="container">
+
+        <!-- Formula reminder -->
+        <div class="box box-formula" style="max-width: var(--container-narrow); margin: 0 auto var(--space-8);">
+          <div class="box-title">Формула</div>
+          $$WACC = w_e \cdot k_e + w_d \cdot k_d \cdot (1 - T) + w_p \cdot k_p$$
+        </div>
+
+        <!-- Presets -->
+        <div style="text-align: center; margin-bottom: var(--space-6);">
+          <span class="text-sm text-muted" style="margin-right: var(--space-2);">Пресеты:</span>
+          <div class="preset-group" style="display: inline-flex;">
+            <button class="preset-btn" data-preset="lukoil">Лукойл</button>
+            <button class="preset-btn" data-preset="gazprom">Газпром</button>
+            <button class="preset-btn" data-preset="sberbank">Сбербанк</button>
+            <button class="preset-btn" data-preset="custom">Свои данные</button>
+          </div>
+        </div>
+
+        <!-- Calculator Layout -->
+        <div class="calc-layout">
+
+          <!-- Inputs Panel -->
+          <div class="calc-panel">
+            <h3>Параметры</h3>
+
+            <div class="calc-field">
+              <label for="we">Доля собственного капитала ($w_e$), %</label>
+              <input type="number" id="we" value="78" min="0" max="100" step="1">
+            </div>
+
+            <div class="calc-field">
+              <label for="wd">Доля заёмного капитала ($w_d$), %</label>
+              <input type="number" id="wd" value="22" min="0" max="100" step="1">
+            </div>
+
+            <div class="calc-field">
+              <label for="wp">Доля привилегированных акций ($w_p$), %</label>
+              <input type="number" id="wp" value="0" min="0" max="100" step="1">
+            </div>
+
+            <hr style="margin: var(--space-4) 0;">
+
+            <div class="calc-field">
+              <label for="ke">Стоимость собственного капитала ($k_e$), %</label>
+              <input type="number" id="ke" value="18.5" min="0" max="100" step="0.1">
+            </div>
+
+            <div class="calc-field">
+              <label for="kd">Стоимость заёмного капитала ($k_d$, до налогов), %</label>
+              <input type="number" id="kd" value="15.0" min="0" max="100" step="0.1">
+            </div>
+
+            <div class="calc-field">
+              <label for="kp">Стоимость привилегированных ($k_p$), %</label>
+              <input type="number" id="kp" value="0" min="0" max="100" step="0.1">
+            </div>
+
+            <div class="calc-field">
+              <label for="tax">Ставка налога на прибыль ($T$), %</label>
+              <input type="number" id="tax" value="25" min="0" max="100" step="1">
+            </div>
+
+            <button class="btn btn-primary" style="width: 100%; margin-top: var(--space-4);" onclick="calculate()">
+              Рассчитать WACC
+            </button>
+          </div>
+
+          <!-- Results Panel -->
+          <div class="calc-panel">
+            <h3>Результаты</h3>
+
+            <div class="result-box" id="resultBox">
+              <div class="result-row">
+                <span class="result-label">WACC</span>
+                <span class="result-value" id="resWacc">—</span>
+              </div>
+              <div class="result-row">
+                <span class="result-label">Стоимость долга (после налогов)</span>
+                <span class="result-value" id="resKdAfter" style="font-size: var(--text-base);">—</span>
+              </div>
+              <div class="result-row">
+                <span class="result-label">Налоговый щит (экономия)</span>
+                <span class="result-value" id="resTaxShield" style="font-size: var(--text-base);">—</span>
+              </div>
+              <div class="result-row">
+                <span class="result-label">Вклад собственного капитала</span>
+                <span class="result-value" id="resEquity" style="font-size: var(--text-base);">—</span>
+              </div>
+              <div class="result-row">
+                <span class="result-label">Вклад заёмного капитала</span>
+                <span class="result-value" id="resDebt" style="font-size: var(--text-base);">—</span>
+              </div>
+            </div>
+
+            <div class="box box-info" id="interpretBox" style="display: none;">
+              <div class="box-title">Интерпретация</div>
+              <p id="interpretText" style="margin: 0;"></p>
+            </div>
+
+            <!-- Chart -->
+            <div class="chart-box">
+              <canvas id="structureChart" aria-label="Структура капитала" role="img"></canvas>
+            </div>
+
+            <div class="chart-box" style="margin-top: var(--space-6);">
+              <canvas id="costChart" aria-label="Стоимость компонентов WACC" role="img"></canvas>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="../js/components.js"></script>
+  <script src="../js/app.js"></script>
+
+  <script>
+    const presets = {
+      lukoil: { we: 78, wd: 22, wp: 0, ke: 18.5, kd: 15.0, kp: 0, tax: 25, name: 'ПАО «Лукойл» (2024)' },
+      gazprom: { we: 55, wd: 45, wp: 0, ke: 20.0, kd: 14.5, kp: 0, tax: 25, name: 'ПАО «Газпром» (2024)' },
+      sberbank: { we: 14, wd: 86, wp: 0, ke: 22.0, kd: 12.0, kp: 0, tax: 25, name: 'ПАО «Сбербанк» (2024)' },
+      custom: { we: 50, wd: 50, wp: 0, ke: 15.0, kd: 12.0, kp: 0, tax: 25, name: 'Пользовательские данные' }
+    };
+
+    let structureChart = null;
+    let costChart = null;
+
+    // Preset buttons
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const p = presets[btn.dataset.preset];
+        if (!p) return;
+        document.getElementById('we').value = p.we;
+        document.getElementById('wd').value = p.wd;
+        document.getElementById('wp').value = p.wp;
+        document.getElementById('ke').value = p.ke;
+        document.getElementById('kd').value = p.kd;
+        document.getElementById('kp').value = p.kp;
+        document.getElementById('tax').value = p.tax;
+        calculate();
+      });
+    });
+
+    function calculate() {
+      const we = parseFloat(document.getElementById('we').value) / 100;
+      const wd = parseFloat(document.getElementById('wd').value) / 100;
+      const wp = parseFloat(document.getElementById('wp').value) / 100;
+      const ke = parseFloat(document.getElementById('ke').value) / 100;
+      const kd = parseFloat(document.getElementById('kd').value) / 100;
+      const kp = parseFloat(document.getElementById('kp').value) / 100;
+      const tax = parseFloat(document.getElementById('tax').value) / 100;
+
+      const kdAfter = kd * (1 - tax);
+      const taxShield = kd * tax;
+      const equityContrib = we * ke;
+      const debtContrib = wd * kdAfter;
+      const prefContrib = wp * kp;
+      const wacc = equityContrib + debtContrib + prefContrib;
+
+      // Display
+      document.getElementById('resWacc').textContent = (wacc * 100).toFixed(2) + '%';
+      document.getElementById('resKdAfter').textContent = (kdAfter * 100).toFixed(2) + '%';
+      document.getElementById('resTaxShield').textContent = (taxShield * 100).toFixed(2) + ' п.п.';
+      document.getElementById('resEquity').textContent = (equityContrib * 100).toFixed(2) + '%';
+      document.getElementById('resDebt').textContent = (debtContrib * 100).toFixed(2) + '%';
+
+      // Interpretation
+      const interpBox = document.getElementById('interpretBox');
+      const interpText = document.getElementById('interpretText');
+      interpBox.style.display = 'block';
+
+      const keyRate = 15.0;
+      if (wacc * 100 > keyRate + 5) {
+        interpText.textContent = `WACC ${(wacc*100).toFixed(1)}% значительно выше ключевой ставки ЦБ (${keyRate}%). Это означает высокую стоимость капитала — компания должна искать проекты с доходностью выше ${(wacc*100).toFixed(1)}%.`;
+      } else if (wacc * 100 > keyRate) {
+        interpText.textContent = `WACC ${(wacc*100).toFixed(1)}% выше ключевой ставки ЦБ (${keyRate}%), что типично для компаний с рыночным уровнем риска. Проекты с IRR > ${(wacc*100).toFixed(1)}% создают стоимость.`;
+      } else {
+        interpText.textContent = `WACC ${(wacc*100).toFixed(1)}% ниже ключевой ставки ЦБ (${keyRate}%). Это необычно низко — проверьте корректность входных данных.`;
+      }
+
+      // Charts
+      updateCharts(we, wd, wp, ke, kdAfter, kp, wacc);
+    }
+
+    function updateCharts(we, wd, wp, ke, kdAfter, kp, wacc) {
+      if (typeof Chart === 'undefined') return;
+
+      const fontOpts = { family: 'Inter, sans-serif', size: 12 };
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const textColor = isDark ? '#d6d3d1' : '#44403c';
+
+      // Structure chart (doughnut)
+      const structData = [];
+      const structLabels = [];
+      const structColors = [];
+
+      if (we > 0) { structData.push((we * 100).toFixed(1)); structLabels.push('Собственный'); structColors.push('#1d4ed8'); }
+      if (wd > 0) { structData.push((wd * 100).toFixed(1)); structLabels.push('Заёмный'); structColors.push('#b45309'); }
+      if (wp > 0) { structData.push((wp * 100).toFixed(1)); structLabels.push('Привилегированные'); structColors.push('#15803d'); }
+
+      if (structureChart) structureChart.destroy();
+      structureChart = new Chart(document.getElementById('structureChart'), {
+        type: 'doughnut',
+        data: {
+          labels: structLabels.map((l, i) => `${l} (${structData[i]}%)`),
+          datasets: [{ data: structData, backgroundColor: structColors, borderWidth: 0, hoverOffset: 8 }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          cutout: '55%',
+          plugins: {
+            title: { display: true, text: 'Структура капитала', font: { ...fontOpts, size: 14, weight: '600' }, color: textColor },
+            legend: { position: 'bottom', labels: { padding: 16, usePointStyle: true, pointStyleWidth: 12, font: fontOpts, color: textColor } }
+          }
+        }
+      });
+
+      // Cost chart (bar)
+      const costLabels = ['ke (собств.)', 'kd до налогов', 'kd после налогов', 'WACC'];
+      const costData = [ke * 100, (kdAfter / (1 - parseFloat(document.getElementById('tax').value) / 100)) * 100, kdAfter * 100, wacc * 100];
+      const costColors = ['#1d4ed8', '#dc2626', '#b45309', '#15803d'];
+
+      if (costChart) costChart.destroy();
+      costChart = new Chart(document.getElementById('costChart'), {
+        type: 'bar',
+        data: {
+          labels: costLabels,
+          datasets: [{ data: costData, backgroundColor: costColors, borderWidth: 0, borderRadius: 6 }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+            title: { display: true, text: 'Стоимость компонентов, %', font: { ...fontOpts, size: 14, weight: '600' }, color: textColor },
+            legend: { display: false }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: { callback: v => v + '%', font: fontOpts, color: textColor },
+              grid: { color: isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)' }
+            },
+            x: {
+              ticks: { font: fontOpts, color: textColor },
+              grid: { display: false }
+            }
+          }
+        }
+      });
+    }
+
+    // Auto-calculate on load
+    document.addEventListener('DOMContentLoaded', () => {
+      // Set default preset active
+      document.querySelector('[data-preset="lukoil"]').classList.add('active');
+      calculate();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Глоссарий — Корпоративные финансы</title>
+  <meta name="description" content="Глоссарий корпоративных финансов: 80+ терминов с определениями. WACC, NPV, CAPM, ROE и другие ключевые понятия.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/base.css">
+  <link rel="stylesheet" href="css/components.css">
+  <link rel="stylesheet" href="css/layout.css">
+  <link rel="stylesheet" href="css/pages.css">
+</head>
+<body data-page="glossary" data-depth="0">
+  <div id="site-nav"></div>
+  <main id="main-content">
+    <section class="hero hero-compact">
+      <div class="hero-glow hero-glow-primary" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-badge">Справочник &bull; 80+ терминов</div>
+        <h1><span class="highlight">Глоссарий</span></h1>
+        <p class="hero-subtitle">Ключевые термины курса корпоративных финансов</p>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="glossary-search">
+          <input type="text" id="glossarySearch" placeholder="Поиск термина..." aria-label="Поиск по глоссарию">
+        </div>
+        <div class="glossary-count">Всего терминов: <span id="termCount">0</span></div>
+
+        <div class="glossary-list" id="glossaryList">
+          <div class="glossary-item"><div class="glossary-term">Агентские издержки (Agency Costs)</div><div class="glossary-def">Затраты из-за конфликта интересов между акционерами и менеджерами: мониторинг, стимулирование, остаточные потери.</div></div>
+          <div class="glossary-item"><div class="glossary-term">Акционерный капитал (Equity)</div><div class="glossary-def">Средства, предоставленные акционерами: уставный, добавочный капитал, нераспределённая прибыль.</div></div>
+          <div class="glossary-item"><div class="glossary-term">Альтернативные издержки (Opportunity Cost)</div><div class="glossary-def">Упущенная выгода от наилучшего альтернативного использования ресурса.</div></div>
+          <div class="glossary-item"><div class="glossary-term">Аннуитет (Annuity)</div><div class="glossary-def">Серия равных платежей через равные промежутки. Обычный (постнумерандо) и авансовый (пренумерандо).</div></div>
+          <div class="glossary-item"><div class="glossary-term">Безрисковая ставка (Risk-Free Rate)</div><div class="glossary-def">Доходность актива с нулевым риском дефолта. В России — ОФЗ-10Y (~15% на март 2026).</div></div>
+          <div class="glossary-item"><div class="glossary-term">Бета-коэффициент (β)</div><div class="glossary-def">Мера систематического риска. β=1 — уровень рынка, β>1 — агрессивный, β<1 — защитный.</div></div>
+          <div class="glossary-item"><div class="glossary-term">WACC</div><div class="glossary-def">Средневзвешенная стоимость капитала. Минимальная доходность для инвесторов. Ставка дисконтирования в NPV.</div></div>
+          <div class="glossary-item"><div class="glossary-term">IRR (Internal Rate of Return)</div><div class="glossary-def">Ставка, при которой NPV = 0. «Доходность самого проекта». Правило: IRR > WACC → принять.</div></div>
+          <div class="glossary-item"><div class="glossary-term">NPV (Net Present Value)</div><div class="glossary-def">Чистая приведённая стоимость: сумма дисконтированных потоков минус инвестиции. NPV > 0 → принять.</div></div>
+          <div class="glossary-item"><div class="glossary-term">Временная стоимость денег (TVM)</div><div class="glossary-def">Рубль сегодня > рубля в будущем из-за инвестирования, инфляции, риска и ликвидности.</div></div>
+          <div class="glossary-item"><div class="glossary-term">CAPM (Capital Asset Pricing Model)</div><div class="glossary-def">Модель оценки капитальных активов: k_e = r_f + β × (r_m − r_f).</div></div>
+          <div class="glossary-item"><div class="glossary-term">Денежный поток (Cash Flow)</div><div class="glossary-def">Поступления и выплаты за период. Операционный, инвестиционный и финансовый CF.</div></div>
+          <div class="glossary-item"><div class="glossary-term">Диверсификация</div><div class="glossary-def">Распределение инвестиций для снижения несистематического риска. 20-30 акций устраняют ~90%.</div></div>
+          <div class="glossary-item"><div class="glossary-term">Дивидендная политика</div><div class="glossary-def">Решения о размере, периодичности и форме дивидендов. Типы: стабильная, остаточная, компромиссная.</div></div>
+          <div class="glossary-item"><div class="glossary-term">Дисконтирование (Discounting)</div><div class="glossary-def">Приведение будущей стоимости к настоящему: PV = FV / (1+r)^n.</div></div>
+          <div class="glossary-item"><div class="glossary-term">DPP (Discounted Payback Period)</div><div class="glossary-def">Срок, за который кумулятивные дисконтированные потоки покрывают инвестиции.</div></div>
+          <div class="glossary-item"><div class="glossary-term">EVA (Economic Value Added)</div><div class="glossary-def">Экономическая добавленная стоимость: NOPAT − WACC × IC. EVA > 0 → создание стоимости.</div></div>
+          <div class="glossary-item"><div class="glossary-term">Индекс рентабельности — PI</div><div class="glossary-def">PV притоков / инвестиции. PI > 1 → проект рентабелен. Полезен при рационировании.</div></div>
+          <div class="glossary-item"><div class="glossary-term">Ключевая ставка ЦБ РФ</div><div class="glossary-def">Основная процентная ставка Банка России. Март 2026: 15,0%.</div></div>
+          <div class="glossary-item"><div class="glossary-term">Корпорация (Corporation)</div><div class="glossary-def">Юридическое лицо с капиталом в акциях и ограниченной ответственностью. В РФ — ПАО.</div></div>
+          <div class="glossary-item"><div class="glossary-term">Корреляция (ρ)</div><div class="glossary-def">Мера линейной связи доходностей. От −1 (обратная) до +1 (прямая). При ρ<1 диверсификация работает.</div></div>
+          <div class="glossary-item"><div class="glossary-term">Леверидж финансовый</div><div class="glossary-def">Использование заёмного капитала для увеличения ROE. Измеряется D/E или DFL.</div></div>
+          <div class="glossary-item"><div class="glossary-term">Модель Гордона (DDM)</div><div class="glossary-def">Оценка акции с растущими дивидендами: P_0 = D_1 / (k_e − g).</div></div>
+          <div class="glossary-item"><div class="glossary-term">Налоговый щит (Tax Shield)</div><div class="glossary-def">Экономия на налогах из-за вычета процентов: TS = D × r_d × T.</div></div>
+          <div class="glossary-item"><div class="glossary-term">Наращение (Compounding)</div><div class="glossary-def">Определение будущей стоимости: FV = PV × (1+r)^n.</div></div>
+          <div class="glossary-item"><div class="glossary-term">Невозвратные затраты (Sunk Costs)</div><div class="glossary-def">Уже понесённые расходы, не влияющие на инвестиционные решения.</div></div>
+          <div class="glossary-item"><div class="glossary-term">Несистематический риск</div><div class="glossary-def">Специфический риск компании/отрасли. Устраняется диверсификацией.</div></div>
+          <div class="glossary-item"><div class="glossary-term">Оборотный капитал (Working Capital)</div><div class="glossary-def">Средства в текущей деятельности: запасы + дебиторка + деньги − краткосрочные обязательства.</div></div>
+          <div class="glossary-item"><div class="glossary-term">ОФЗ (гособлигации РФ)</div><div class="glossary-def">Доходность 10Y ОФЗ — безрисковая ставка для расчётов CAPM в России.</div></div>
+          <div class="glossary-item"><div class="glossary-term">Перпетуитет (Perpetuity)</div><div class="glossary-def">Бессрочный аннуитет. PV = PMT / r. Основа модели Гордона.</div></div>
+          <div class="glossary-item"><div class="glossary-term">ROE (Return on Equity)</div><div class="glossary-def">Рентабельность собственного капитала = Чистая прибыль / Собственный капитал.</div></div>
+          <div class="glossary-item"><div class="glossary-term">ROA (Return on Assets)</div><div class="glossary-def">Рентабельность активов = Чистая прибыль / Совокупные активы.</div></div>
+          <div class="glossary-item"><div class="glossary-term">Рыночная премия (Equity Risk Premium)</div><div class="glossary-def">r_m − r_f. Для России: 5–7% (Дамодаран, emerging markets).</div></div>
+          <div class="glossary-item"><div class="glossary-term">Систематический риск (β-риск)</div><div class="glossary-def">Рыночный риск, не устраняется диверсификацией. Компенсируется через CAPM.</div></div>
+          <div class="glossary-item"><div class="glossary-term">SML (Security Market Line)</div><div class="glossary-def">Графическое представление CAPM: зависимость требуемой доходности от β.</div></div>
+          <div class="glossary-item"><div class="glossary-term">Стоимость долга (k_d)</div><div class="glossary-def">Эффективная ставка по заёмным средствам. После налогов: k_d × (1−T).</div></div>
+          <div class="glossary-item"><div class="glossary-term">Стоимость собственного капитала (k_e)</div><div class="glossary-def">Требуемая доходность акций. Определяется через CAPM, DDM или «облигации + премия».</div></div>
+          <div class="glossary-item"><div class="glossary-term">Структура капитала</div><div class="glossary-def">Соотношение D/E. Оптимум — при минимальном WACC.</div></div>
+          <div class="glossary-item"><div class="glossary-term">Теоремы ММ (Модильяни–Миллера)</div><div class="glossary-def">MM I: стоимость не зависит от структуры (без налогов). MM II: k_e растёт с левериджем.</div></div>
+          <div class="glossary-item"><div class="glossary-term">Теория иерархии (Pecking Order)</div><div class="glossary-def">Компания предпочитает: внутренние источники → долг → акции.</div></div>
+          <div class="glossary-item"><div class="glossary-term">Теория компромисса (Trade-off)</div><div class="glossary-def">Оптимальная структура = баланс налоговых выгод долга и издержек банкротства.</div></div>
+          <div class="glossary-item"><div class="glossary-term">Формула Дюпона (DuPont)</div><div class="glossary-def">Декомпозиция ROE: маржа × оборачиваемость × леверидж. 3- и 5-факторная версии.</div></div>
+          <div class="glossary-item"><div class="glossary-term">Формула Фишера</div><div class="glossary-def">(1+r_ном) = (1+r_реал)(1+π). Связь номинальной, реальной ставки и инфляции.</div></div>
+          <div class="glossary-item"><div class="glossary-term">D/E (Debt-to-Equity)</div><div class="glossary-def">Соотношение заёмного и собственного капитала. Мера финансового левериджа.</div></div>
+          <div class="glossary-item"><div class="glossary-term">DCF (Discounted Cash Flow)</div><div class="glossary-def">Метод оценки бизнеса: PV будущих свободных денежных потоков дисконтированных по WACC.</div></div>
+          <div class="glossary-item"><div class="glossary-term">Z-score Альтмана</div><div class="glossary-def">Модель прогнозирования банкротства. Z>2,99 — безопасно, 1,81-2,99 — серая зона, <1,81 — опасно.</div></div>
+          <div class="glossary-item"><div class="glossary-term">EAR (Effective Annual Rate)</div><div class="glossary-def">Эффективная годовая ставка с учётом частоты начислений: EAR = (1 + r/m)^m − 1.</div></div>
+          <div class="glossary-item"><div class="glossary-term">Коэффициент Шарпа (Sharpe Ratio)</div><div class="glossary-def">Доходность на единицу риска: S = (E(r_p) − r_f) / σ_p. Чем выше — тем лучше.</div></div>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div id="site-footer"></div>
+  <script src="js/components.js"></script>
+  <script src="js/app.js"></script>
+  <script src="js/utils.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const items = document.querySelectorAll('.glossary-item');
+      document.getElementById('termCount').textContent = items.length;
+      initGlossarySearch('glossarySearch', '.glossary-list', '.glossary-item');
+    });
+  </script>
+</body>
+</html>

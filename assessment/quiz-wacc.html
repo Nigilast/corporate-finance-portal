@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Квиз: WACC — Корпоративные финансы</title>
+  <meta name="description" content="Тест по теме WACC: 10 вопросов с мгновенной проверкой. Средневзвешенная стоимость капитала, налоговый щит, структура капитала.">
+
+  <meta property="og:title" content="Квиз: WACC — Средневзвешенная стоимость капитала">
+  <meta property="og:description" content="10 вопросов с мгновенной проверкой по теме WACC">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/pages.css">
+</head>
+<body data-page="assessment/quiz-wacc" data-depth="1">
+
+  <div id="site-nav"></div>
+
+  <main id="main-content">
+
+    <section class="hero hero-compact" aria-label="Заголовок теста">
+      <div class="hero-glow hero-glow-primary" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-badge">Тема 4.2 &bull; 10 вопросов &bull; ~15 минут</div>
+        <h1>
+          Квиз: <span class="highlight">WACC</span>
+        </h1>
+        <p class="hero-subtitle">Средневзвешенная стоимость капитала, налоговый щит, оптимизация структуры</p>
+      </div>
+    </section>
+
+    <section class="section" aria-label="Тест">
+      <div class="container">
+
+        <div class="quiz-container" id="quizContainer"></div>
+
+        <div class="score-box" id="scoreBox">
+          <div class="score-num" id="scoreNum"></div>
+          <div class="score-label">правильных ответов из 10</div>
+          <div class="score-msg" id="scoreMsg"></div>
+          <div class="quiz-actions">
+            <button class="btn btn-primary" onclick="location.reload()">Пройти заново</button>
+            <a href="../lectures/topic-42.html" class="btn btn-outline">Повторить лекцию</a>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="../js/components.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/utils.js"></script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const questions = [
+        {
+          text: 'Что представляет собой WACC?',
+          options: [
+            'Средневзвешенную стоимость всех источников капитала компании',
+            'Стоимость только собственного капитала',
+            'Ставку рефинансирования Центрального банка',
+            'Среднюю доходность акций на рынке'
+          ],
+          correct: 0,
+          explanation: 'WACC (Weighted Average Cost of Capital) — средневзвешенная стоимость капитала, учитывающая долю и стоимость каждого источника финансирования: собственного капитала, заёмного капитала и привилегированных акций.'
+        },
+        {
+          text: 'Почему заёмный капитал, как правило, дешевле собственного?',
+          options: [
+            'Потому что банки всегда предлагают низкие ставки',
+            'Из-за приоритета в выплатах и налогового щита',
+            'Потому что акционеры не требуют дивидендов',
+            'Из-за государственного регулирования процентных ставок'
+          ],
+          correct: 1,
+          explanation: 'Кредиторы имеют приоритет в выплатах (меньший риск = меньшая требуемая доходность), а процентные платежи создают налоговый щит, снижая эффективную стоимость долга.'
+        },
+        {
+          text: 'Какова формула посленалоговой стоимости заёмного капитала?',
+          options: [
+            'k_d × T',
+            'k_d × (1 + T)',
+            'k_d × (1 − T)',
+            'k_d / (1 − T)'
+          ],
+          correct: 2,
+          explanation: 'Посленалоговая стоимость долга = k_d × (1 − T), где T — ставка налога на прибыль. Множитель (1 − T) отражает налоговый щит.'
+        },
+        {
+          text: 'С 01.01.2025 ставка налога на прибыль в России составляет:',
+          options: [
+            '13%',
+            '20%',
+            '25%',
+            '30%'
+          ],
+          correct: 2,
+          explanation: 'ФЗ от 12.07.2024 № 176-ФЗ повысил базовую ставку налога на прибыль с 20% до 25% с 1 января 2025 года.'
+        },
+        {
+          text: 'Как рост ставки налога на прибыль влияет на WACC (при прочих равных)?',
+          options: [
+            'WACC увеличивается',
+            'WACC уменьшается',
+            'WACC не изменяется',
+            'Зависит от структуры капитала'
+          ],
+          correct: 1,
+          explanation: 'Рост налога увеличивает налоговый щит (множитель (1 − T) уменьшается), что снижает посленалоговую стоимость долга и, следовательно, WACC.'
+        },
+        {
+          text: 'Какой метод используется для оценки стоимости собственного капитала (k_e)?',
+          options: [
+            'Метод чистых активов',
+            'Модель CAPM',
+            'Метод ликвидационной стоимости',
+            'Метод аналогов'
+          ],
+          correct: 1,
+          explanation: 'Модель CAPM (Capital Asset Pricing Model): k_e = r_f + β × (r_m − r_f), где r_f — безрисковая ставка, β — бета-коэффициент, (r_m − r_f) — рыночная премия за риск.'
+        },
+        {
+          text: 'Что такое налоговый щит (Tax Shield)?',
+          options: [
+            'Льгота по НДС для экспортёров',
+            'Экономия на налогах за счёт вычета процентных платежей из налогооблагаемой прибыли',
+            'Специальный налоговый режим для малого бизнеса',
+            'Отсрочка по уплате налога на прибыль'
+          ],
+          correct: 1,
+          explanation: 'Налоговый щит = процентные платежи × ставка налога. Это экономия на налогах, возникающая из-за того, что проценты по долгу уменьшают налогооблагаемую базу.'
+        },
+        {
+          text: 'Если WACC компании = 15%, а проект обещает IRR = 12%, следует ли принять проект?',
+          options: [
+            'Да, проект прибыльный',
+            'Нет, проект разрушает стоимость',
+            'Да, если NPV положительный',
+            'Зависит от срока окупаемости'
+          ],
+          correct: 1,
+          explanation: 'Если IRR < WACC, проект не покрывает стоимость капитала и разрушает стоимость для акционеров. NPV такого проекта будет отрицательным при ставке дисконтирования = WACC.'
+        },
+        {
+          text: 'Какая форма кривой WACC при различных уровнях долговой нагрузки?',
+          options: [
+            'Прямая линия (WACC не зависит от структуры)',
+            'U-образная (сначала снижается, потом растёт)',
+            'Экспоненциально возрастающая',
+            'Логарифмически убывающая'
+          ],
+          correct: 1,
+          explanation: 'При умеренном долге WACC снижается (из-за дешёвого долга с налоговым щитом). При чрезмерном долге растут финансовые риски → растут k_e и k_d → WACC начинает расти. Это U-образная кривая.'
+        },
+        {
+          text: 'При расчёте WACC веса (доли) источников капитала должны определяться по:',
+          options: [
+            'Балансовой стоимости',
+            'Рыночной стоимости',
+            'Номинальной стоимости',
+            'Ликвидационной стоимости'
+          ],
+          correct: 1,
+          explanation: 'Согласно теории, веса должны определяться по рыночной стоимости капитала, так как именно она отражает текущие ожидания инвесторов. Балансовая стоимость может существенно отличаться от рыночной.'
+        }
+      ];
+
+      renderQuiz('quizContainer', questions, 'scoreBox');
+    });
+  </script>
+</body>
+</html>
