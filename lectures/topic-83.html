@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>8.3 Поведенческие финансы — Корпоративные финансы</title>
+  <meta name="description" content="Поведенческие финансы: когнитивные искажения менеджеров и инвесторов, иррациональность рынков, практические последствия для корпоративных решений.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+</head>
+<body data-page="lectures/topic-83" data-depth="1">
+  <div id="site-nav"></div>
+  <main id="main-content">
+    <section class="hero hero-compact">
+      <div class="hero-glow hero-glow-primary" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-badge">Раздел 8 &bull; Новые направления</div>
+        <h1>Поведенческие <span class="highlight">финансы</span></h1>
+        <p class="hero-subtitle">Почему менеджеры и инвесторы принимают иррациональные решения — и как это учитывать</p>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="lecture-content">
+
+          <h2>Классика vs Поведенческие финансы</h2>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Классическая теория</th><th>Поведенческие финансы</th></tr></thead>
+              <tbody>
+                <tr><td>Рациональный инвестор (homo economicus)</td><td>Ограниченная рациональность (bounded rationality)</td></tr>
+                <tr><td>Эффективный рынок (EMH)</td><td>Рынок часто иррационален (пузыри, паника)</td></tr>
+                <tr><td>Менеджеры максимизируют NPV</td><td>Менеджеры подвержены overconfidence, empire building</td></tr>
+                <tr><td>CAPM объясняет все доходности</td><td>Аномалии: momentum, value, size effects</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>Даниэль Канеман (Нобелевская премия 2002) и Ричард Талер (Нобелевская премия 2017) показали: <strong>люди систематически отклоняются от рациональности</strong>, и это предсказуемо.</p>
+
+          <h2>Ключевые когнитивные искажения</h2>
+
+          <div class="box box-example">
+            <div class="box-title">1. Overconfidence (самоуверенность)</div>
+            <p><strong>Суть:</strong> Менеджеры переоценивают свои способности и точность прогнозов.</p>
+            <p><strong>В корпфин:</strong> CEO-«empire builders» делают переоценённые M&A. Исследования показывают: 60-80% сделок M&A <strong>уничтожают</strong> стоимость для покупателя. Причина — overconfidence: «мы будем управлять активом лучше».</p>
+            <p style="margin-bottom:0;"><strong>Пример:</strong> AOL + Time Warner (2000) — $165 млрд, «сделка века». Через 2 года списали $99 млрд. Overconfidence + синергия-фантазия.</p>
+          </div>
+
+          <div class="box box-example">
+            <div class="box-title">2. Loss Aversion (неприятие потерь)</div>
+            <p><strong>Суть:</strong> Потеря $100 «болит» в 2-2,5 раза сильнее, чем радует выигрыш $100.</p>
+            <p><strong>В корпфин:</strong> Менеджеры затягивают с закрытием убыточных проектов (sunk cost fallacy). Инвесторы держат падающие акции «чтобы не фиксировать убыток» и слишком рано продают растущие.</p>
+            <p style="margin-bottom:0;">$$U(x) = \begin{cases} x^{0{,}88} & \text{если } x \geq 0 \\ -2{,}25 \cdot (-x)^{0{,}88} & \text{если } x < 0 \end{cases}$$
+            <em>Функция ценности Канемана-Тверского (Prospect Theory)</em></p>
+          </div>
+
+          <div class="box box-example">
+            <div class="box-title">3. Anchoring (якорение)</div>
+            <p><strong>Суть:</strong> Решения зависят от начальной «якорной» точки, даже если она нерелевантна.</p>
+            <p style="margin-bottom:0;"><strong>В корпфин:</strong> При переговорах о цене M&A первое предложение («якорь») определяет финальную цену. При оценке акций инвесторы «якорятся» на исторических максимумах. «Газпром стоил 390₽, значит при 130₽ он дешёвый» — якорение (рынок мог фундаментально измениться).</p>
+          </div>
+
+          <div class="box box-example">
+            <div class="box-title">4. Herding (стадное поведение)</div>
+            <p><strong>Суть:</strong> Следовать за толпой, даже если это противоречит собственному анализу.</p>
+            <p style="margin-bottom:0;"><strong>В корпфин:</strong> Волны IPO (все идут на IPO когда рынок горячий), волны M&A (если конкуренты покупают — надо и нам), пузыри (доткомы 2000, жильё 2008, мемные акции 2021). Фонд-менеджеры боятся отклоняться от индекса — career risk.</p>
+          </div>
+
+          <h2>Поведенческие аномалии рынка</h2>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Аномалия</th><th>Описание</th><th>Противоречие EMH</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Momentum</strong></td><td>Акции-победители продолжают расти 3-12 мес.</td><td>Информация должна мгновенно отражаться в цене</td></tr>
+                <tr><td><strong>Value effect</strong></td><td>Дешёвые акции (P/B < 1) обыгрывают дорогие</td><td>Рынок должен правильно оценивать</td></tr>
+                <tr><td><strong>January effect</strong></td><td>Акции растут в январе (tax-loss harvesting)</td><td>Предсказуемость = неэффективность</td></tr>
+                <tr><td><strong>Disposition effect</strong></td><td>Инвесторы продают победителей, держат проигравших</td><td>Рациональный агент фиксирует убытки</td></tr>
+                <tr><td><strong>IPO underpricing</strong></td><td>IPO растут на 10-20% в первый день</td><td>Эмитент «оставляет деньги на столе»</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>Практические рекомендации</h2>
+          <div class="box box-key">
+            <div class="box-title">Как бороться с иррациональностью</div>
+            <ul style="margin-bottom:0;">
+              <li><strong>Чеклисты</strong> — формализованные процедуры одобрения инвестпроектов снижают overconfidence</li>
+              <li><strong>Devil's advocate</strong> — обязательная критика проекта в совете директоров</li>
+              <li><strong>Premortem analysis</strong> — «представим что проект провалился — почему?»</li>
+              <li><strong>Стоп-лоссы</strong> — автоматические правила фиксации убытков (против loss aversion)</li>
+              <li><strong>Комитеты</strong> — коллективные решения снижают индивидуальные искажения</li>
+              <li><strong>Nudge</strong> — «подталкивание» к правильным решениям через дизайн выбора (Талер)</li>
+            </ul>
+          </div>
+
+          <h2>Контрольные вопросы</h2>
+          <details class="question-card">
+            <summary>Почему 60-80% M&A-сделок уничтожают стоимость для покупателя?</summary>
+            <div class="answer"><p>1) Overconfidence CEO — «мы извлечём синергию, которую другие не видят»; 2) Winner's curse — на аукционе победитель переплачивает; 3) Empire building — менеджеры максимизируют размер компании, не стоимость; 4) Herding — «если конкуренты покупают, и нам надо»; 5) Плохая интеграция — культурные конфликты, потеря ключевых сотрудников.</p></div>
+          </details>
+          <details class="question-card">
+            <summary>Как loss aversion влияет на инвестиционные решения компании?</summary>
+            <div class="answer"><p>1) Менеджеры не закрывают убыточные подразделения — «ещё год и выйдем в плюс» (sunk cost); 2) Предпочитают маленький гарантированный проект большому рискованному, даже если NPV второго выше; 3) Не списывают обесценившиеся активы (accounting gimmick — «когда-нибудь восстановится»); 4) Избегают инноваций из-за страха потерь от текущего бизнеса (Kodak).</p></div>
+          </details>
+
+          <nav class="nav-lecture" aria-label="Навигация по лекциям">
+            <a href="topic-82.html"><span class="nav-label">&larr; Предыдущая</span><span class="nav-title">8.2 Финтех</span></a>
+            <a href="index.html"><span class="nav-label">К каталогу &rarr;</span><span class="nav-title">Все лекции</span></a>
+          </nav>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div id="site-footer"></div>
+  <script src="../js/components.js"></script>
+  <script src="../js/app.js"></script>
+</body>
+</html>

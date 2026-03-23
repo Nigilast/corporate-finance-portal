@@ -20,6 +20,9 @@
   <url><loc>lectures/topic-52.html</loc><priority>0.7</priority></url>
   <url><loc>lectures/topic-61.html</loc><priority>0.7</priority></url>
   <url><loc>lectures/topic-71.html</loc><priority>0.7</priority></url>
+  <url><loc>lectures/topic-81.html</loc><priority>0.7</priority></url>
+  <url><loc>lectures/topic-82.html</loc><priority>0.7</priority></url>
+  <url><loc>lectures/topic-83.html</loc><priority>0.7</priority></url>
 
   <!-- Инструменты -->
   <url><loc>tools/index.html</loc><priority>0.8</priority></url>
@@ -27,12 +30,16 @@
   <url><loc>tools/npv-calculator.html</loc><priority>0.8</priority></url>
   <url><loc>tools/capm-calculator.html</loc><priority>0.8</priority></url>
   <url><loc>tools/formulas.html</loc><priority>0.7</priority></url>
+  <url><loc>tools/excel-labs.html</loc><priority>0.7</priority></url>
 
   <!-- Кейсы -->
   <url><loc>cases/index.html</loc><priority>0.8</priority></url>
   <url><loc>cases/lukoil.html</loc><priority>0.7</priority></url>
   <url><loc>cases/gazprom.html</loc><priority>0.7</priority></url>
   <url><loc>cases/sberbank.html</loc><priority>0.7</priority></url>
+  <url><loc>cases/apple.html</loc><priority>0.7</priority></url>
+  <url><loc>cases/tesla.html</loc><priority>0.7</priority></url>
+  <url><loc>cases/nornickel.html</loc><priority>0.7</priority></url>
 
   <!-- Тесты -->
   <url><loc>assessment/index.html</loc><priority>0.8</priority></url>

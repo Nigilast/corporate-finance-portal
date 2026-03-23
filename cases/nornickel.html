@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Кейс: ПАО «Норникель» — Корпоративные финансы</title>
+  <meta name="description" content="Кейс Норникель: циклическая компания, дивидендная политика, волатильность ROE, формула привязки дивидендов к EBITDA.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body data-page="cases/nornickel" data-depth="1">
+  <div id="site-nav"></div>
+  <main id="main-content">
+    <section class="hero hero-compact">
+      <div class="hero-glow hero-glow-primary" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-badge">Кейс 6 &bull; Циклическая компания &bull; ОПК-2, ОПК-5</div>
+        <h1>ПАО &laquo;<span class="highlight">Норникель</span>&raquo;</h1>
+        <p class="hero-subtitle">Дивидендная политика циклической компании: привязка к EBITDA, волатильность ROE</p>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="lecture-content">
+
+          <h2>Описание ситуации</h2>
+          <p>Норникель — крупнейший мировой производитель палладия и высокосортного никеля. Компания <strong>циклическая</strong>: её прибыль зависит от мировых цен на металлы. ROE колеблется от 37% до 177%. Дивидендная политика привязана к EBITDA — уникальный для России механизм. Как управлять дивидендами в циклическом бизнесе?</p>
+
+          <h2>Финансовые показатели (реальные данные)</h2>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Показатель</th><th>2021</th><th>2022</th><th>2023</th></tr></thead>
+              <tbody>
+                <tr><td>Выручка, $млрд</td><td class="num">17,9</td><td class="num">16,9</td><td class="num">14,4</td></tr>
+                <tr><td>Чистая прибыль, $млрд</td><td class="num">6,5</td><td class="num">5,5</td><td class="num">2,4</td></tr>
+                <tr><td>EBITDA, $млрд</td><td class="num">10,5</td><td class="num">8,2</td><td class="num">5,8</td></tr>
+                <tr><td>ROE</td><td class="num">176,6%</td><td class="num">76,6%</td><td class="num">37,3%</td></tr>
+                <tr><td>D/E</td><td class="num">2,84</td><td class="num">1,64</td><td class="num">1,60</td></tr>
+                <tr><td>Net Margin</td><td class="num">36,3%</td><td class="num">32,5%</td><td class="num">16,7%</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p><em>Источник: Yahoo Finance, данные из озера данных проекта</em></p>
+
+          <h2>Решение</h2>
+
+          <h3>1. Дивидендная формула Норникеля</h3>
+          <p>До 2023 года действовало акционерное соглашение (Потанин — Дерипаска):</p>
+
+          <div class="box box-formula">
+            <div class="box-title">Формула дивидендов</div>
+            $$\text{Дивиденд} = \begin{cases} 60\% \times EBITDA & \text{если } \frac{Net Debt}{EBITDA} < 1{,}8 \\ 30\% \times EBITDA & \text{если } \frac{Net Debt}{EBITDA} > 2{,}2 \end{cases}$$
+          </div>
+
+          <div class="box box-key">
+            <div class="box-title">Зачем привязка к EBITDA?</div>
+            <p style="margin-bottom:0;"><strong>Чистая прибыль</strong> циклической компании скачет из-за курсовых разниц и переоценки. <strong>EBITDA</strong> стабильнее — отражает операционную генерацию кэша. Привязка к EBITDA с порогом по долговой нагрузке (Net Debt/EBITDA) защищает компанию от чрезмерных выплат в плохие годы.</p>
+          </div>
+
+          <h3>2. История дивидендов</h3>
+          <div class="chart-box"><canvas id="divChart" role="img" aria-label="Дивиденды Норникель 2015-2024"></canvas></div>
+          <p>21 дивидендная выплата за историю. Средний дивиденд: <strong>635 ₽/акцию</strong>, максимум: 1 523 ₽ (2021), минимум: 221 ₽.</p>
+
+          <h3>3. Почему ROE = 177% в 2021?</h3>
+          <div class="box box-formula">
+            <div class="box-title">Дюпон-анализ (3 фактора)</div>
+            $$ROE_{2021} = \underbrace{36{,}3\%}_{\text{Маржа}} \times \underbrace{4{,}88}_{\text{Оборот}} \times \underbrace{?}_{\text{Рычаг}} \approx 177\%$$
+            <p style="margin-top:8px;margin-bottom:0;">Высокая маржа (цены на палладий были на пике) + высокий рычаг (D/E = 2,84). К 2023 маржа сжалась вдвое → ROE упал до 37%.</p>
+          </div>
+
+          <h3>4. Влияние цен на металлы</h3>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Металл</th><th>Доля выручки</th><th>Цена 2021</th><th>Цена 2023</th><th>Изменение</th></tr></thead>
+              <tbody>
+                <tr><td>Палладий</td><td class="num">~35%</td><td class="num">$2 400/oz</td><td class="num">$1 300/oz</td><td class="num" style="color:var(--color-error)">−46%</td></tr>
+                <tr><td>Никель</td><td class="num">~25%</td><td class="num">$18 500/t</td><td class="num">$16 500/t</td><td class="num" style="color:var(--color-error)">−11%</td></tr>
+                <tr><td>Медь</td><td class="num">~20%</td><td class="num">$9 300/t</td><td class="num">$8 500/t</td><td class="num" style="color:var(--color-error)">−9%</td></tr>
+                <tr><td>Платина</td><td class="num">~10%</td><td class="num">$1 100/oz</td><td class="num">$950/oz</td><td class="num" style="color:var(--color-error)">−14%</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="box box-info">
+            <div class="box-title">Урок для инвестора</div>
+            <p style="margin-bottom:0;">Циклические компании нельзя оценивать по P/E на пике цикла — в 2021 P/E Норникеля был ~5, что выглядит «дёшево». Но это ловушка: прибыль была аномально высокой. Лучший подход — <strong>нормализованная прибыль</strong> (средняя за 5-7 лет) или EV/EBITDA с поправкой на цикл.</p>
+          </div>
+
+          <h2>Контрольные вопросы</h2>
+          <details class="question-card">
+            <summary>Почему привязка к EBITDA лучше привязки к чистой прибыли?</summary>
+            <div class="answer"><p>1) EBITDA не зависит от курсовых разниц ($-номинация долга при рублёвых расходах); 2) не включает амортизацию (capex-интенсивная отрасль); 3) стабильнее отражает способность генерировать кэш. Минус: EBITDA не учитывает проценты — при росте долга компания может платить дивиденды, не покрывая обслуживание долга.</p></div>
+          </details>
+          <details class="question-card">
+            <summary>Как оценивать D/E = 2,84? Это опасно?</summary>
+            <div class="answer"><p>Зависит от контекста. Для банка (Сбербанк) D/E > 7 — норма. Для горнодобычи D/E > 2 — повышенный риск, т.к. выручка волатильна. Но у Норникеля: 1) почти монопольное положение (40% мирового палладия); 2) низкий cash cost; 3) EBITDA margin > 40% даже на дне цикла. Interest coverage ratio > 5x — долг обслуживается комфортно.</p></div>
+          </details>
+          <details class="question-card">
+            <summary>Что такое «ловушка низкого P/E» для циклических акций?</summary>
+            <div class="answer"><p>На пике цикла прибыль максимальна → P/E минимален → акция кажется дешёвой. Но прибыль скоро упадёт, а цена уже начнёт снижаться. Обратно: на дне цикла P/E огромен (прибыль мала) → акция кажется дорогой, но это лучший момент для покупки. Поэтому для циклических акций используют EV/EBITDA(normalized) или P/B.</p></div>
+          </details>
+
+          <nav class="nav-lecture" aria-label="Навигация по кейсам">
+            <a href="tesla.html"><span class="nav-label">&larr; Предыдущий</span><span class="nav-title">Tesla: growth-оценка</span></a>
+            <a href="index.html"><span class="nav-label">К каталогу &rarr;</span><span class="nav-title">Все кейсы</span></a>
+          </nav>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div id="site-footer"></div>
+  <script src="../js/components.js"></script>
+  <script src="../js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof Chart === 'undefined') return;
+      new Chart(document.getElementById('divChart'), {
+        type: 'bar',
+        data: {
+          labels: ['2017', '2018', '2019', '2020', '2021', '2022', '2023', '2024'],
+          datasets: [{
+            label: 'Дивиденд (₽/акция)',
+            data: [607, 793, 1523, 1220, 1388, 1166, 915, 475],
+            backgroundColor: '#1d4ed8',
+            borderRadius: 4
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: { y: { beginAtZero: true, title: { display: true, text: '₽ / акция' } } },
+          plugins: { legend: { display: false } }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

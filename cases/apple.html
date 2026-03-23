@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Кейс: Apple Inc. — Корпоративные финансы</title>
+  <meta name="description" content="Кейс Apple: программа buyback, возврат капитала акционерам, ROE через финансовый рычаг, оценка методом DCF.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body data-page="cases/apple" data-depth="1">
+  <div id="site-nav"></div>
+  <main id="main-content">
+    <section class="hero hero-compact">
+      <div class="hero-glow hero-glow-primary" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-badge">Кейс 4 &bull; Buyback + DCF &bull; ОПК-2, ОПК-5</div>
+        <h1>Apple <span class="highlight">Inc.</span></h1>
+        <p class="hero-subtitle">Программа buyback, возврат капитала и оценка DCF крупнейшей компании мира</p>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="lecture-content">
+
+          <h2>Описание ситуации</h2>
+          <p>Apple — крупнейшая компания мира по капитализации (~$3,4 трлн). С 2012 года проводит масштабную программу обратного выкупа акций (buyback), потратив более <strong>$700 млрд</strong>. Это больше ВВП многих стран. Как buyback влияет на финансовые показатели и стоимость акций?</p>
+
+          <h2>Финансовые показатели (реальные данные)</h2>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Показатель</th><th>FY2022</th><th>FY2023</th><th>FY2024</th><th>FY2025</th></tr></thead>
+              <tbody>
+                <tr><td>Выручка, $млрд</td><td class="num">394,3</td><td class="num">383,3</td><td class="num">391,0</td><td class="num">416,2</td></tr>
+                <tr><td>Чистая прибыль, $млрд</td><td class="num">99,8</td><td class="num">97,0</td><td class="num">93,7</td><td class="num">112,0</td></tr>
+                <tr><td>Собственный капитал, $млрд</td><td class="num">50,7</td><td class="num">62,1</td><td class="num">56,9</td><td class="num">73,8</td></tr>
+                <tr><td>Общий долг, $млрд</td><td class="num">132,5</td><td class="num">111,1</td><td class="num">106,6</td><td class="num">98,6</td></tr>
+                <tr><td>ROE</td><td class="num">197,0%</td><td class="num">156,1%</td><td class="num">164,6%</td><td class="num">151,9%</td></tr>
+                <tr><td>D/E</td><td class="num">2,61</td><td class="num">1,79</td><td class="num">1,87</td><td class="num">1,34</td></tr>
+                <tr><td>Beta</td><td class="num" colspan="4">1,12</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p><em>Источник: Yahoo Finance, данные из озера данных проекта</em></p>
+
+          <h2>Решение</h2>
+
+          <h3>1. Почему ROE Apple > 150%?</h3>
+          <p>Обычно ROE 15-25% считается отличным. У Apple ROE превышает 150%. Причина — <strong>программа buyback</strong> сокращает собственный капитал:</p>
+
+          <div class="box box-formula">
+            <div class="box-title">Формула Дюпона (3-факторная)</div>
+            $$ROE = \underbrace{\frac{NI}{Revenue}}_{\text{Маржа}} \times \underbrace{\frac{Revenue}{Assets}}_{\text{Оборачиваемость}} \times \underbrace{\frac{Assets}{Equity}}_{\text{Рычаг}}$$
+            $$ROE_{2025} = \frac{112{,}0}{416{,}2} \times \frac{416{,}2}{353{,}5} \times \frac{353{,}5}{73{,}8} = 26{,}9\% \times 1{,}18 \times 4{,}79 = \mathbf{151{,}9\%}$$
+          </div>
+
+          <div class="box box-key">
+            <div class="box-title">Ключевой вывод</div>
+            <p style="margin-bottom:0;">Финансовый рычаг (Assets/Equity = <strong>4,79x</strong>) — главный драйвер высокого ROE Apple. Buyback сокращает Equity, увеличивая рычаг и ROE. Это не означает, что бизнес стал лучше — маржинальность (26,9%) стабильна.</p>
+          </div>
+
+          <h3>2. Оценка методом DCF</h3>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Параметр</th><th>Значение</th><th>Обоснование</th></tr></thead>
+              <tbody>
+                <tr><td>FCFF (базовый)</td><td class="num">$105 млрд</td><td>FY2025 прибыль + D&A − CapEx</td></tr>
+                <tr><td>Рост FCFF (5 лет)</td><td class="num">5%</td><td>Консервативно (сервисы растут)</td></tr>
+                <tr><td>Терминальный рост (g)</td><td class="num">3%</td><td>Инфляция + реальный рост</td></tr>
+                <tr><td>$r_f$ (10Y Treasury)</td><td class="num">4,3%</td><td>FRED DGS10</td></tr>
+                <tr><td>ERP</td><td class="num">4,6%</td><td>Damodaran USA</td></tr>
+                <tr><td>$\beta$</td><td class="num">1,12</td><td>Yahoo Finance</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="box box-formula">
+            <div class="box-title">CAPM → WACC</div>
+            $$k_e = 4{,}3\% + 1{,}12 \times 4{,}6\% = 9{,}45\%$$
+            $$w_e \approx 0{,}80; \quad w_d \approx 0{,}20; \quad k_d = 3{,}5\% \times (1-0{,}21) = 2{,}77\%$$
+            $$WACC = 0{,}20 \times 2{,}77\% + 0{,}80 \times 9{,}45\% = \mathbf{8{,}11\%}$$
+          </div>
+
+          <div class="box box-formula">
+            <div class="box-title">Terminal Value + Enterprise Value</div>
+            $$TV = \frac{FCFF_6}{WACC - g} = \frac{105 \times 1{,}05^5 \times 1{,}03}{0{,}0811 - 0{,}03} = \frac{138{,}1}{0{,}0511} = \$2\,703 \text{ млрд}$$
+            $$EV = \sum_{t=1}^{5}\frac{FCFF_t}{(1+WACC)^t} + \frac{TV}{(1+WACC)^5} \approx 454 + 1\,832 = \$2\,286 \text{ млрд}$$
+          </div>
+
+          <div class="box box-info">
+            <div class="box-title">Сравнение с рынком</div>
+            <p style="margin-bottom:0;">Наша DCF-оценка (~$2,3 трлн) <strong>ниже</strong> рыночной капитализации ($3,4 трлн). Это означает, что рынок закладывает более оптимистичные ожидания роста (AI, Vision Pro, сервисы) или что акции переоценены. Такие расхождения — типичная ситуация при оценке tech-гигантов.</p>
+          </div>
+
+          <h3>Структура возврата капитала</h3>
+          <div class="chart-box"><canvas id="returnChart" role="img" aria-label="Возврат капитала Apple: buyback vs дивиденды"></canvas></div>
+
+          <h2>Контрольные вопросы</h2>
+          <details class="question-card">
+            <summary>Почему Apple предпочитает buyback дивидендам?</summary>
+            <div class="answer"><p>1) Buyback более гибкий — можно остановить без сигнального эффекта. 2) Налоговое преимущество — capital gains tax < dividend tax в большинстве юрисдикций. 3) Увеличивает EPS за счёт сокращения количества акций. 4) Не создаёт обязательства (в отличие от дивидендов, которые «нельзя» снижать).</p></div>
+          </details>
+          <details class="question-card">
+            <summary>Может ли ROE > 100% быть устойчивым?</summary>
+            <div class="answer"><p>Да, если компания систематически выкупает акции и D/E остаётся управляемым. Apple обслуживает долг без проблем (interest coverage > 30x). Но если бизнес ухудшится, высокий рычаг усилит падение ROE. Сравните: без buyback ROE Apple был бы ~27% (чистая маржа × оборачиваемость).</p></div>
+          </details>
+          <details class="question-card">
+            <summary>Почему DCF даёт оценку ниже рыночной?</summary>
+            <div class="answer"><p>DCF чувствителен к темпу роста g и ставке WACC. При g=4% вместо 3% оценка вырастет на ~40%. Рынок может закладывать: 1) более высокий рост сервисов (Apple TV+, Apple Pay); 2) прорыв в AI; 3) «премию качества» за бренд и экосистему.</p></div>
+          </details>
+
+          <nav class="nav-lecture" aria-label="Навигация по кейсам">
+            <a href="sberbank.html"><span class="nav-label">&larr; Предыдущий</span><span class="nav-title">Сбербанк: DuPont</span></a>
+            <a href="tesla.html"><span class="nav-label">Следующий &rarr;</span><span class="nav-title">Tesla: growth-оценка</span></a>
+          </nav>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div id="site-footer"></div>
+  <script src="../js/components.js"></script>
+  <script src="../js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof Chart === 'undefined') return;
+      new Chart(document.getElementById('returnChart'), {
+        type: 'bar',
+        data: {
+          labels: ['FY2022', 'FY2023', 'FY2024', 'FY2025'],
+          datasets: [
+            { label: 'Buyback ($млрд)', data: [89.4, 77.6, 94.9, 100.2], backgroundColor: '#1d4ed8' },
+            { label: 'Дивиденды ($млрд)', data: [14.8, 15.0, 15.2, 15.6], backgroundColor: '#c9a84c' }
+          ]
+        },
+        options: {
+          responsive: true,
+          scales: { y: { beginAtZero: true, title: { display: true, text: '$ млрд' } } },
+          plugins: { legend: { position: 'bottom', labels: { padding: 16, usePointStyle: true, font: { family: 'Inter', size: 13 } } } }
+        }
+      });
+    });
+  </script>
+</body>
+</html>

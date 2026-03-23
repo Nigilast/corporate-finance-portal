@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>8.1 ESG и устойчивые финансы — Корпоративные финансы</title>
+  <meta name="description" content="ESG-факторы в корпоративных финансах: экологические, социальные и управленческие критерии, ESG-рейтинги, влияние на стоимость капитала.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+</head>
+<body data-page="lectures/topic-81" data-depth="1">
+  <div id="site-nav"></div>
+  <main id="main-content">
+    <section class="hero hero-compact">
+      <div class="hero-glow hero-glow-primary" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-badge">Раздел 8 &bull; Новые направления</div>
+        <h1>ESG и устойчивые <span class="highlight">финансы</span></h1>
+        <p class="hero-subtitle">Как экологические, социальные и управленческие факторы меняют корпоративные финансы</p>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="lecture-content">
+
+          <h2>Что такое ESG?</h2>
+          <p><strong>ESG</strong> (Environmental, Social, Governance) — система оценки компании по трём нефинансовым измерениям:</p>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>E — Экология</th><th>S — Социум</th><th>G — Управление</th></tr></thead>
+              <tbody>
+                <tr><td>Выбросы CO₂, углеродный след</td><td>Условия труда, безопасность</td><td>Независимый совет директоров</td></tr>
+                <tr><td>Энергоэффективность</td><td>Разнообразие и инклюзивность</td><td>Прозрачность отчётности</td></tr>
+                <tr><td>Управление отходами</td><td>Права человека в цепочке</td><td>Антикоррупционная политика</td></tr>
+                <tr><td>Водные ресурсы</td><td>Клиентская безопасность</td><td>Вознаграждение менеджмента</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>ESG и стоимость капитала</h2>
+          <p>Мета-анализ 2000+ исследований (Friede et al., 2015) показал: в <strong>63% случаев</strong> высокий ESG-рейтинг коррелирует с лучшими финансовыми результатами. Механизм:</p>
+
+          <div class="box box-formula">
+            <div class="box-title">CAPM с ESG-поправкой</div>
+            $$k_e = r_f + \beta \cdot ERP - \alpha_{ESG}$$
+            <p style="margin-top:8px;margin-bottom:0;">Где $\alpha_{ESG}$ — «ESG-дисконт»: компании с высоким рейтингом привлекают ESG-фонды, что снижает стоимость капитала на 0,3-0,5%. Обратно: низкий ESG → «грязная премия» +0,5-1,5%.</p>
+          </div>
+
+          <h3>ESG-рейтинги российских компаний</h3>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Компания</th><th>MSCI ESG</th><th>Основные риски</th><th>Стратегия</th></tr></thead>
+              <tbody>
+                <tr><td>Лукойл</td><td class="num">BBB</td><td>Углеродный след, аварии</td><td>Газификация, снижение сжигания</td></tr>
+                <tr><td>Сбербанк</td><td class="num">BB</td><td>Санкции, прозрачность</td><td>ESG-кредитование, зелёные облигации</td></tr>
+                <tr><td>Норникель</td><td class="num">B</td><td>Экологические инциденты (2020)</td><td>$5,5 млрд на экологию до 2030</td></tr>
+                <tr><td>Apple</td><td class="num">A</td><td>Цепочка поставок</td><td>Carbon neutral к 2030</td></tr>
+                <tr><td>Tesla</td><td class="num">BBB</td><td>Условия труда, governance</td><td>Миссия: ускорить переход на clean energy</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <h2>Инструменты ESG-финансирования</h2>
+          <div class="box box-example">
+            <div class="box-title">Зелёные облигации (Green Bonds)</div>
+            <p>Облигации, средства от которых идут на экологические проекты. Мировой рынок: <strong>$500+ млрд/год</strong>. В России: РЖД, Москва, ДОМ.РФ выпускают зелёные и социальные облигации. Доходность обычно на 5-15 бп ниже обычных — «greenium».</p>
+          </div>
+
+          <div class="box box-example">
+            <div class="box-title">Sustainability-Linked Loans</div>
+            <p style="margin-bottom:0;">Кредиты, ставка которых привязана к достижению ESG-целей. Например: если Норникель снизит выбросы SO₂ на 85% к 2025 → ставка снижается на 25 бп. Не снизил → штрафная надбавка.</p>
+          </div>
+
+          <h2>Критика ESG</h2>
+          <ul>
+            <li><strong>Greenwashing</strong> — компании декларируют ESG, но реальные действия минимальны</li>
+            <li><strong>Несогласованность рейтингов</strong> — корреляция между MSCI, S&P и Sustainalytics всего 0,5 (vs 0,99 для кредитных рейтингов)</li>
+            <li><strong>Trade-off</strong> — ESG-инвестиции снижают краткосрочную доходность (capex на экологию)</li>
+            <li><strong>Субъективность</strong> — что важнее: E, S или G? Вес определяется методологией рейтинга</li>
+          </ul>
+
+          <div class="box box-key">
+            <div class="box-title">Вывод для финансиста</div>
+            <p style="margin-bottom:0;">ESG — не благотворительность, а <strong>управление рисками</strong>. Экологические штрафы (Норникель 2020: $2 млрд), репутационные потери, и ужесточение регулирования — реальные финансовые риски. ESG-рейтинг влияет на доступ к капиталу, стоимость долга и базу инвесторов.</p>
+          </div>
+
+          <h2>Контрольные вопросы</h2>
+          <details class="question-card">
+            <summary>Как ESG влияет на WACC?</summary>
+            <div class="answer"><p>1) Снижает стоимость собственного капитала (ESG-фонды с $40+ трлн AUM создают спрос → цена акций выше → cost of equity ниже). 2) Снижает стоимость долга (банки дают «зелёные» кредиты дешевле). 3) Но может увеличить capex в краткосрочной перспективе. Нет-эффект: обычно -0,3-0,5% от WACC для лидеров ESG.</p></div>
+          </details>
+          <details class="question-card">
+            <summary>Почему Tesla имеет рейтинг BBB, а не AAA, при «зелёной» миссии?</summary>
+            <div class="answer"><p>ESG — это не только E. Tesla теряет на: S (условия на фабриках, увольнения, отсутствие профсоюзов) и G (зависимость от одного CEO, конфликт интересов, спорная компенсация Маска $56 млрд). «Зелёный» продукт не компенсирует слабое управление.</p></div>
+          </details>
+
+          <nav class="nav-lecture" aria-label="Навигация по лекциям">
+            <a href="topic-71.html"><span class="nav-label">&larr; Предыдущая</span><span class="nav-title">7.1 Финансовый анализ</span></a>
+            <a href="topic-82.html"><span class="nav-label">Следующая &rarr;</span><span class="nav-title">8.2 Финтех</span></a>
+          </nav>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div id="site-footer"></div>
+  <script src="../js/components.js"></script>
+  <script src="../js/app.js"></script>
+</body>
+</html>

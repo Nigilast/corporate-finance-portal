@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Кейс: Tesla Inc. — Корпоративные финансы</title>
+  <meta name="description" content="Кейс Tesla: оценка growth-компании, высокая бета, DCF с множественными сценариями, сравнительная оценка.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body data-page="cases/tesla" data-depth="1">
+  <div id="site-nav"></div>
+  <main id="main-content">
+    <section class="hero hero-compact">
+      <div class="hero-glow hero-glow-primary" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-badge">Кейс 5 &bull; Growth-оценка &bull; ОПК-2, ОПК-4</div>
+        <h1>Tesla <span class="highlight">Inc.</span></h1>
+        <p class="hero-subtitle">Оценка growth-компании: высокая бета, падающая маржа, сценарный анализ</p>
+      </div>
+    </section>
+    <section class="section">
+      <div class="container">
+        <div class="lecture-content">
+
+          <h2>Описание ситуации</h2>
+          <p>Tesla — одна из самых противоречивых компаний на рынке. Капитализация ~$800 млрд при чистой прибыли $3,8 млрд (P/E > 200). Beta = 1,93 — почти вдвое выше рынка. ROE упал с 28% до 4,6% за 3 года. Как оценивать компанию, чей рост замедляется, но рынок продолжает верить в будущее?</p>
+
+          <h2>Финансовые показатели (реальные данные)</h2>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Показатель</th><th>FY2022</th><th>FY2023</th><th>FY2024</th><th>FY2025</th></tr></thead>
+              <tbody>
+                <tr><td>Выручка, $млрд</td><td class="num">81,5</td><td class="num">96,8</td><td class="num">97,7</td><td class="num">94,8</td></tr>
+                <tr><td>Чистая прибыль, $млрд</td><td class="num">12,6</td><td class="num">15,0</td><td class="num">7,1</td><td class="num">3,8</td></tr>
+                <tr><td>Net Margin</td><td class="num">15,5%</td><td class="num">15,5%</td><td class="num">7,3%</td><td class="num">4,0%</td></tr>
+                <tr><td>ROE</td><td class="num">28,1%</td><td class="num">23,9%</td><td class="num">9,8%</td><td class="num">4,6%</td></tr>
+                <tr><td>D/E</td><td class="num">0,13</td><td class="num">0,15</td><td class="num">0,19</td><td class="num">0,18</td></tr>
+                <tr><td>Beta</td><td class="num" colspan="4">1,93</td></tr>
+              </tbody>
+            </table>
+          </div>
+          <p><em>Источник: Yahoo Finance, данные из озера данных проекта</em></p>
+
+          <div class="box box-warning">
+            <div class="box-title">Тревожный тренд</div>
+            <p style="margin-bottom:0;">Выручка стагнирует ($94,8 млрд в 2025 vs $96,8 млрд в 2023), а чистая прибыль упала <strong>в 4 раза</strong>. Ценовые войны в EV-сегменте и конкуренция из Китая (BYD) сжимают маржу.</p>
+          </div>
+
+          <h2>Решение: Сценарный анализ DCF</h2>
+
+          <h3>1. Стоимость капитала</h3>
+          <div class="box box-formula">
+            <div class="box-title">CAPM с высокой бетой</div>
+            $$k_e = 4{,}3\% + 1{,}93 \times 4{,}6\% = \mathbf{13{,}2\%}$$
+            <p style="margin-top:8px;margin-bottom:0;">Сравните: Apple $k_e$ = 9,45% (β = 1,12). Инвесторы Tesla требуют премию +3,75% за дополнительный риск.</p>
+          </div>
+
+          <div class="box box-formula">
+            <div class="box-title">WACC (минимальный долг)</div>
+            $$WACC \approx 0{,}95 \times 13{,}2\% + 0{,}05 \times 3{,}0\% = \mathbf{12{,}7\%}$$
+          </div>
+
+          <h3>2. Три сценария</h3>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Сценарий</th><th>Рост выручки</th><th>Маржа FCFF</th><th>Terminal g</th><th>EV, $млрд</th></tr></thead>
+              <tbody>
+                <tr><td><strong>Бычий</strong> (AI, роботакси)</td><td class="num">25%/год</td><td class="num">15%</td><td class="num">5%</td><td class="num">1 450</td></tr>
+                <tr><td><strong>Базовый</strong> (авто + энергия)</td><td class="num">12%/год</td><td class="num">8%</td><td class="num">3%</td><td class="num">520</td></tr>
+                <tr><td><strong>Медвежий</strong> (ценовые войны)</td><td class="num">5%/год</td><td class="num">4%</td><td class="num">2%</td><td class="num">180</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <div class="box box-key">
+            <div class="box-title">Ключевой вывод</div>
+            <p style="margin-bottom:0;">Разброс оценок: от $180 до $1,450 млрд — <strong>в 8 раз!</strong> При капитализации ~$800 млрд, рынок закладывает что-то между базовым и бычьим сценариями. Такая неопределённость характерна для growth-компаний и объясняет высокую бету.</p>
+          </div>
+
+          <h3>Динамика ROE</h3>
+          <div class="chart-box"><canvas id="roeChart" role="img" aria-label="Падение ROE Tesla с 28% до 4.6%"></canvas></div>
+
+          <h3>3. Сравнительная оценка</h3>
+          <div class="table-wrap">
+            <table class="data-table">
+              <thead><tr><th>Компания</th><th>P/E</th><th>EV/EBITDA</th><th>Beta</th><th>ROE</th></tr></thead>
+              <tbody>
+                <tr><td>Tesla</td><td class="num">>200</td><td class="num">~90</td><td class="num">1,93</td><td class="num">4,6%</td></tr>
+                <tr><td>Toyota</td><td class="num">~10</td><td class="num">~8</td><td class="num">0,65</td><td class="num">12%</td></tr>
+                <tr><td>BYD</td><td class="num">~25</td><td class="num">~15</td><td class="num">1,10</td><td class="num">18%</td></tr>
+                <tr><td>Rivian</td><td class="num">N/A</td><td class="num">N/A</td><td class="num">2,30</td><td class="num">−40%</td></tr>
+              </tbody>
+            </table>
+          </div>
+
+          <p>Tesla торгуется с <strong>20-кратной премией</strong> к традиционным автопроизводителям. Инвесторы оценивают не только автомобильный бизнес, но и: энергохранилища (Megapack), роботакси (FSD), робота Optimus, AI-инфраструктуру (Dojo).</p>
+
+          <h2>Контрольные вопросы</h2>
+          <details class="question-card">
+            <summary>Почему β Tesla = 1,93, а Toyota = 0,65?</summary>
+            <div class="answer"><p>Beta отражает систематический риск. Tesla: 1) высокая зависимость от одного лидера (Musk); 2) конкуренция в быстро меняющемся EV-рынке; 3) значительная доля спекулятивных инвесторов; 4) выручка чувствительна к субсидиям и регулированию. Toyota: стабильный спрос, диверсифицированный модельный ряд, низкий долг.</p></div>
+          </details>
+          <details class="question-card">
+            <summary>Можно ли использовать P/E для оценки убыточных growth-компаний?</summary>
+            <div class="answer"><p>Нет — P/E бессмыслен при отрицательной прибыли (Rivian). Альтернативы: 1) EV/Revenue (для быстрорастущих); 2) DCF с явным моделированием будущей прибыльности; 3) EV/Subscribers или EV/User для платформенных бизнесов. Для Tesla текущий P/E > 200 говорит о том, что рынок оценивает будущие прибыли, не текущие.</p></div>
+          </details>
+
+          <nav class="nav-lecture" aria-label="Навигация по кейсам">
+            <a href="apple.html"><span class="nav-label">&larr; Предыдущий</span><span class="nav-title">Apple: buyback</span></a>
+            <a href="nornickel.html"><span class="nav-label">Следующий &rarr;</span><span class="nav-title">Норникель: циклы</span></a>
+          </nav>
+        </div>
+      </div>
+    </section>
+  </main>
+  <div id="site-footer"></div>
+  <script src="../js/components.js"></script>
+  <script src="../js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      if (typeof Chart === 'undefined') return;
+      new Chart(document.getElementById('roeChart'), {
+        type: 'line',
+        data: {
+          labels: ['FY2022', 'FY2023', 'FY2024', 'FY2025'],
+          datasets: [{
+            label: 'ROE Tesla (%)',
+            data: [28.1, 23.9, 9.8, 4.6],
+            borderColor: '#ef4444',
+            backgroundColor: 'rgba(239,68,68,0.1)',
+            fill: true,
+            tension: 0.3,
+            pointRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          scales: { y: { beginAtZero: true, title: { display: true, text: 'ROE, %' } } },
+          plugins: { legend: { display: false } }
+        }
+      });
+    });
+  </script>
+</body>
+</html>
