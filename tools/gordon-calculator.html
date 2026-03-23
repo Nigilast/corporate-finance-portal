@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Модель Гордона — Корпоративные финансы</title>
+  <meta name="description" content="Интерактивный калькулятор модели Гордона (DDM). Оцените справедливую стоимость акции по дивидендам. Пресеты: Лукойл, Сбербанк, Газпром.">
+
+  <meta property="og:title" content="Модель Гордона — Дивидендная модель дисконтирования">
+  <meta property="og:description" content="Рассчитайте справедливую стоимость акции по модели Гордона с визуализацией.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="stylesheet" href="../css/features.css">
+
+  <!-- KaTeX for formula display -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+
+  <!-- Chart.js -->
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body data-page="tools/gordon-calculator" data-depth="1">
+
+  <div id="site-nav"></div>
+
+  <main id="main-content">
+
+    <section class="hero hero-compact" aria-label="Заголовок">
+      <div class="hero-glow hero-glow-primary" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-badge">Интерактивный инструмент</div>
+        <h1>Модель <span class="highlight">Гордона</span></h1>
+        <p class="hero-subtitle">Дивидендная модель дисконтирования — оценка справедливой стоимости акции</p>
+      </div>
+    </section>
+
+    <section class="section" aria-label="Калькулятор">
+      <div class="container">
+
+        <!-- Formula reminder -->
+        <div class="box box-formula" style="max-width: var(--container-narrow); margin: 0 auto var(--space-8);">
+          <div class="box-title">Формула</div>
+          $$P = \frac{D_1}{k - g} = \frac{D_0 \cdot (1 + g)}{k - g}$$
+        </div>
+
+        <!-- Presets -->
+        <div style="text-align: center; margin-bottom: var(--space-6);">
+          <span class="text-sm text-muted" style="margin-right: var(--space-2);">Пресеты:</span>
+          <div class="preset-group" style="display: inline-flex;">
+            <button class="preset-btn" data-preset="lukoil">Лукойл</button>
+            <button class="preset-btn" data-preset="sberbank">Сбербанк</button>
+            <button class="preset-btn" data-preset="gazprom">Газпром</button>
+            <button class="preset-btn" data-preset="custom">Свои данные</button>
+          </div>
+        </div>
+
+        <!-- Calculator Layout -->
+        <div class="calc-layout">
+
+          <!-- Inputs Panel -->
+          <div class="calc-panel">
+            <h3>Параметры</h3>
+
+            <div class="calc-field">
+              <label for="d0">Текущий дивиденд ($D_0$), руб./акция</label>
+              <input type="number" id="d0" value="793" min="0" step="0.1">
+            </div>
+
+            <div class="calc-field">
+              <label for="g">Темп роста дивидендов ($g$), %</label>
+              <input type="number" id="g" value="5" min="0" max="99" step="0.1">
+            </div>
+
+            <div class="calc-field">
+              <label for="k">Требуемая доходность ($k$), %</label>
+              <input type="number" id="k" value="14" min="0.1" max="100" step="0.1">
+            </div>
+
+            <hr style="margin: var(--space-4) 0;">
+
+            <div class="calc-field">
+              <label for="pMarket">Текущая рыночная цена (для сравнения), руб.</label>
+              <input type="number" id="pMarket" value="7200" min="0" step="1">
+            </div>
+
+            <button class="btn btn-primary" style="width: 100%; margin-top: var(--space-4);" onclick="calculate()">
+              Рассчитать стоимость
+            </button>
+          </div>
+
+          <!-- Results Panel -->
+          <div class="calc-panel">
+            <h3>Результаты</h3>
+
+            <div class="result-box" id="resultBox">
+              <div class="result-row">
+                <span class="result-label">Справедливая стоимость ($P$)</span>
+                <span class="result-value" id="resFairValue">--</span>
+              </div>
+              <div class="result-row">
+                <span class="result-label">Ожидаемый дивиденд ($D_1$)</span>
+                <span class="result-value" id="resD1" style="font-size: var(--text-base);">--</span>
+              </div>
+              <div class="result-row">
+                <span class="result-label">Дивидендная доходность</span>
+                <span class="result-value" id="resDivYield" style="font-size: var(--text-base);">--</span>
+              </div>
+              <div class="result-row">
+                <span class="result-label">Рыночная цена</span>
+                <span class="result-value" id="resMarketPrice" style="font-size: var(--text-base);">--</span>
+              </div>
+              <div class="result-row">
+                <span class="result-label">Потенциал роста/падения</span>
+                <span class="result-value" id="resUpside" style="font-size: var(--text-base);">--</span>
+              </div>
+            </div>
+
+            <div class="box box-info" id="interpretBox" style="display: none;">
+              <div class="box-title">Интерпретация</div>
+              <p id="interpretText" style="margin: 0;"></p>
+            </div>
+
+            <!-- Chart: Projected dividends & cumulative PV -->
+            <div class="chart-box">
+              <canvas id="dividendChart" aria-label="Прогноз дивидендов и кумулятивная PV" role="img"></canvas>
+            </div>
+
+            <!-- Sensitivity table -->
+            <div style="margin-top: var(--space-6);">
+              <h4 style="margin-bottom: var(--space-3);">Таблица чувствительности (справедливая цена, руб.)</h4>
+              <div style="overflow-x: auto;">
+                <table class="sensitivity-table" id="sensitivityTable">
+                </table>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="../js/components.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/progress.js"></script>
+  <script src="../js/search.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js" defer></script>
+
+  <style>
+    .sensitivity-table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: var(--text-sm);
+      font-family: 'Inter', sans-serif;
+    }
+    .sensitivity-table th,
+    .sensitivity-table td {
+      padding: 6px 10px;
+      text-align: center;
+      border: 1px solid var(--border);
+    }
+    .sensitivity-table th {
+      background: var(--surface-2);
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .sensitivity-table td {
+      white-space: nowrap;
+    }
+    .sensitivity-table .cell-current {
+      background: var(--accent-bg, rgba(29,78,216,0.08));
+      font-weight: 700;
+    }
+    .sensitivity-table .cell-overvalued {
+      color: #dc2626;
+    }
+    .sensitivity-table .cell-undervalued {
+      color: #15803d;
+    }
+    .sensitivity-table .header-k {
+      background: var(--surface-3, var(--surface-2));
+    }
+  </style>
+
+  <script>
+    const presets = {
+      lukoil:   { d0: 793,  g: 5,  k: 14, pMarket: 7200, name: 'ПАО "Лукойл" (2024)' },
+      sberbank: { d0: 33.3, g: 8,  k: 15, pMarket: 310,  name: 'ПАО "Сбербанк" (2024)' },
+      gazprom:  { d0: 51.0, g: 2,  k: 16, pMarket: 155,  name: 'ПАО "Газпром" (2024)' },
+      custom:   { d0: 100,  g: 5,  k: 12, pMarket: 1500, name: 'Пользовательские данные' }
+    };
+
+    let dividendChart = null;
+
+    // Preset buttons
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const p = presets[btn.dataset.preset];
+        if (!p) return;
+        document.getElementById('d0').value = p.d0;
+        document.getElementById('g').value = p.g;
+        document.getElementById('k').value = p.k;
+        document.getElementById('pMarket').value = p.pMarket;
+        calculate();
+      });
+    });
+
+    function formatRub(value) {
+      return value.toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    }
+
+    function gordonPrice(d0, gRate, kRate) {
+      if (kRate <= gRate) return Infinity;
+      return (d0 * (1 + gRate)) / (kRate - gRate);
+    }
+
+    function calculate() {
+      const d0 = parseFloat(document.getElementById('d0').value);
+      const gPct = parseFloat(document.getElementById('g').value);
+      const kPct = parseFloat(document.getElementById('k').value);
+      const pMarket = parseFloat(document.getElementById('pMarket').value);
+
+      const g = gPct / 100;
+      const k = kPct / 100;
+
+      // Validation
+      if (isNaN(d0) || isNaN(g) || isNaN(k) || k <= g) {
+        document.getElementById('resFairValue').textContent = 'k > g!';
+        document.getElementById('resD1').textContent = '--';
+        document.getElementById('resDivYield').textContent = '--';
+        document.getElementById('resMarketPrice').textContent = '--';
+        document.getElementById('resUpside').textContent = '--';
+        document.getElementById('interpretBox').style.display = 'block';
+        document.getElementById('interpretText').textContent =
+          'Требуемая доходность (k) должна быть строго больше темпа роста дивидендов (g). При k \u2264 g модель Гордона не применима.';
+        return;
+      }
+
+      const d1 = d0 * (1 + g);
+      const fairValue = d1 / (k - g);
+      const divYield = (d1 / pMarket) * 100;
+      const upside = ((fairValue - pMarket) / pMarket) * 100;
+
+      // Display results
+      document.getElementById('resFairValue').textContent = formatRub(fairValue) + ' \u0440\u0443\u0431.';
+      document.getElementById('resD1').textContent = formatRub(d1) + ' \u0440\u0443\u0431.';
+      document.getElementById('resDivYield').textContent = divYield.toFixed(2) + '%';
+      document.getElementById('resMarketPrice').textContent = formatRub(pMarket) + ' \u0440\u0443\u0431.';
+
+      const upsideEl = document.getElementById('resUpside');
+      if (upside >= 0) {
+        upsideEl.textContent = '+' + upside.toFixed(1) + '% (недооценена)';
+        upsideEl.style.color = '#15803d';
+      } else {
+        upsideEl.textContent = upside.toFixed(1) + '% (переоценена)';
+        upsideEl.style.color = '#dc2626';
+      }
+
+      // Interpretation
+      const interpBox = document.getElementById('interpretBox');
+      const interpText = document.getElementById('interpretText');
+      interpBox.style.display = 'block';
+
+      if (Math.abs(upside) < 5) {
+        interpText.textContent = 'Справедливая стоимость по модели Гордона (' + formatRub(fairValue) +
+          ' \u0440\u0443\u0431.) близка к рыночной цене (' + formatRub(pMarket) +
+          ' \u0440\u0443\u0431.). Акция оценена рынком справедливо.';
+      } else if (upside > 0) {
+        interpText.textContent = 'Справедливая стоимость (' + formatRub(fairValue) +
+          ' \u0440\u0443\u0431.) выше рыночной цены (' + formatRub(pMarket) +
+          ' \u0440\u0443\u0431.) на ' + upside.toFixed(1) +
+          '%. По модели Гордона акция недооценена \u2014 потенциальная возможность для покупки.';
+      } else {
+        interpText.textContent = 'Справедливая стоимость (' + formatRub(fairValue) +
+          ' \u0440\u0443\u0431.) ниже рыночной цены (' + formatRub(pMarket) +
+          ' \u0440\u0443\u0431.) на ' + Math.abs(upside).toFixed(1) +
+          '%. По модели Гордона акция переоценена \u2014 возможный сигнал к продаже.';
+      }
+
+      // Update chart and sensitivity table
+      updateChart(d0, g, k);
+      updateSensitivityTable(d0, gPct, kPct, pMarket);
+    }
+
+    function updateChart(d0, g, k) {
+      if (typeof Chart === 'undefined') return;
+
+      const years = 10;
+      const labels = [];
+      const dividends = [];
+      const cumulativePV = [];
+      let cumPV = 0;
+
+      for (let t = 1; t <= years; t++) {
+        labels.push('Год ' + t);
+        const dt = d0 * Math.pow(1 + g, t);
+        dividends.push(parseFloat(dt.toFixed(2)));
+        cumPV += dt / Math.pow(1 + k, t);
+        cumulativePV.push(parseFloat(cumPV.toFixed(2)));
+      }
+
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const textColor = isDark ? '#d6d3d1' : '#44403c';
+      const gridColor = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
+      const fontOpts = { family: 'Inter, sans-serif', size: 12 };
+
+      if (dividendChart) dividendChart.destroy();
+      dividendChart = new Chart(document.getElementById('dividendChart'), {
+        type: 'line',
+        data: {
+          labels: labels,
+          datasets: [
+            {
+              label: 'Дивиденд (руб.)',
+              data: dividends,
+              borderColor: '#1d4ed8',
+              backgroundColor: 'rgba(29,78,216,0.1)',
+              fill: true,
+              tension: 0.3,
+              pointRadius: 4,
+              pointHoverRadius: 6,
+              yAxisID: 'y'
+            },
+            {
+              label: 'Кумулятивная PV дивидендов (руб.)',
+              data: cumulativePV,
+              borderColor: '#b45309',
+              backgroundColor: 'rgba(180,83,9,0.1)',
+              fill: true,
+              tension: 0.3,
+              pointRadius: 4,
+              pointHoverRadius: 6,
+              borderDash: [6, 3],
+              yAxisID: 'y1'
+            }
+          ]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          interaction: { mode: 'index', intersect: false },
+          plugins: {
+            title: {
+              display: true,
+              text: 'Прогноз дивидендов и кумулятивная приведённая стоимость (10 лет)',
+              font: { ...fontOpts, size: 14, weight: '600' },
+              color: textColor
+            },
+            legend: {
+              position: 'bottom',
+              labels: { padding: 16, usePointStyle: true, pointStyleWidth: 12, font: fontOpts, color: textColor }
+            },
+            tooltip: {
+              callbacks: {
+                label: function(ctx) {
+                  return ctx.dataset.label + ': ' + ctx.parsed.y.toLocaleString('ru-RU', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) + ' \u0440\u0443\u0431.';
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              type: 'linear',
+              position: 'left',
+              title: { display: true, text: 'Дивиденд, руб.', font: fontOpts, color: textColor },
+              ticks: { font: fontOpts, color: textColor },
+              grid: { color: gridColor }
+            },
+            y1: {
+              type: 'linear',
+              position: 'right',
+              title: { display: true, text: 'Кумулятивная PV, руб.', font: fontOpts, color: textColor },
+              ticks: { font: fontOpts, color: textColor },
+              grid: { drawOnChartArea: false }
+            },
+            x: {
+              ticks: { font: fontOpts, color: textColor },
+              grid: { color: gridColor }
+            }
+          }
+        }
+      });
+    }
+
+    function updateSensitivityTable(d0, gCenter, kCenter, pMarket) {
+      const gSteps = [-2, -1, 0, 1, 2];
+      const kSteps = [-2, -1, 0, 1, 2];
+
+      const gValues = gSteps.map(s => gCenter + s);
+      const kValues = kSteps.map(s => kCenter + s);
+
+      let html = '<thead><tr><th class="header-k">k \\ g</th>';
+      gValues.forEach(gv => {
+        html += '<th>' + gv.toFixed(0) + '%</th>';
+      });
+      html += '</tr></thead><tbody>';
+
+      kValues.forEach(kv => {
+        html += '<tr><th class="header-k">' + kv.toFixed(0) + '%</th>';
+        gValues.forEach(gv => {
+          const kRate = kv / 100;
+          const gRate = gv / 100;
+          const isCurrent = (kv === kCenter && gv === gCenter);
+
+          if (kRate <= gRate || gRate < 0) {
+            html += '<td' + (isCurrent ? ' class="cell-current"' : '') + '>\u2014</td>';
+          } else {
+            const price = gordonPrice(d0, gRate, kRate);
+            const cls = [];
+            if (isCurrent) cls.push('cell-current');
+            if (price < pMarket) cls.push('cell-overvalued');
+            else if (price > pMarket) cls.push('cell-undervalued');
+
+            html += '<td' + (cls.length ? ' class="' + cls.join(' ') + '"' : '') + '>' +
+              Math.round(price).toLocaleString('ru-RU') + '</td>';
+          }
+        });
+        html += '</tr>';
+      });
+      html += '</tbody>';
+
+      document.getElementById('sensitivityTable').innerHTML = html;
+    }
+
+    // Auto-calculate on load
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelector('[data-preset="lukoil"]').classList.add('active');
+      calculate();
+    });
+  </script>
+</body>
+</html>

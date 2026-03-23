@@ -1,0 +1,433 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Калькулятор DCF — Корпоративные финансы</title>
+  <meta name="description" content="Интерактивный калькулятор DCF (дисконтированных денежных потоков) с визуализацией. Пресеты: Лукойл, Газпром, Сбербанк.">
+
+  <meta property="og:title" content="Калькулятор DCF — Оценка стоимости компании">
+  <meta property="og:description" content="Рассчитайте стоимость компании методом DCF. Пресеты российских компаний.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="stylesheet" href="../css/features.css">
+
+  <!-- KaTeX for formula display -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+
+  <!-- Chart.js -->
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body data-page="tools/dcf-calculator" data-depth="1">
+
+  <div id="site-nav"></div>
+
+  <main id="main-content">
+
+    <section class="hero hero-compact" aria-label="Заголовок">
+      <div class="hero-glow hero-glow-primary" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-badge">Интерактивный инструмент</div>
+        <h1>Калькулятор <span class="highlight">DCF</span></h1>
+        <p class="hero-subtitle">Оценка стоимости компании методом дисконтированных денежных потоков</p>
+      </div>
+    </section>
+
+    <section class="section" aria-label="Калькулятор">
+      <div class="container">
+
+        <!-- Formula reminder -->
+        <div class="box box-formula" style="max-width: var(--container-narrow); margin: 0 auto var(--space-8);">
+          <div class="box-title">Формула</div>
+          $$V = \sum_{t=1}^{n} \frac{FCF_t}{(1+WACC)^t} + \frac{TV}{(1+WACC)^n}, \quad TV = \frac{FCF_n \cdot (1+g)}{WACC - g}$$
+        </div>
+
+        <!-- Presets -->
+        <div style="text-align: center; margin-bottom: var(--space-6);">
+          <span class="text-sm text-muted" style="margin-right: var(--space-2);">Пресеты:</span>
+          <div class="preset-group" style="display: inline-flex;">
+            <button class="preset-btn" data-preset="lukoil">Лукойл</button>
+            <button class="preset-btn" data-preset="gazprom">Газпром</button>
+            <button class="preset-btn" data-preset="sberbank">Сбербанк</button>
+            <button class="preset-btn" data-preset="custom">Свои данные</button>
+          </div>
+        </div>
+
+        <!-- Calculator Layout -->
+        <div class="calc-layout">
+
+          <!-- Inputs Panel -->
+          <div class="calc-panel">
+            <h3>Параметры</h3>
+
+            <div class="calc-field">
+              <label for="fcf0">Начальный FCF (год 0), млрд ₽</label>
+              <input type="number" id="fcf0" value="800" min="0" step="10">
+            </div>
+
+            <hr style="margin: var(--space-4) 0;">
+            <p class="text-sm text-muted" style="margin-bottom: var(--space-2);">Темпы роста FCF по годам, %</p>
+
+            <div class="calc-field">
+              <label for="g1">Год 1</label>
+              <input type="number" id="g1" value="5" min="-50" max="100" step="0.5">
+            </div>
+
+            <div class="calc-field">
+              <label for="g2">Год 2</label>
+              <input type="number" id="g2" value="4" min="-50" max="100" step="0.5">
+            </div>
+
+            <div class="calc-field">
+              <label for="g3">Год 3</label>
+              <input type="number" id="g3" value="3.5" min="-50" max="100" step="0.5">
+            </div>
+
+            <div class="calc-field">
+              <label for="g4">Год 4</label>
+              <input type="number" id="g4" value="3" min="-50" max="100" step="0.5">
+            </div>
+
+            <div class="calc-field">
+              <label for="g5">Год 5</label>
+              <input type="number" id="g5" value="2.5" min="-50" max="100" step="0.5">
+            </div>
+
+            <hr style="margin: var(--space-4) 0;">
+
+            <div class="calc-field">
+              <label for="termGrowth">Терминальный темп роста ($g$), %</label>
+              <input type="number" id="termGrowth" value="2" min="0" max="10" step="0.1">
+            </div>
+
+            <div class="calc-field">
+              <label for="wacc">WACC, %</label>
+              <input type="number" id="wacc" value="12" min="0.1" max="50" step="0.1">
+            </div>
+
+            <button class="btn btn-primary" style="width: 100%; margin-top: var(--space-4);" onclick="calculate()">
+              Рассчитать DCF
+            </button>
+          </div>
+
+          <!-- Results Panel -->
+          <div class="calc-panel">
+            <h3>Результаты</h3>
+
+            <div class="result-box" id="resultBox">
+              <div class="result-row">
+                <span class="result-label">Enterprise Value</span>
+                <span class="result-value" id="resEV">—</span>
+              </div>
+              <div class="result-row">
+                <span class="result-label">PV прогнозных потоков</span>
+                <span class="result-value" id="resPVFcf" style="font-size: var(--text-base);">—</span>
+              </div>
+              <div class="result-row">
+                <span class="result-label">Terminal Value (недисконт.)</span>
+                <span class="result-value" id="resTV" style="font-size: var(--text-base);">—</span>
+              </div>
+              <div class="result-row">
+                <span class="result-label">PV Terminal Value</span>
+                <span class="result-value" id="resPVTV" style="font-size: var(--text-base);">—</span>
+              </div>
+              <div class="result-row">
+                <span class="result-label">Доля TV в EV</span>
+                <span class="result-value" id="resTVShare" style="font-size: var(--text-base);">—</span>
+              </div>
+            </div>
+
+            <div class="box box-info" id="interpretBox" style="display: none;">
+              <div class="box-title">Интерпретация</div>
+              <p id="interpretText" style="margin: 0;"></p>
+            </div>
+
+            <!-- Projection Table -->
+            <div style="overflow-x: auto; margin-top: var(--space-6);">
+              <table class="data-table" id="projectionTable" style="width: 100%; font-size: var(--text-sm);">
+                <thead>
+                  <tr>
+                    <th>Год</th>
+                    <th>FCF, млрд ₽</th>
+                    <th>Коэфф. дисконта</th>
+                    <th>PV, млрд ₽</th>
+                  </tr>
+                </thead>
+                <tbody id="projectionBody"></tbody>
+              </table>
+            </div>
+
+            <!-- Chart -->
+            <div class="chart-box" style="margin-top: var(--space-6);">
+              <canvas id="dcfChart" aria-label="Структура стоимости DCF" role="img"></canvas>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="../js/components.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/progress.js"></script>
+  <script src="../js/search.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js" defer></script>
+
+  <script>
+    const presets = {
+      lukoil: {
+        fcf0: 800, g1: 5, g2: 4, g3: 3.5, g4: 3, g5: 2.5,
+        termGrowth: 2, wacc: 12,
+        name: 'ПАО «Лукойл» (2024)'
+      },
+      gazprom: {
+        fcf0: 500, g1: 3, g2: 2.5, g3: 2, g4: 1.5, g5: 1.5,
+        termGrowth: 1.5, wacc: 14,
+        name: 'ПАО «Газпром» (2024)'
+      },
+      sberbank: {
+        fcf0: 600, g1: 8, g2: 7, g3: 5, g4: 4, g5: 3,
+        termGrowth: 3, wacc: 11,
+        name: 'ПАО «Сбербанк» (2024)'
+      },
+      custom: {
+        fcf0: 100, g1: 5, g2: 5, g3: 5, g4: 5, g5: 5,
+        termGrowth: 2, wacc: 15,
+        name: 'Пользовательские данные'
+      }
+    };
+
+    let dcfChart = null;
+
+    function formatRu(num, decimals) {
+      if (decimals === undefined) decimals = 1;
+      return num.toLocaleString('ru-RU', {
+        minimumFractionDigits: decimals,
+        maximumFractionDigits: decimals
+      });
+    }
+
+    // Preset buttons
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const p = presets[btn.dataset.preset];
+        if (!p) return;
+        document.getElementById('fcf0').value = p.fcf0;
+        document.getElementById('g1').value = p.g1;
+        document.getElementById('g2').value = p.g2;
+        document.getElementById('g3').value = p.g3;
+        document.getElementById('g4').value = p.g4;
+        document.getElementById('g5').value = p.g5;
+        document.getElementById('termGrowth').value = p.termGrowth;
+        document.getElementById('wacc').value = p.wacc;
+        calculate();
+      });
+    });
+
+    function calculate() {
+      const fcf0 = parseFloat(document.getElementById('fcf0').value);
+      const growthRates = [
+        parseFloat(document.getElementById('g1').value) / 100,
+        parseFloat(document.getElementById('g2').value) / 100,
+        parseFloat(document.getElementById('g3').value) / 100,
+        parseFloat(document.getElementById('g4').value) / 100,
+        parseFloat(document.getElementById('g5').value) / 100
+      ];
+      const g = parseFloat(document.getElementById('termGrowth').value) / 100;
+      const wacc = parseFloat(document.getElementById('wacc').value) / 100;
+
+      // Validate WACC > g
+      if (wacc <= g) {
+        document.getElementById('resEV').textContent = 'Ошибка';
+        document.getElementById('resPVFcf').textContent = '—';
+        document.getElementById('resTV').textContent = '—';
+        document.getElementById('resPVTV').textContent = '—';
+        document.getElementById('resTVShare').textContent = '—';
+        const interpBox = document.getElementById('interpretBox');
+        interpBox.style.display = 'block';
+        document.getElementById('interpretText').textContent =
+          'WACC должен быть строго больше терминального темпа роста (g). Иначе модель Гордона даёт бесконечную стоимость.';
+        return;
+      }
+
+      // Project FCFs for years 1-5
+      const fcfs = [];
+      let currentFcf = fcf0;
+      for (let i = 0; i < 5; i++) {
+        currentFcf = currentFcf * (1 + growthRates[i]);
+        fcfs.push(currentFcf);
+      }
+
+      // Discount factors and PVs
+      const discountFactors = [];
+      const pvs = [];
+      let totalPVFcf = 0;
+      for (let t = 1; t <= 5; t++) {
+        const df = 1 / Math.pow(1 + wacc, t);
+        discountFactors.push(df);
+        const pv = fcfs[t - 1] * df;
+        pvs.push(pv);
+        totalPVFcf += pv;
+      }
+
+      // Terminal Value (Gordon Growth Model)
+      const fcfN = fcfs[4];
+      const tv = (fcfN * (1 + g)) / (wacc - g);
+      const pvTV = tv / Math.pow(1 + wacc, 5);
+
+      // Enterprise Value
+      const ev = totalPVFcf + pvTV;
+      const tvShare = (pvTV / ev) * 100;
+
+      // Display results
+      document.getElementById('resEV').textContent = formatRu(ev, 1) + ' млрд ₽';
+      document.getElementById('resPVFcf').textContent = formatRu(totalPVFcf, 1) + ' млрд ₽';
+      document.getElementById('resTV').textContent = formatRu(tv, 1) + ' млрд ₽';
+      document.getElementById('resPVTV').textContent = formatRu(pvTV, 1) + ' млрд ₽';
+      document.getElementById('resTVShare').textContent = formatRu(tvShare, 1) + '%';
+
+      // Interpretation
+      const interpBox = document.getElementById('interpretBox');
+      const interpText = document.getElementById('interpretText');
+      interpBox.style.display = 'block';
+
+      if (tvShare > 75) {
+        interpText.textContent =
+          'Доля терминальной стоимости (' + formatRu(tvShare, 1) + '%) очень высока. ' +
+          'Это означает, что оценка сильно зависит от долгосрочных предположений о росте. ' +
+          'Рекомендуется провести анализ чувствительности по g и WACC.';
+      } else if (tvShare > 50) {
+        interpText.textContent =
+          'Терминальная стоимость составляет ' + formatRu(tvShare, 1) + '% от EV — это типичная структура для зрелых компаний. ' +
+          'Enterprise Value: ' + formatRu(ev, 1) + ' млрд ₽.';
+      } else {
+        interpText.textContent =
+          'Прогнозные потоки дают значительный вклад в стоимость (TV = ' + formatRu(tvShare, 1) + '%). ' +
+          'Это характерно для компаний с высоким краткосрочным ростом. EV: ' + formatRu(ev, 1) + ' млрд ₽.';
+      }
+
+      // Fill projection table
+      const tbody = document.getElementById('projectionBody');
+      tbody.innerHTML = '';
+      for (let t = 0; t < 5; t++) {
+        const tr = document.createElement('tr');
+        tr.innerHTML =
+          '<td>' + (t + 1) + '</td>' +
+          '<td>' + formatRu(fcfs[t], 1) + '</td>' +
+          '<td>' + formatRu(discountFactors[t], 4) + '</td>' +
+          '<td>' + formatRu(pvs[t], 1) + '</td>';
+        tbody.appendChild(tr);
+      }
+      // Terminal value row
+      const trTV = document.createElement('tr');
+      trTV.style.fontWeight = '600';
+      trTV.innerHTML =
+        '<td>TV</td>' +
+        '<td>' + formatRu(tv, 1) + '</td>' +
+        '<td>' + formatRu(1 / Math.pow(1 + wacc, 5), 4) + '</td>' +
+        '<td>' + formatRu(pvTV, 1) + '</td>';
+      tbody.appendChild(trTV);
+      // Total row
+      const trTotal = document.createElement('tr');
+      trTotal.style.fontWeight = '700';
+      trTotal.style.borderTop = '2px solid var(--color-border)';
+      trTotal.innerHTML =
+        '<td colspan="3">Enterprise Value</td>' +
+        '<td>' + formatRu(ev, 1) + '</td>';
+      tbody.appendChild(trTotal);
+
+      // Chart
+      updateChart(pvs, pvTV);
+    }
+
+    function updateChart(pvs, pvTV) {
+      if (typeof Chart === 'undefined') return;
+
+      const fontOpts = { family: 'Inter, sans-serif', size: 12 };
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const textColor = isDark ? '#d6d3d1' : '#44403c';
+      const gridColor = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
+
+      const labels = ['Год 1', 'Год 2', 'Год 3', 'Год 4', 'Год 5', 'Terminal Value'];
+      const data = pvs.map(v => parseFloat(v.toFixed(2)));
+      data.push(parseFloat(pvTV.toFixed(2)));
+
+      const colors = ['#1d4ed8', '#2563eb', '#3b82f6', '#60a5fa', '#93c5fd', '#b45309'];
+
+      if (dcfChart) dcfChart.destroy();
+      dcfChart = new Chart(document.getElementById('dcfChart'), {
+        type: 'bar',
+        data: {
+          labels: labels,
+          datasets: [{
+            label: 'PV, млрд ₽',
+            data: data,
+            backgroundColor: colors,
+            borderWidth: 0,
+            borderRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+            title: {
+              display: true,
+              text: 'Вклад каждого периода в Enterprise Value (PV, млрд ₽)',
+              font: { ...fontOpts, size: 14, weight: '600' },
+              color: textColor
+            },
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: function(ctx) {
+                  return ctx.parsed.y.toLocaleString('ru-RU', { maximumFractionDigits: 1 }) + ' млрд ₽';
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true,
+              ticks: {
+                callback: function(v) {
+                  return v.toLocaleString('ru-RU') + ' млрд';
+                },
+                font: fontOpts,
+                color: textColor
+              },
+              grid: { color: gridColor }
+            },
+            x: {
+              ticks: { font: fontOpts, color: textColor },
+              grid: { display: false }
+            }
+          }
+        }
+      });
+    }
+
+    // Auto-calculate on load
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelector('[data-preset="lukoil"]').classList.add('active');
+      calculate();
+    });
+  </script>
+</body>
+</html>

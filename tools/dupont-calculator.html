@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Формула Дюпона — Корпоративные финансы</title>
+  <meta name="description" content="Интерактивный калькулятор DuPont Analysis: 3-факторная и 5-факторная декомпозиция ROE. Пресеты: Лукойл, Сбербанк, Газпром.">
+
+  <meta property="og:title" content="Формула Дюпона — Декомпозиция ROE">
+  <meta property="og:description" content="Разложите ROE на компоненты по модели Дюпона. Пресеты российских компаний.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="stylesheet" href="../css/features.css">
+
+  <!-- KaTeX for formula display -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+
+  <!-- Chart.js -->
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body data-page="tools/dupont-calculator" data-depth="1">
+
+  <div id="site-nav"></div>
+
+  <main id="main-content">
+
+    <section class="hero hero-compact" aria-label="Заголовок">
+      <div class="hero-glow hero-glow-primary" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-badge">Интерактивный инструмент</div>
+        <h1>Формула <span class="highlight">Дюпона</span></h1>
+        <p class="hero-subtitle">Декомпозиция ROE: от чистой прибыли до рентабельности собственного капитала</p>
+      </div>
+    </section>
+
+    <section class="section" aria-label="Калькулятор">
+      <div class="container">
+
+        <!-- Formula: 3-factor -->
+        <div class="box box-formula" style="max-width: var(--container-narrow); margin: 0 auto var(--space-4);">
+          <div class="box-title">3-факторная модель</div>
+          $$ROE = \underbrace{\frac{NI}{Revenue}}_{\text{Чистая маржа}} \times \underbrace{\frac{Revenue}{Assets}}_{\text{Оборач. активов}} \times \underbrace{\frac{Assets}{Equity}}_{\text{Мультипл. капитала}}$$
+        </div>
+
+        <!-- Formula: 5-factor -->
+        <div class="box box-formula" style="max-width: var(--container-narrow); margin: 0 auto var(--space-8);">
+          <div class="box-title">5-факторная модель</div>
+          $$ROE = \frac{EBT}{EBIT} \times \frac{EBIT}{Revenue} \times \frac{Revenue}{Assets} \times \frac{Assets}{Equity} \times (1 - T)$$
+        </div>
+
+        <!-- Presets -->
+        <div style="text-align: center; margin-bottom: var(--space-6);">
+          <span class="text-sm text-muted" style="margin-right: var(--space-2);">Пресеты:</span>
+          <div class="preset-group" style="display: inline-flex; flex-wrap: wrap; gap: 4px;">
+            <button class="preset-btn" data-preset="lukoil">Лукойл</button>
+            <button class="preset-btn" data-preset="sberbank">Сбербанк</button>
+            <button class="preset-btn" data-preset="gazprom">Газпром</button>
+            <button class="preset-btn" data-preset="custom">Свои данные</button>
+          </div>
+        </div>
+
+        <!-- Model toggle -->
+        <div style="text-align: center; margin-bottom: var(--space-6);">
+          <span class="text-sm text-muted" style="margin-right: var(--space-2);">Модель:</span>
+          <div class="preset-group" style="display: inline-flex;">
+            <button class="preset-btn active" id="btnModel3" onclick="switchModel(3)">3-факторная</button>
+            <button class="preset-btn" id="btnModel5" onclick="switchModel(5)">5-факторная</button>
+          </div>
+        </div>
+
+        <!-- Calculator Layout -->
+        <div class="calc-layout">
+
+          <!-- Inputs Panel -->
+          <div class="calc-panel">
+            <h3>Финансовые данные</h3>
+
+            <div class="calc-field">
+              <label for="revenue">Выручка (Revenue), млрд руб.</label>
+              <input type="number" id="revenue" value="9400" min="0" step="10">
+            </div>
+
+            <div class="calc-field">
+              <label for="netIncome">Чистая прибыль (Net Income), млрд руб.</label>
+              <input type="number" id="netIncome" value="790" min="0" step="10">
+            </div>
+
+            <div class="calc-field">
+              <label for="totalAssets">Совокупные активы (Total Assets), млрд руб.</label>
+              <input type="number" id="totalAssets" value="6800" min="0" step="10">
+            </div>
+
+            <div class="calc-field">
+              <label for="totalEquity">Собственный капитал (Total Equity), млрд руб.</label>
+              <input type="number" id="totalEquity" value="4500" min="0" step="10">
+            </div>
+
+            <div id="fields5factor" style="display: none;">
+              <hr style="margin: var(--space-4) 0;">
+              <p class="text-sm text-muted" style="margin-bottom: var(--space-3);">Дополнительно для 5-факторной модели:</p>
+
+              <div class="calc-field">
+                <label for="ebit">EBIT (операционная прибыль), млрд руб.</label>
+                <input type="number" id="ebit" value="1100" min="0" step="10">
+              </div>
+
+              <div class="calc-field">
+                <label for="ebt">EBT (прибыль до налогов), млрд руб.</label>
+                <input type="number" id="ebt" value="1020" min="0" step="10">
+              </div>
+
+              <div class="calc-field">
+                <label for="taxRate">Ставка налога на прибыль ($T$), %</label>
+                <input type="number" id="taxRate" value="25" min="0" max="100" step="1">
+              </div>
+            </div>
+
+            <button class="btn btn-primary" style="width: 100%; margin-top: var(--space-4);" onclick="calculate()">
+              Рассчитать ROE
+            </button>
+          </div>
+
+          <!-- Results Panel -->
+          <div class="calc-panel">
+            <h3>Результаты</h3>
+
+            <div class="result-box" id="resultBox">
+              <div class="result-row">
+                <span class="result-label">ROE</span>
+                <span class="result-value" id="resROE">—</span>
+              </div>
+              <div class="result-row">
+                <span class="result-label">Чистая маржа (Net Margin)</span>
+                <span class="result-value" id="resMargin" style="font-size: var(--text-base);">—</span>
+              </div>
+              <div class="result-row">
+                <span class="result-label">Оборачиваемость активов (Asset Turnover)</span>
+                <span class="result-value" id="resTurnover" style="font-size: var(--text-base);">—</span>
+              </div>
+              <div class="result-row">
+                <span class="result-label">Мультипликатор капитала (Equity Multiplier)</span>
+                <span class="result-value" id="resMultiplier" style="font-size: var(--text-base);">—</span>
+              </div>
+            </div>
+
+            <!-- 5-factor extra results -->
+            <div class="result-box" id="resultBox5" style="display: none; margin-top: var(--space-4);">
+              <div class="result-row">
+                <span class="result-label">Налоговое бремя (EBT / EBIT)</span>
+                <span class="result-value" id="resTaxBurden" style="font-size: var(--text-base);">—</span>
+              </div>
+              <div class="result-row">
+                <span class="result-label">Операционная маржа (EBIT / Revenue)</span>
+                <span class="result-value" id="resOpMargin" style="font-size: var(--text-base);">—</span>
+              </div>
+              <div class="result-row">
+                <span class="result-label">Налоговый щит (1 - T)</span>
+                <span class="result-value" id="resTaxShield" style="font-size: var(--text-base);">—</span>
+              </div>
+            </div>
+
+            <div class="box box-info" id="interpretBox" style="display: none; margin-top: var(--space-4);">
+              <div class="box-title">Интерпретация</div>
+              <p id="interpretText" style="margin: 0;"></p>
+            </div>
+
+            <!-- Decomposition tree -->
+            <div class="box" id="treeBox" style="margin-top: var(--space-6); display: none;">
+              <div class="box-title">Декомпозиция ROE</div>
+              <div id="decompTree" style="font-family: 'Inter', monospace; font-size: var(--text-sm); line-height: 1.8; overflow-x: auto; white-space: pre;"></div>
+            </div>
+
+            <!-- Chart -->
+            <div class="chart-box" style="margin-top: var(--space-6);">
+              <canvas id="factorChart" aria-label="Факторы DuPont" role="img"></canvas>
+            </div>
+
+            <div class="chart-box" style="margin-top: var(--space-6);">
+              <canvas id="waterfallChart" aria-label="Вклад каждого фактора в ROE" role="img"></canvas>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="../js/components.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/progress.js"></script>
+  <script src="../js/search.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js" defer></script>
+
+  <script>
+    /* ===== Presets ===== */
+    const presets = {
+      lukoil: {
+        revenue: 9400, netIncome: 790, totalAssets: 6800, totalEquity: 4500,
+        ebit: 1100, ebt: 1020, taxRate: 25,
+        name: 'ПАО «Лукойл» (2024)'
+      },
+      sberbank: {
+        revenue: 3200, netIncome: 1500, totalAssets: 44000, totalEquity: 6200,
+        ebit: 2050, ebt: 1950, taxRate: 25,
+        name: 'ПАО «Сбербанк» (2024)'
+      },
+      gazprom: {
+        revenue: 8500, netIncome: 730, totalAssets: 25000, totalEquity: 15800,
+        ebit: 1050, ebt: 970, taxRate: 25,
+        name: 'ПАО «Газпром» (2024)'
+      },
+      custom: {
+        revenue: 1000, netIncome: 100, totalAssets: 800, totalEquity: 400,
+        ebit: 150, ebt: 130, taxRate: 25,
+        name: 'Пользовательские данные'
+      }
+    };
+
+    let currentModel = 3;
+    let factorChart = null;
+    let waterfallChart = null;
+
+    /* ===== Model toggle ===== */
+    function switchModel(n) {
+      currentModel = n;
+      document.getElementById('btnModel3').classList.toggle('active', n === 3);
+      document.getElementById('btnModel5').classList.toggle('active', n === 5);
+      document.getElementById('fields5factor').style.display = n === 5 ? 'block' : 'none';
+      document.getElementById('resultBox5').style.display = n === 5 ? 'block' : 'none';
+      calculate();
+    }
+
+    /* ===== Preset buttons ===== */
+    document.querySelectorAll('.preset-btn[data-preset]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.preset-btn[data-preset]').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const p = presets[btn.dataset.preset];
+        if (!p) return;
+        document.getElementById('revenue').value = p.revenue;
+        document.getElementById('netIncome').value = p.netIncome;
+        document.getElementById('totalAssets').value = p.totalAssets;
+        document.getElementById('totalEquity').value = p.totalEquity;
+        document.getElementById('ebit').value = p.ebit;
+        document.getElementById('ebt').value = p.ebt;
+        document.getElementById('taxRate').value = p.taxRate;
+        calculate();
+      });
+    });
+
+    /* ===== Format number with Russian locale ===== */
+    function fmt(v, digits) {
+      if (digits === undefined) digits = 2;
+      return v.toLocaleString('ru-RU', { minimumFractionDigits: digits, maximumFractionDigits: digits });
+    }
+
+    function fmtPct(v) {
+      return fmt(v * 100) + '%';
+    }
+
+    /* ===== Calculate ===== */
+    function calculate() {
+      const revenue = parseFloat(document.getElementById('revenue').value) || 0;
+      const ni = parseFloat(document.getElementById('netIncome').value) || 0;
+      const assets = parseFloat(document.getElementById('totalAssets').value) || 0;
+      const equity = parseFloat(document.getElementById('totalEquity').value) || 0;
+
+      if (revenue === 0 || assets === 0 || equity === 0) return;
+
+      // 3-factor
+      const netMargin = ni / revenue;
+      const assetTurnover = revenue / assets;
+      const equityMultiplier = assets / equity;
+      const roe3 = netMargin * assetTurnover * equityMultiplier;
+
+      document.getElementById('resROE').textContent = fmtPct(roe3);
+      document.getElementById('resMargin').textContent = fmtPct(netMargin);
+      document.getElementById('resTurnover').textContent = fmt(assetTurnover) + 'x';
+      document.getElementById('resMultiplier').textContent = fmt(equityMultiplier) + 'x';
+
+      let factors, labels, colors, roe;
+
+      if (currentModel === 5) {
+        const ebit = parseFloat(document.getElementById('ebit').value) || 0;
+        const ebt = parseFloat(document.getElementById('ebt').value) || 0;
+        const taxRate = parseFloat(document.getElementById('taxRate').value) / 100;
+
+        if (ebit === 0) return;
+
+        const taxBurden = ebt / ebit;
+        const opMargin = ebit / revenue;
+        const taxRetention = 1 - taxRate;
+        const roe5 = taxBurden * opMargin * assetTurnover * equityMultiplier * taxRetention;
+
+        document.getElementById('resTaxBurden').textContent = fmt(taxBurden);
+        document.getElementById('resOpMargin').textContent = fmtPct(opMargin);
+        document.getElementById('resTaxShield').textContent = fmt(taxRetention);
+        document.getElementById('resROE').textContent = fmtPct(roe5);
+
+        factors = [taxBurden, opMargin, assetTurnover, equityMultiplier, taxRetention];
+        labels = [
+          'EBT/EBIT\n(нал. бремя)',
+          'EBIT/Revenue\n(опер. маржа)',
+          'Revenue/Assets\n(оборач.)',
+          'Assets/Equity\n(мульт.)',
+          '1 - T\n(нал. щит)'
+        ];
+        colors = ['#7c3aed', '#2563eb', '#0891b2', '#d97706', '#16a34a'];
+        roe = roe5;
+
+        buildTree5(ebt, ebit, revenue, assets, equity, taxRate, roe5);
+      } else {
+        factors = [netMargin, assetTurnover, equityMultiplier];
+        labels = [
+          'NI/Revenue\n(чистая маржа)',
+          'Revenue/Assets\n(оборач.)',
+          'Assets/Equity\n(мульт.)'
+        ];
+        colors = ['#2563eb', '#0891b2', '#d97706'];
+        roe = roe3;
+
+        buildTree3(ni, revenue, assets, equity, roe3);
+      }
+
+      // Interpretation
+      const interpBox = document.getElementById('interpretBox');
+      const interpText = document.getElementById('interpretText');
+      interpBox.style.display = 'block';
+
+      let mainDriver = '';
+      if (currentModel === 3) {
+        if (netMargin > 0.15) mainDriver = 'высокой чистой маржи (прибыльность)';
+        else if (equityMultiplier > 3) mainDriver = 'значительного финансового рычага';
+        else if (assetTurnover > 1.5) mainDriver = 'высокой оборачиваемости активов';
+        else mainDriver = 'сбалансированных факторов';
+      } else {
+        mainDriver = 'см. 5-факторную декомпозицию выше';
+      }
+
+      if (roe > 0.25) {
+        interpText.textContent = 'ROE ' + fmtPct(roe) + ' — отличный результат, значительно выше среднерыночного уровня (~15%). Основной драйвер: ' + mainDriver + '.';
+      } else if (roe > 0.15) {
+        interpText.textContent = 'ROE ' + fmtPct(roe) + ' — хороший результат на уровне рыночных ожиданий. Основной драйвер: ' + mainDriver + '.';
+      } else if (roe > 0.05) {
+        interpText.textContent = 'ROE ' + fmtPct(roe) + ' — умеренный результат, ниже среднерыночного. Стоит проанализировать, какой фактор ограничивает рентабельность.';
+      } else {
+        interpText.textContent = 'ROE ' + fmtPct(roe) + ' — низкий результат. Рекомендуется детальный анализ каждого компонента для выявления узких мест.';
+      }
+
+      updateCharts(factors, labels, colors, roe);
+    }
+
+    /* ===== Decomposition tree (3-factor) ===== */
+    function buildTree3(ni, revenue, assets, equity, roe) {
+      const box = document.getElementById('treeBox');
+      const tree = document.getElementById('decompTree');
+      box.style.display = 'block';
+
+      tree.textContent =
+        '  ROE = ' + fmtPct(roe) + '\n' +
+        '  |\n' +
+        '  +-- Чистая маржа = ' + fmtPct(ni / revenue) + '\n' +
+        '  |     NI ' + fmt(ni, 0) + ' / Revenue ' + fmt(revenue, 0) + '\n' +
+        '  |\n' +
+        '  +-- Оборач. активов = ' + fmt(revenue / assets) + 'x\n' +
+        '  |     Revenue ' + fmt(revenue, 0) + ' / Assets ' + fmt(assets, 0) + '\n' +
+        '  |\n' +
+        '  +-- Мульт. капитала = ' + fmt(assets / equity) + 'x\n' +
+        '        Assets ' + fmt(assets, 0) + ' / Equity ' + fmt(equity, 0);
+    }
+
+    /* ===== Decomposition tree (5-factor) ===== */
+    function buildTree5(ebt, ebit, revenue, assets, equity, taxRate, roe) {
+      const box = document.getElementById('treeBox');
+      const tree = document.getElementById('decompTree');
+      box.style.display = 'block';
+
+      tree.textContent =
+        '  ROE = ' + fmtPct(roe) + '\n' +
+        '  |\n' +
+        '  +-- Налоговое бремя = ' + fmt(ebt / ebit) + '\n' +
+        '  |     EBT ' + fmt(ebt, 0) + ' / EBIT ' + fmt(ebit, 0) + '\n' +
+        '  |\n' +
+        '  +-- Опер. маржа = ' + fmtPct(ebit / revenue) + '\n' +
+        '  |     EBIT ' + fmt(ebit, 0) + ' / Revenue ' + fmt(revenue, 0) + '\n' +
+        '  |\n' +
+        '  +-- Оборач. активов = ' + fmt(revenue / assets) + 'x\n' +
+        '  |     Revenue ' + fmt(revenue, 0) + ' / Assets ' + fmt(assets, 0) + '\n' +
+        '  |\n' +
+        '  +-- Мульт. капитала = ' + fmt(assets / equity) + 'x\n' +
+        '  |     Assets ' + fmt(assets, 0) + ' / Equity ' + fmt(equity, 0) + '\n' +
+        '  |\n' +
+        '  +-- Налоговый щит = ' + fmt(1 - taxRate) + '\n' +
+        '        (1 - T) = 1 - ' + fmt(taxRate * 100, 0) + '%';
+    }
+
+    /* ===== Charts ===== */
+    function updateCharts(factors, labels, colors, roe) {
+      if (typeof Chart === 'undefined') return;
+
+      const fontOpts = { family: 'Inter, sans-serif', size: 12 };
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const textColor = isDark ? '#d6d3d1' : '#44403c';
+      const gridColor = isDark ? 'rgba(255,255,255,0.06)' : 'rgba(0,0,0,0.06)';
+
+      // Horizontal bar chart — factor values
+      const barLabels = labels.map(l => l.replace('\n', ' '));
+      const barData = factors.map(f => parseFloat((f * 100).toFixed(2)));
+
+      if (factorChart) factorChart.destroy();
+      factorChart = new Chart(document.getElementById('factorChart'), {
+        type: 'bar',
+        data: {
+          labels: barLabels,
+          datasets: [{
+            label: 'Значение',
+            data: factors.map(f => parseFloat(f.toFixed(4))),
+            backgroundColor: colors,
+            borderWidth: 0,
+            borderRadius: 6
+          }]
+        },
+        options: {
+          indexAxis: 'y',
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+            title: {
+              display: true,
+              text: 'Значение каждого фактора',
+              font: { ...fontOpts, size: 14, weight: '600' },
+              color: textColor
+            },
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: function(ctx) {
+                  const v = ctx.raw;
+                  return v < 1 ? (v * 100).toFixed(2) + '%' : v.toFixed(2) + 'x';
+                }
+              }
+            }
+          },
+          scales: {
+            x: {
+              beginAtZero: true,
+              ticks: { font: fontOpts, color: textColor },
+              grid: { color: gridColor }
+            },
+            y: {
+              ticks: { font: fontOpts, color: textColor },
+              grid: { display: false }
+            }
+          }
+        }
+      });
+
+      // Waterfall-style stacked bar showing contribution
+      // We show ln-decomposition: ln(ROE) = ln(f1) + ln(f2) + ...
+      // But for simplicity, show percentage-point contribution via logarithms
+      const lnFactors = factors.map(f => f > 0 ? Math.log(f) : 0);
+      const lnROE = lnFactors.reduce((a, b) => a + b, 0);
+      const contributions = lnFactors.map(lf => lnROE !== 0 ? (lf / lnROE) * roe * 100 : 0);
+
+      if (waterfallChart) waterfallChart.destroy();
+      waterfallChart = new Chart(document.getElementById('waterfallChart'), {
+        type: 'bar',
+        data: {
+          labels: [...barLabels, 'ROE'],
+          datasets: [{
+            label: 'Вклад в ROE (п.п.)',
+            data: [...contributions, roe * 100],
+            backgroundColor: [...colors, '#15803d'],
+            borderWidth: 0,
+            borderRadius: 6
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          plugins: {
+            title: {
+              display: true,
+              text: 'Вклад каждого фактора в ROE (лог-декомпозиция), п.п.',
+              font: { ...fontOpts, size: 14, weight: '600' },
+              color: textColor
+            },
+            legend: { display: false },
+            tooltip: {
+              callbacks: {
+                label: function(ctx) {
+                  return ctx.raw.toFixed(2) + ' п.п.';
+                }
+              }
+            }
+          },
+          scales: {
+            y: {
+              ticks: { callback: v => v.toFixed(1) + ' п.п.', font: fontOpts, color: textColor },
+              grid: { color: gridColor }
+            },
+            x: {
+              ticks: { font: fontOpts, color: textColor },
+              grid: { display: false }
+            }
+          }
+        }
+      });
+    }
+
+    /* ===== Auto-calculate on load ===== */
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelector('[data-preset="lukoil"]').classList.add('active');
+      calculate();
+    });
+  </script>
+</body>
+</html>

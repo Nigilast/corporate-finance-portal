@@ -1,0 +1,445 @@
+<!DOCTYPE html>
+<html lang="ru" data-theme="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Z-Score Альтмана — Корпоративные финансы</title>
+  <meta name="description" content="Интерактивный калькулятор Z-Score Альтмана для прогнозирования банкротства. Пресеты: Лукойл, Сбербанк.">
+
+  <meta property="og:title" content="Z-Score Альтмана — Прогнозирование банкротства">
+  <meta property="og:description" content="Рассчитайте Z-Score Альтмана с визуализацией. Пресеты российских компаний.">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:wght@400;600;700;800&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="../css/base.css">
+  <link rel="stylesheet" href="../css/components.css">
+  <link rel="stylesheet" href="../css/layout.css">
+  <link rel="stylesheet" href="../css/pages.css">
+  <link rel="stylesheet" href="../css/features.css">
+
+  <!-- KaTeX for formula display -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"
+    onload="renderMathInElement(document.body,{delimiters:[{left:'$$',right:'$$',display:true},{left:'$',right:'$',display:false}]});"></script>
+
+  <!-- Chart.js -->
+  <script defer src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+</head>
+<body data-page="tools/altman-calculator" data-depth="1">
+
+  <div id="site-nav"></div>
+
+  <main id="main-content">
+
+    <section class="hero hero-compact" aria-label="Заголовок">
+      <div class="hero-glow hero-glow-primary" aria-hidden="true"></div>
+      <div class="hero-content">
+        <div class="hero-badge">Интерактивный инструмент</div>
+        <h1><span class="highlight">Z-Score</span> Альтмана</h1>
+        <p class="hero-subtitle">Прогнозирование банкротства по модели Эдварда Альтмана (1968)</p>
+      </div>
+    </section>
+
+    <section class="section" aria-label="Калькулятор">
+      <div class="container">
+
+        <!-- Formula reminder -->
+        <div class="box box-formula" style="max-width: var(--container-narrow); margin: 0 auto var(--space-8);">
+          <div class="box-title">Формула</div>
+          $$Z = 1{,}2 \cdot X_1 + 1{,}4 \cdot X_2 + 3{,}3 \cdot X_3 + 0{,}6 \cdot X_4 + 1{,}0 \cdot X_5$$
+          <div style="margin-top: var(--space-3); font-size: var(--text-sm); color: var(--text-muted);">
+            $X_1 = \frac{WC}{TA}$, &ensp;
+            $X_2 = \frac{RE}{TA}$, &ensp;
+            $X_3 = \frac{EBIT}{TA}$, &ensp;
+            $X_4 = \frac{MVE}{TL}$, &ensp;
+            $X_5 = \frac{Sales}{TA}$
+          </div>
+        </div>
+
+        <!-- Presets -->
+        <div style="text-align: center; margin-bottom: var(--space-6);">
+          <span class="text-sm text-muted" style="margin-right: var(--space-2);">Пресеты:</span>
+          <div class="preset-group" style="display: inline-flex;">
+            <button class="preset-btn" data-preset="lukoil">Лукойл</button>
+            <button class="preset-btn" data-preset="sberbank">Сбербанк</button>
+            <button class="preset-btn" data-preset="bankrupt">Банкрот (пример)</button>
+            <button class="preset-btn" data-preset="custom">Свои данные</button>
+          </div>
+        </div>
+
+        <!-- Calculator Layout -->
+        <div class="calc-layout">
+
+          <!-- Inputs Panel -->
+          <div class="calc-panel">
+            <h3>Финансовые данные (млрд руб.)</h3>
+
+            <div class="calc-field">
+              <label for="wc">Оборотный капитал (Working Capital)</label>
+              <input type="number" id="wc" value="1200" step="1">
+            </div>
+
+            <div class="calc-field">
+              <label for="re">Нераспределённая прибыль (Retained Earnings)</label>
+              <input type="number" id="re" value="3800" step="1">
+            </div>
+
+            <div class="calc-field">
+              <label for="ebit">EBIT (прибыль до процентов и налогов)</label>
+              <input type="number" id="ebit" value="1100" step="1">
+            </div>
+
+            <div class="calc-field">
+              <label for="mve">Рыночная капитализация (Market Value of Equity)</label>
+              <input type="number" id="mve" value="4500" step="1">
+            </div>
+
+            <div class="calc-field">
+              <label for="tl">Общие обязательства (Total Liabilities)</label>
+              <input type="number" id="tl" value="2200" step="1">
+            </div>
+
+            <div class="calc-field">
+              <label for="ta">Общие активы (Total Assets)</label>
+              <input type="number" id="ta" value="6500" step="1">
+            </div>
+
+            <div class="calc-field">
+              <label for="sales">Выручка (Sales)</label>
+              <input type="number" id="sales" value="9200" step="1">
+            </div>
+
+            <button class="btn btn-primary" style="width: 100%; margin-top: var(--space-4);" onclick="calculate()">
+              Рассчитать Z-Score
+            </button>
+          </div>
+
+          <!-- Results Panel -->
+          <div class="calc-panel">
+            <h3>Результаты</h3>
+
+            <div class="result-box" id="resultBox">
+              <div class="result-row">
+                <span class="result-label">Z-Score</span>
+                <span class="result-value" id="resZscore" style="font-size: var(--text-2xl);">—</span>
+              </div>
+              <div class="result-row">
+                <span class="result-label">Зона</span>
+                <span class="result-value" id="resZone" style="font-size: var(--text-base);">—</span>
+              </div>
+            </div>
+
+            <div class="box box-info" id="interpretBox" style="display: none;">
+              <div class="box-title">Интерпретация</div>
+              <p id="interpretText" style="margin: 0;"></p>
+            </div>
+
+            <!-- Components Table -->
+            <div id="componentsTable" style="display: none; margin-top: var(--space-6);">
+              <h4 style="margin-bottom: var(--space-3);">Компоненты Z-Score</h4>
+              <div style="overflow-x: auto;">
+                <table class="data-table" style="width: 100%;">
+                  <thead>
+                    <tr>
+                      <th>Показатель</th>
+                      <th>Значение</th>
+                      <th>Коэфф.</th>
+                      <th>Вклад</th>
+                    </tr>
+                  </thead>
+                  <tbody id="compBody"></tbody>
+                  <tfoot>
+                    <tr style="font-weight: 600;">
+                      <td colspan="3">Итого Z-Score</td>
+                      <td id="compTotal">—</td>
+                    </tr>
+                  </tfoot>
+                </table>
+              </div>
+            </div>
+
+            <!-- Gauge Chart -->
+            <div class="chart-box" style="margin-top: var(--space-6);">
+              <canvas id="gaugeChart" aria-label="Шкала Z-Score" role="img"></canvas>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <div id="site-footer"></div>
+
+  <script src="../js/components.js"></script>
+  <script src="../js/app.js"></script>
+  <script src="../js/progress.js"></script>
+  <script src="../js/search.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js" defer></script>
+
+  <script>
+    const presets = {
+      lukoil: {
+        wc: 1200, re: 3800, ebit: 1100, mve: 4500, tl: 2200, ta: 6500, sales: 9200,
+        name: 'ПАО "Лукойл" (условные данные)'
+      },
+      sberbank: {
+        wc: 2800, re: 4200, ebit: 1600, mve: 5800, tl: 28000, ta: 42000, sales: 3200,
+        name: 'ПАО "Сбербанк" (условные данные)'
+      },
+      bankrupt: {
+        wc: -150, re: -80, ebit: 20, mve: 50, tl: 900, ta: 800, sales: 400,
+        name: 'Компания-банкрот (пример)'
+      },
+      custom: {
+        wc: 500, re: 1000, ebit: 300, mve: 2000, tl: 1500, ta: 3500, sales: 4000,
+        name: 'Пользовательские данные'
+      }
+    };
+
+    let gaugeChart = null;
+
+    // Preset buttons
+    document.querySelectorAll('.preset-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        document.querySelectorAll('.preset-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        const p = presets[btn.dataset.preset];
+        if (!p) return;
+        document.getElementById('wc').value = p.wc;
+        document.getElementById('re').value = p.re;
+        document.getElementById('ebit').value = p.ebit;
+        document.getElementById('mve').value = p.mve;
+        document.getElementById('tl').value = p.tl;
+        document.getElementById('ta').value = p.ta;
+        document.getElementById('sales').value = p.sales;
+        calculate();
+      });
+    });
+
+    function formatNum(n) {
+      return n.toLocaleString('ru-RU', { minimumFractionDigits: 4, maximumFractionDigits: 4 });
+    }
+
+    function calculate() {
+      const wc = parseFloat(document.getElementById('wc').value) || 0;
+      const re = parseFloat(document.getElementById('re').value) || 0;
+      const ebit = parseFloat(document.getElementById('ebit').value) || 0;
+      const mve = parseFloat(document.getElementById('mve').value) || 0;
+      const tl = parseFloat(document.getElementById('tl').value) || 0;
+      const ta = parseFloat(document.getElementById('ta').value) || 0;
+      const sales = parseFloat(document.getElementById('sales').value) || 0;
+
+      if (ta === 0) {
+        document.getElementById('resZscore').textContent = 'Ошибка';
+        document.getElementById('resZone').textContent = 'Активы не могут быть 0';
+        return;
+      }
+
+      if (tl === 0) {
+        document.getElementById('resZscore').textContent = 'Ошибка';
+        document.getElementById('resZone').textContent = 'Обязательства не могут быть 0';
+        return;
+      }
+
+      const x1 = wc / ta;
+      const x2 = re / ta;
+      const x3 = ebit / ta;
+      const x4 = mve / tl;
+      const x5 = sales / ta;
+
+      const c1 = 1.2;
+      const c2 = 1.4;
+      const c3 = 3.3;
+      const c4 = 0.6;
+      const c5 = 1.0;
+
+      const w1 = c1 * x1;
+      const w2 = c2 * x2;
+      const w3 = c3 * x3;
+      const w4 = c4 * x4;
+      const w5 = c5 * x5;
+
+      const z = w1 + w2 + w3 + w4 + w5;
+
+      // Display Z-Score
+      document.getElementById('resZscore').textContent = z.toLocaleString('ru-RU', {
+        minimumFractionDigits: 2,
+        maximumFractionDigits: 2
+      });
+
+      // Zone classification
+      const zoneEl = document.getElementById('resZone');
+      if (z > 2.99) {
+        zoneEl.innerHTML = '<span style="color: var(--color-success, #16a34a); font-weight: 600;">Безопасная зона</span>';
+      } else if (z >= 1.81) {
+        zoneEl.innerHTML = '<span style="color: var(--color-warning, #ca8a04); font-weight: 600;">Серая зона (неопределённость)</span>';
+      } else {
+        zoneEl.innerHTML = '<span style="color: var(--color-error, #dc2626); font-weight: 600;">Зона финансового бедствия</span>';
+      }
+
+      // Interpretation
+      const interpBox = document.getElementById('interpretBox');
+      const interpText = document.getElementById('interpretText');
+      interpBox.style.display = 'block';
+
+      if (z > 2.99) {
+        interpText.textContent = `Z-Score = ${z.toFixed(2)} (> 2,99). Компания финансово устойчива. Вероятность банкротства в ближайшие 2 года крайне мала. Модель Альтмана классифицирует компанию как надёжную.`;
+      } else if (z >= 1.81) {
+        interpText.textContent = `Z-Score = ${z.toFixed(2)} (1,81 – 2,99). Серая зона — модель не может однозначно классифицировать компанию. Необходим дополнительный анализ: динамика показателей, отраслевая специфика, качество менеджмента.`;
+      } else {
+        interpText.textContent = `Z-Score = ${z.toFixed(2)} (< 1,81). Зона финансового бедствия. Высокая вероятность банкротства в ближайшие 2 года. Требуются срочные меры: реструктуризация долга, сокращение расходов, привлечение инвестиций.`;
+      }
+
+      // Components table
+      const components = [
+        { label: 'X₁ = WC / TA', value: x1, coeff: c1, contrib: w1 },
+        { label: 'X₂ = RE / TA', value: x2, coeff: c2, contrib: w2 },
+        { label: 'X₃ = EBIT / TA', value: x3, coeff: c3, contrib: w3 },
+        { label: 'X₄ = MVE / TL', value: x4, coeff: c4, contrib: w4 },
+        { label: 'X₅ = Sales / TA', value: x5, coeff: c5, contrib: w5 }
+      ];
+
+      const compBody = document.getElementById('compBody');
+      compBody.innerHTML = '';
+      components.forEach(c => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `<td>${c.label}</td><td>${formatNum(c.value)}</td><td>${c.coeff.toFixed(1)}</td><td>${formatNum(c.contrib)}</td>`;
+        compBody.appendChild(tr);
+      });
+      document.getElementById('compTotal').textContent = z.toLocaleString('ru-RU', {
+        minimumFractionDigits: 4,
+        maximumFractionDigits: 4
+      });
+      document.getElementById('componentsTable').style.display = 'block';
+
+      // Gauge chart
+      updateGauge(z);
+    }
+
+    function updateGauge(z) {
+      if (typeof Chart === 'undefined') return;
+
+      const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+      const textColor = isDark ? '#d6d3d1' : '#44403c';
+      const fontOpts = { family: 'Inter, sans-serif', size: 12 };
+
+      // Clamp Z to 0–5 for display
+      const zClamped = Math.max(0, Math.min(5, z));
+
+      // Doughnut as gauge: three colored zones + needle position
+      // Distress: 0 – 1.81, Grey: 1.81 – 2.99, Safe: 2.99 – 5.0
+      const distress = 1.81;
+      const grey = 2.99 - 1.81;   // 1.18
+      const safe = 5.0 - 2.99;    // 2.01
+      const total = 5.0;
+
+      if (gaugeChart) gaugeChart.destroy();
+
+      gaugeChart = new Chart(document.getElementById('gaugeChart'), {
+        type: 'doughnut',
+        data: {
+          labels: ['Бедствие (< 1,81)', 'Серая зона (1,81 – 2,99)', 'Безопасная (> 2,99)'],
+          datasets: [{
+            data: [distress, grey, safe],
+            backgroundColor: [
+              'rgba(220, 38, 38, 0.75)',
+              'rgba(202, 138, 4, 0.75)',
+              'rgba(22, 163, 74, 0.75)'
+            ],
+            borderWidth: 0,
+            circumference: 180,
+            rotation: 270
+          }]
+        },
+        options: {
+          responsive: true,
+          maintainAspectRatio: true,
+          cutout: '70%',
+          plugins: {
+            title: {
+              display: true,
+              text: 'Шкала Z-Score Альтмана',
+              font: { ...fontOpts, size: 14, weight: '600' },
+              color: textColor
+            },
+            legend: {
+              position: 'bottom',
+              labels: {
+                padding: 16,
+                usePointStyle: true,
+                pointStyleWidth: 12,
+                font: fontOpts,
+                color: textColor
+              }
+            },
+            tooltip: {
+              callbacks: {
+                label: function(ctx) {
+                  const ranges = ['0 – 1,81', '1,81 – 2,99', '2,99 – 5,0'];
+                  return ctx.label + ': ' + ranges[ctx.dataIndex];
+                }
+              }
+            }
+          }
+        },
+        plugins: [{
+          id: 'gaugeNeedle',
+          afterDatasetsDraw(chart) {
+            const { ctx, chartArea } = chart;
+            const meta = chart.getDatasetMeta(0);
+            if (!meta.data || meta.data.length === 0) return;
+
+            const arc = meta.data[0];
+            const cx = arc.x;
+            const cy = arc.y;
+            const outerRadius = arc.outerRadius;
+            const innerRadius = arc.innerRadius;
+            const needleRadius = (outerRadius + innerRadius) / 2;
+
+            // Angle: map Z from 0–5 to 180deg arc (from -PI to 0)
+            const fraction = zClamped / total;
+            const angle = Math.PI + fraction * Math.PI;
+
+            const needleX = cx + Math.cos(angle) * needleRadius;
+            const needleY = cy + Math.sin(angle) * needleRadius;
+
+            // Draw needle line
+            ctx.save();
+            ctx.beginPath();
+            ctx.moveTo(cx, cy);
+            ctx.lineTo(needleX, needleY);
+            ctx.lineWidth = 3;
+            ctx.strokeStyle = isDark ? '#f5f5f4' : '#1c1917';
+            ctx.stroke();
+
+            // Draw center circle
+            ctx.beginPath();
+            ctx.arc(cx, cy, 6, 0, 2 * Math.PI);
+            ctx.fillStyle = isDark ? '#f5f5f4' : '#1c1917';
+            ctx.fill();
+
+            // Draw Z-value text
+            ctx.font = 'bold 20px Inter, sans-serif';
+            ctx.fillStyle = textColor;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'top';
+            ctx.fillText('Z = ' + z.toFixed(2), cx, cy + 12);
+            ctx.restore();
+          }
+        }]
+      });
+    }
+
+    // Auto-calculate on load
+    document.addEventListener('DOMContentLoaded', () => {
+      document.querySelector('[data-preset="lukoil"]').classList.add('active');
+      calculate();
+    });
+  </script>
+</body>
+</html>

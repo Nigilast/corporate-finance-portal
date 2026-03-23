@@ -82,6 +82,34 @@ document.addEventListener('DOMContentLoaded', () => {
     }
   });
 
+  // --- Animated Counters ---
+  const counters = document.querySelectorAll('.stat-value[data-countup]');
+  if (counters.length > 0) {
+    const counterObserver = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (!entry.isIntersecting) return;
+        const el = entry.target;
+        const target = parseInt(el.dataset.countup, 10);
+        const suffix = el.dataset.suffix || '';
+        const duration = 1500;
+        const start = performance.now();
+
+        function tick(now) {
+          const elapsed = now - start;
+          const progress = Math.min(elapsed / duration, 1);
+          // Ease out cubic
+          const eased = 1 - Math.pow(1 - progress, 3);
+          const current = Math.round(eased * target);
+          el.textContent = current + suffix;
+          if (progress < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+        counterObserver.unobserve(el);
+      });
+    }, { threshold: 0.5 });
+    counters.forEach(el => counterObserver.observe(el));
+  }
+
   // --- SVG Favicon ---
   if (!document.querySelector('link[rel="icon"]')) {
     const fav = document.createElement('link');
